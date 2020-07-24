@@ -26,5 +26,7 @@
 #define _IO_MATH_HPP
 
 #include "Vectors.hpp"
+#include "Geometric.hpp"
+#include "Trigonometric.hpp"
 
 #endif
