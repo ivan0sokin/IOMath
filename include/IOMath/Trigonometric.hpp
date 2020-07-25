@@ -25,84 +25,17 @@
 #ifndef _IO_MATH_TRIGONOMETRIC_HPP
 #define _IO_MATH_TRIGONOMETRIC_HPP
 
-#include <cmath>
-
-#include "types/BasicTypes.hpp"
+#include "detail/ComputeTrigonometric.hpp"
 
 namespace IOMath
 {
-	namespace Detail
-	{
-		template <typename T>
-		constexpr Types::TVector<2, T> ComputeSinus(Types::TVector<2, T> const &object) noexcept
-		{
-			return Types::TVector<2, T>
-			(
-				std::sin(object.x),
-				std::sin(object.y)
-			);
-		}
-		template <typename T>
-		constexpr Types::TVector<3, T> ComputeSinus(Types::TVector<3, T> const &object) noexcept
-		{
-			return Types::TVector<3, T>
-			(
-				std::sin(object.x),
-				std::sin(object.y),
-				std::sin(object.z)
-			);
-		}
-		template <typename T>
-		constexpr Types::TVector<4, T> ComputeSinus(Types::TVector<4, T> const &object) noexcept
-		{
-			return Types::TVector<4, T>
-			(
-				std::sin(object.x),
-				std::sin(object.y),
-				std::sin(object.z),
-				std::sin(object.w)
-			);
-		}
-		
-		template <typename T>
-		constexpr Types::TVector<2, T> ComputeCosin(Types::TVector<2, T> const &object) noexcept
-		{
-			return Types::TVector<2, T>
-			(
-				std::cos(object.x),
-				std::cos(object.y)
-			);
-		}
-		template <typename T>
-		constexpr Types::TVector<3, T> ComputeCosin(Types::TVector<3, T> const &object) noexcept
-		{
-			return Types::TVector<3, T>
-			(
-				std::cos(object.x),
-				std::cos(object.y),
-				std::cos(object.z)
-			);
-		}
-		template <typename T>
-		constexpr Types::TVector<4, T> ComputeCosin(Types::TVector<4, T> const &object) noexcept
-		{
-			return Types::TVector<4, T>
-			(
-				std::cos(object.x),
-				std::cos(object.y),
-				std::cos(object.z),
-				std::cos(object.w)
-			);
-		}
-	}
-
 	template <size_t S, typename T>
-	constexpr Types::TVector<S, T> sin(Types::TVector<S, T> const &object) noexcept
+	constexpr Types::TVector<S, T> Sin(Types::TVector<S, T> const &object) noexcept
 	{
 		return Detail::ComputeSinus(object);
 	}
 	template <size_t S, typename T>
-	constexpr Types::TVector<S, T> cos(Types::TVector<S, T> const &object) noexcept
+	constexpr Types::TVector<S, T> Cos(Types::TVector<S, T> const &object) noexcept
 	{
 		return Detail::ComputeCosin(object);
 	}

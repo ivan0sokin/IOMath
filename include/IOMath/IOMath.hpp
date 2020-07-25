@@ -28,5 +28,6 @@
 #include "Vectors.hpp"
 #include "Geometric.hpp"
 #include "Trigonometric.hpp"
+#include "Matrices.hpp"
 
 #endif

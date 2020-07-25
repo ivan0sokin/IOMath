@@ -25,64 +25,10 @@
 #ifndef _IO_MATH_GEOMETRIC_HPP
 #define _IO_MATH_GEOMETRIC_HPP
 
-#include <cmath>
-#include <cassert>
-
-#include "types/BasicTypes.hpp"
+#include "detail/ComputeGeometric.hpp"
 
 namespace IOMath
 {
-	namespace Detail
-	{
-		template <typename T>
-		constexpr T ComputeDot(Types::TVector<2, T> const &lObject, Types::TVector<2, T> const &rObject) noexcept
-		{
-			return (lObject.x * rObject.x + lObject.y * rObject.y);
-		}
-		template <typename T>
-		constexpr T ComputeDot(Types::TVector<3, T> const &lObject, Types::TVector<3, T> const &rObject) noexcept
-		{
-			return (lObject.x * rObject.x + lObject.y * rObject.y + lObject.z * rObject.z);
-		}
-		template <typename T>
-		constexpr T ComputeDot(Types::TVector<4, T> const &lObject, Types::TVector<4, T> const &rObject) noexcept
-		{
-			return (lObject.x * rObject.x + lObject.y * rObject.y + lObject.z * rObject.z + lObject.w * rObject.w);
-		}
-	
-		template <size_t S, typename T>
-		constexpr T ComputeLength(Types::TVector<S, T> const &object) noexcept
-		{
-			return std::sqrt(ComputeDot(object, object));
-		}
-
-		template <size_t S, typename T>
-		constexpr T ComputeDistance(Types::TVector<S, T> const &lObject, Types::TVector<S, T> const &rObject) noexcept
-		{
-			return ComputeLength(rObject - lObject);
-		}
-
-		template <size_t S, typename T>
-		constexpr Types::TVector<S, T> ComputeNormalize(Types::TVector<S, T> const &object) noexcept
-		{
-			T objectLength = ComputeLength(object);
-			assert(objectLength > static_cast<T>(0));
-
-			return Types::TVector<S, T>(object) /= objectLength;
-		}
-	
-		template <typename T>
-		constexpr Types::TVector<3, T> ComputeCross(Types::TVector<3, T> const &lObject, Types::TVector<3, T> const &rObject) noexcept
-		{
-			return Types::TVector<3, T>
-			(
-				lObject.y * rObject.z - rObject.y * lObject.z,
-				lObject.z * rObject.x - rObject.z * lObject.x,
-				lObject.x * rObject.y - rObject.x * lObject.y
-			);
-		}
-	}
-
 	template <size_t S, typename T>
 	constexpr T Length(Types::TVector<S, T> const &object) noexcept
 	{
@@ -109,6 +55,18 @@ namespace IOMath
 	constexpr Types::TVector<3, T> Cross(Types::TVector<3, T> const &lObject, Types::TVector<3, T> const &rObject) noexcept
 	{
 		return Detail::ComputeCross(lObject, rObject);
+	}
+
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Reflect(Types::TVector<S, T> const &object, Types::TVector<S, T> const &normal) noexcept
+	{
+		return Detail::ComputeReflect(object, normal);
+	}
+
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Refract(Types::TVector<S, T> const &object, Types::TVector<S, T> const &normal, T eta) noexcept
+	{
+		return Detail::ComputeRefract(object, normal, eta);
 	}
 }
 

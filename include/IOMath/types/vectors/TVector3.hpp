@@ -138,7 +138,7 @@ namespace IOMath
 				}
 			}
 
-			constexpr TVector<3, T>& operator=(TVector<3, T> const &other) noexcept
+			constexpr TVector<3, T>& operator=(TVector const &other) noexcept
 			{
 				this->x = other.x;
 				this->y = other.y;

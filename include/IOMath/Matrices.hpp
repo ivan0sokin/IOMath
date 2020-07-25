@@ -22,13 +22,10 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_VECTORS_HPP
-#define _IO_MATH_VECTORS_HPP
+#ifndef _IO_MATH_MATRICES_HPP
+#define _IO_MATH_MATRICES_HPP
 
-#include "extended/vectors/BVector.hpp"
-#include "extended/vectors/DVector.hpp"
-#include "extended/vectors/FVector.hpp"
-#include "extended/vectors/IVector.hpp"
-#include "extended/vectors/UVector.hpp"
+#include "extended/matrices/FMatrix.hpp"
+#include "extended/matrices/DMatrix.hpp"
 
 #endif

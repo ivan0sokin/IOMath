@@ -22,13 +22,15 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_VECTORS_HPP
-#define _IO_MATH_VECTORS_HPP
+#ifndef _IO_MATH_DMATRIX_HPP
+#define _IO_MATH_DMATRIX_HPP
 
-#include "extended/vectors/BVector.hpp"
-#include "extended/vectors/DVector.hpp"
-#include "extended/vectors/FVector.hpp"
-#include "extended/vectors/IVector.hpp"
-#include "extended/vectors/UVector.hpp"
+#include "../../types/matrices/TMatrix2x2.hpp"
+
+namespace IOMath
+{
+	typedef Types::TMatrix<2, 2, double> DMatrix2x2;
+	typedef Types::TMatrix<2, 2, double> DMatrix2;
+}
 
 #endif
