@@ -25,6 +25,14 @@
 #ifndef _IO_BASIC_TYPES_HPP
 #define _IO_BASIC_TYPES_HPP
 
+#ifdef _WIN32
+typedef unsigned long long size_t;
+#elif _WIN64
+typedef unsigned long long size_t;
+#elif __linux__
+typedef unsigned long size_t;
+#endif
+
 namespace IOMath
 {
 	namespace Types
