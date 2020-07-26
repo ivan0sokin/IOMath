@@ -104,6 +104,14 @@ namespace IOMath
 				this->w = static_cast<T>(c);
 			}
 			template <typename A, typename B>
+			constexpr TVector(TVector<2, A> const &a, TVector<2, B> const &b) noexcept
+			{
+				this->x = static_cast<T>(a.x);
+				this->y = static_cast<T>(a.y);
+				this->z = static_cast<T>(b.x);
+				this->w = static_cast<T>(b.y);
+			}
+			template <typename A, typename B>
 			constexpr TVector(A a, TVector<3, B> const &other) noexcept
 			{
 				this->x = static_cast<T>(a);
@@ -119,7 +127,6 @@ namespace IOMath
 				this->z = static_cast<T>(other.z);
 				this->w = static_cast<T>(b);
 			}
-
 			template <typename U>
 			constexpr TVector(TVector<4, U> const &other) noexcept
 			{

@@ -22,13 +22,36 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_HPP
-#define _IO_MATH_HPP
+#ifndef _IO_MATH_MATRIX_FUNCTIONS_HPP
+#define _IO_MATH_MATRIX_FUNCTIONS_HPP
 
-#include "Vectors.hpp"
-#include "Geometric.hpp"
-#include "Trigonometric.hpp"
-#include "Matrices.hpp"
-#include "MatrixFunctions.hpp"
+#include "detail/ComputeMatrixFunctions.hpp"
+
+#include <cassert>
+
+namespace IOMath
+{
+    template <size_t R, size_t C, typename T>
+    constexpr Types::TMatrix<C, R, T> Transpose(Types::TMatrix<R, C, T> const &object) noexcept
+    {
+        return Detail::ComputeTranspose(object);
+    }
+
+    template <size_t R, size_t C, typename T>
+    constexpr T Determinant(Types::TMatrix<R, C, T> const &object) noexcept
+    {
+        assert(R == C);
+
+        return Detail::ComputeDeterminant(object);
+    }
+
+    template <size_t R, size_t C>
+    constexpr Types::TMatrix<R, C, float> Inverse(Types::TMatrix<R, C, float> const &object) noexcept
+    {
+        assert(R == C);
+
+        return Detail::ComputeInverse(object);
+    }
+}
 
 #endif

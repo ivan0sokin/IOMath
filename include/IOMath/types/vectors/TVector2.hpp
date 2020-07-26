@@ -108,7 +108,7 @@ namespace IOMath
 			}
 			constexpr T const& operator[](size_t index) const noexcept
 			{
-				assert(index >= 0 && index < TVector::Length());
+				assert(index >= 0 && index < TVector::Size());
 
 				switch (index)
 				{

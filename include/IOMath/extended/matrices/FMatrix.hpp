@@ -26,11 +26,34 @@
 #define _IO_MATH_FMATRIX_HPP
 
 #include "../../types/matrices/TMatrix2x2.hpp"
+#include "../../types/matrices/TMatrix2x3.hpp"
+#include "../../types/matrices/TMatrix2x4.hpp"
+#include "../../types/matrices/TMatrix3x2.hpp"
+#include "../../types/matrices/TMatrix3x3.hpp"
+#include "../../types/matrices/TMatrix3x4.hpp"
+#include "../../types/matrices/TMatrix4x2.hpp"
+#include "../../types/matrices/TMatrix4x3.hpp"
+#include "../../types/matrices/TMatrix4x4.hpp"
 
 namespace IOMath
 {
-	typedef Types::TMatrix<2, 2, float> Matrix2x2;
 	typedef Types::TMatrix<2, 2, float> Matrix2;
+
+	typedef Types::TMatrix<2, 2, float> Matrix2x2;
+	typedef Types::TMatrix<2, 3, float> Matrix2x3;
+	typedef Types::TMatrix<2, 4, float> Matrix2x4;
+
+	typedef Types::TMatrix<3, 3, float> Matrix3;
+
+	typedef Types::TMatrix<3, 2, float> Matrix3x2;
+	typedef Types::TMatrix<3, 3, float> Matrix3x3;
+	typedef Types::TMatrix<3, 4, float> Matrix3x4;
+
+	typedef Types::TMatrix<4, 3, float> Matrix4;
+
+	typedef Types::TMatrix<4, 2, float> Matrix4x2;
+	typedef Types::TMatrix<4, 3, float> Matrix4x3;
+	typedef Types::TMatrix<4, 4, float> Matrix4x4;
 }
 
 #endif
