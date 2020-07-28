@@ -27,30 +27,24 @@
 
 #include "detail/ComputeMatrixFunctions.hpp"
 
-#include <cassert>
-
 namespace IOMath
 {
     template <size_t R, size_t C, typename T>
     constexpr Types::TMatrix<C, R, T> Transpose(Types::TMatrix<R, C, T> const &object) noexcept
     {
-        return Detail::ComputeTranspose(object);
+        return detail::ComputeTranspose(object);
     }
 
     template <size_t R, size_t C, typename T>
     constexpr T Determinant(Types::TMatrix<R, C, T> const &object) noexcept
     {
-        assert(R == C);
-
-        return Detail::ComputeDeterminant(object);
+        return detail::ComputeDeterminant(object);
     }
 
-    template <size_t R, size_t C>
-    constexpr Types::TMatrix<R, C, float> Inverse(Types::TMatrix<R, C, float> const &object) noexcept
+    template <size_t R, size_t C, typename T>
+    constexpr Types::TMatrix<R, C, T> Inverse(Types::TMatrix<R, C, T> const &object) noexcept
     {
-        assert(R == C);
-
-        return Detail::ComputeInverse(object);
+        return detail::ComputeInverse(object);
     }
 }
 

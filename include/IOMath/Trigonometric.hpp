@@ -32,12 +32,12 @@ namespace IOMath
 	template <size_t S, typename T>
 	constexpr Types::TVector<S, T> Sin(Types::TVector<S, T> const &object) noexcept
 	{
-		return Detail::ComputeSin(object);
+		return detail::ComputeSin(object);
 	}
 	template <size_t S, typename T>
 	constexpr Types::TVector<S, T> Cos(Types::TVector<S, T> const &object) noexcept
 	{
-		return Detail::ComputeCos(object);
+		return detail::ComputeCos(object);
 	}
 }
 

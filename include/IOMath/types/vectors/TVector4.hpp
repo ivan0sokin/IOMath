@@ -147,14 +147,15 @@ namespace IOMath
 
 				switch (index)
 				{
-				case 0:
-					return x;
-				case 1:
-					return y;
-				case 2:
-					return z;
-				case 3:
-					return w;
+				default:
+					case 0:
+						return x;
+					case 1:
+						return y;
+					case 2:
+						return z;
+					case 3:
+						return w;
 				}
 			}
 			constexpr T const& operator[](size_t index) const noexcept
@@ -163,18 +164,19 @@ namespace IOMath
 
 				switch (index)
 				{
-				case 0:
-					return x;
-				case 1:
-					return y;
-				case 2:
-					return z;
-				case 3:
-					return w;
+				default:
+					case 0:
+						return x;
+					case 1:
+						return y;
+					case 2:
+						return z;
+					case 3:
+						return w;
 				}
 			}
 		
-			constexpr TVector<4, T>& operator=(TVector const &other) noexcept
+			constexpr TVector<4, T>& operator=(TVector<4, T> const &other) noexcept
 			{
 				this->x = other.x;
 				this->y = other.y;
@@ -193,7 +195,6 @@ namespace IOMath
 
 				return *this;
 			}
-
 			template <typename U>
 			constexpr TVector<4, T>& operator+=(U scalar) noexcept
 			{
@@ -490,6 +491,11 @@ namespace IOMath
 			return TVector<4, T>(object) *= scalar;
 		}
 		template <typename T>
+		constexpr TVector<4, T> operator*(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
+		{
+			return TVector<4, T>(lObject) *= rObject;
+		}
+		template <typename T>
 		constexpr TVector<4, T> operator/(T scalar, TVector<4, T> const &object) noexcept
 		{
 			return TVector<4, T>(scalar) /= object;
@@ -498,6 +504,11 @@ namespace IOMath
 		constexpr TVector<4, T> operator/(TVector<4, T> const &object, T scalar) noexcept
 		{
 			return TVector<4, T>(object) /= scalar;
+		}
+		template <typename T>
+		constexpr TVector<4, T> operator/(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
+		{
+			return TVector<4, T>(lObject) /= rObject;
 		}
 
 		template <typename T>

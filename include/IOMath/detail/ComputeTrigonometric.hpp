@@ -31,7 +31,7 @@
 
 namespace IOMath
 {
-	namespace Detail
+	namespace detail
 	{
 		template <typename T>
 		constexpr Types::TVector<2, T> ComputeSin(Types::TVector<2, T> const &object) noexcept

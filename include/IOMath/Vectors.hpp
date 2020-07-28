@@ -25,10 +25,28 @@
 #ifndef _IO_MATH_VECTORS_HPP
 #define _IO_MATH_VECTORS_HPP
 
-#include "extended/vectors/BVector.hpp"
-#include "extended/vectors/DVector.hpp"
-#include "extended/vectors/FVector.hpp"
-#include "extended/vectors/IVector.hpp"
-#include "extended/vectors/UVector.hpp"
+#ifdef IO_MATH_ADD_ALL_VECTOR_TYPES
+	#include "extended/vectors/BVector.hpp"
+	#include "extended/vectors/DVector.hpp"
+	#include "extended/vectors/FVector.hpp"
+	#include "extended/vectors/IVector.hpp"
+	#include "extended/vectors/UVector.hpp"
+#else
+	#ifdef IO_MATH_ADD_VECTOR_TYPE_BOOL
+	#include "extended/vectors/BVector.hpp"
+	#endif
+	#ifdef IO_MATH_ADD_VECTOR_TYPE_DOUBLE
+	#include "extended/vectors/DVector.hpp"
+	#endif
+	#ifdef IO_MATH_ADD_VECTOR_TYPE_FLOAT
+	#include "extended/vectors/FVector.hpp"
+	#endif
+	#ifdef IO_MATH_ADD_VECTOR_TYPE_INT
+	#include "extended/vectors/IVector.hpp"
+	#endif
+	#ifdef IO_MATH_ADD_VECTOR_TYPE_UINT
+	#include "extended/vectors/UVector.hpp"
+	#endif
+#endif
 
 #endif

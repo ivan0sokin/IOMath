@@ -28,11 +28,10 @@
 #include "../types/BasicTypes.hpp"
 
 #include <cmath>
-#include <cassert>
 
 namespace IOMath
 {
-	namespace Detail
+	namespace detail
 	{
 		template <typename T>
 		constexpr T ComputeDot(Types::TVector<2, T> const &lObject, Types::TVector<2, T> const &rObject) noexcept

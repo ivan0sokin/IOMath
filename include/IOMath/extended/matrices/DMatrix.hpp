@@ -49,7 +49,7 @@ namespace IOMath
 	typedef Types::TMatrix<3, 3, double> DMatrix3x3;
 	typedef Types::TMatrix<3, 4, double> DMatrix3x4;
 
-	typedef Types::TMatrix<4, 3, double> DMatrix4;
+	typedef Types::TMatrix<4, 4, double> DMatrix4;
 
 	typedef Types::TMatrix<4, 2, double> DMatrix4x2;
 	typedef Types::TMatrix<4, 3, double> DMatrix4x3;
