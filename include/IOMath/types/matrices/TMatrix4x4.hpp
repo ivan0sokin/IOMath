@@ -149,6 +149,13 @@ namespace IOMath
 				this->data[2] = row_t(other[2], 0);
 				this->data[3] = row_t(other[3], 0);
 			}
+			constexpr TMatrix(TMatrix<2, 2, T> const &otherA, TMatrix<2, 2, T> const &otherB, TMatrix<2, 2, T> const &otherC, TMatrix<2, 2, T> const &otherD) noexcept
+			{
+				this->data[0] = row_t(otherA[0], otherB[0]);
+				this->data[1] = row_t(otherA[1], otherB[1]);
+				this->data[2] = row_t(otherC[0], otherD[0]);
+				this->data[3] = row_t(otherC[1], otherD[1]);
+			}
 
 			static constexpr TMatrix<4, 4, T> Identity() noexcept
 			{
@@ -544,6 +551,23 @@ namespace IOMath
 		constexpr TMatrix<4, 4, T> operator/(TMatrix<4, 4, T> const &lObject, TMatrix<4, 4, T> const &rObject) noexcept
 		{
 			return TMatrix<4, 4, T>(lObject) /= rObject;
+		}
+
+		template <typename T>
+		constexpr bool operator==(TMatrix<4, 4, T> const &lObject, TMatrix<4, 4, T> const &rObject) noexcept
+		{
+			return
+			(
+				lObject[0] == rObject[0] &&
+				lObject[1] == rObject[1] &&
+				lObject[2] == rObject[2] &&
+				lObject[3] == rObject[3]
+			);
+		}
+		template <typename T>
+		constexpr bool operator!=(TMatrix<4, 4, T> const &lObject, TMatrix<4, 4, T> const &rObject) noexcept
+		{
+			return !(lObject == rObject);
 		}
 	}
 }

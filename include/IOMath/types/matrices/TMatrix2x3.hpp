@@ -3,10 +3,8 @@
 
 #include "../vectors/TVector2.hpp"
 #include "../vectors/TVector3.hpp"
-#include "../BasicTypes.hpp"
 
 #include <cassert>
-#include <memory.h>
 
 namespace IOMath
 {
@@ -82,8 +80,8 @@ namespace IOMath
 			}
 			constexpr TMatrix(TMatrix<3, 3, T> const &other) noexcept
 			{
-				this->data[0] = row_t(other[0]);
-				this->data[1] = row_t(other[1]);
+				this->data[0] = other[0];
+				this->data[1] = other[1];
 			}
 			constexpr TMatrix(TMatrix<3, 4, T> const &other) noexcept
 			{
@@ -97,8 +95,8 @@ namespace IOMath
 			}
 			constexpr TMatrix(TMatrix<4, 3, T> const &other) noexcept
 			{
-				this->data[0] = row_t(other[0]);
-				this->data[1] = row_t(other[1]);
+				this->data[0] = other[0];
+				this->data[1] = other[1];
 			}
 			constexpr TMatrix(TMatrix<4, 4, T> const &other) noexcept
 			{
@@ -284,51 +282,93 @@ namespace IOMath
 			return TMatrix<2, 3, T>(object) *= scalar;
 		}
 		template <typename T>
-		constexpr typename TMatrix<2, 3, T>::column_t operator*(TMatrix<2, 3, T> const &matrix, typename TMatrix<2, 3, T>::row_t const &vector) noexcept
-		{
-			return typename TMatrix<2, 3, T>::column_t
-			(
-				matrix[0][0] * vector.x + matrix[0][1] * vector.y + matrix[0][2] * vector.z,
-				matrix[1][0] * vector.x + matrix[1][1] * vector.y + matrix[1][2] * vector.z
-			);
-		}
-		template <typename T>
 		constexpr TMatrix<2, 2, T> operator*(TMatrix<2, 3, T> const &lObject, TMatrix<3, 2, T> const &rObject) noexcept
 		{
+			T const lObjectA = lObject[0][0];
+			T const lObjectB = lObject[0][1];
+			T const lObjectC = lObject[0][2];
+			T const lObjectD = lObject[1][0];
+			T const lObjectE = lObject[1][1];
+			T const lObjectF = lObject[1][2];
+
+			T const rObjectA = rObject[0][0];
+			T const rObjectB = rObject[0][1];
+			T const rObjectC = rObject[1][0];
+			T const rObjectD = rObject[1][1];
+			T const rObjectE = rObject[2][0];
+			T const rObjectF = rObject[2][1];
+
 			return TMatrix<2, 2, T>
 			(
-				lObject[0][0] * rObject[0][0] + lObject[0][1] * rObject[1][0] + lObject[0][2] * rObject[2][0],
-				lObject[0][0] * rObject[0][1] + lObject[0][1] * rObject[1][1] + lObject[0][2] * rObject[2][1],
-				lObject[1][0] * rObject[0][0] + lObject[1][1] * rObject[1][0] + lObject[1][2] * rObject[2][0],
-				lObject[1][0] * rObject[0][1] + lObject[1][1] * rObject[1][1] + lObject[1][2] * rObject[2][1]
+				lObjectA * rObjectA + lObjectB * rObjectC + lObjectC * rObjectE,
+				lObjectA * rObjectB + lObjectB * rObjectD + lObjectC * rObjectF,
+				lObjectD * rObjectA + lObjectE * rObjectC + lObjectF * rObjectE,
+				lObjectD * rObjectB + lObjectE * rObjectD + lObjectF * rObjectF
 			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator*(TMatrix<2, 3, T> const &lObject, TMatrix<3, 3, T> const &rObject) noexcept
 		{
+			T const lObjectA = lObject[0][0];
+			T const lObjectB = lObject[0][1];
+			T const lObjectC = lObject[0][2];
+			T const lObjectD = lObject[1][0];
+			T const lObjectE = lObject[1][1];
+			T const lObjectF = lObject[1][2];
+
+			T const rObjectA = rObject[0][0];
+			T const rObjectB = rObject[0][1];
+			T const rObjectC = rObject[0][2];
+			T const rObjectD = rObject[1][0];
+			T const rObjectE = rObject[1][1];
+			T const rObjectF = rObject[1][2];
+			T const rObjectG = rObject[2][0];
+			T const rObjectH = rObject[2][1];
+			T const rObjectI = rObject[2][2];
+
 			return TMatrix<2, 3, T>
 			(
-				lObject[0][0] * rObject[0][0] + lObject[0][1] * rObject[1][0] + lObject[0][2] * rObject[2][0],
-				lObject[0][0] * rObject[0][1] + lObject[0][1] * rObject[1][1] + lObject[0][2] * rObject[2][1],
-				lObject[0][0] * rObject[0][2] + lObject[0][1] * rObject[1][2] + lObject[0][2] * rObject[2][2],
-				lObject[1][0] * rObject[0][0] + lObject[1][1] * rObject[1][0] + lObject[1][2] * rObject[2][0],
-				lObject[1][0] * rObject[0][1] + lObject[1][1] * rObject[1][1] + lObject[1][2] * rObject[2][1],
-				lObject[1][0] * rObject[0][2] + lObject[1][1] * rObject[1][2] + lObject[1][2] * rObject[2][2]
+				lObjectA * rObjectA + lObjectB * rObjectD + lObjectC * rObjectG,
+				lObjectA * rObjectB + lObjectB * rObjectE + lObjectC * rObjectH,
+				lObjectA * rObjectC + lObjectB * rObjectF + lObjectC * rObjectI,
+				lObjectD * rObjectA + lObjectE * rObjectD + lObjectF * rObjectG,
+				lObjectD * rObjectB + lObjectE * rObjectE + lObjectF * rObjectH,
+				lObjectD * rObjectC + lObjectE * rObjectF + lObjectF * rObjectI
 			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 4, T> operator*(TMatrix<2, 3, T> const &lObject, TMatrix<3, 4, T> const &rObject) noexcept
 		{
+			T const lObjectA = lObject[0][0];
+			T const lObjectB = lObject[0][1];
+			T const lObjectC = lObject[0][2];
+			T const lObjectD = lObject[1][0];
+			T const lObjectE = lObject[1][1];
+			T const lObjectF = lObject[1][2];
+
+			T const rObjectA = rObject[0][0];
+			T const rObjectB = rObject[0][1];
+			T const rObjectC = rObject[0][2];
+			T const rObjectD = rObject[0][3];
+			T const rObjectE = rObject[1][0];
+			T const rObjectF = rObject[1][1];
+			T const rObjectG = rObject[1][2];
+			T const rObjectH = rObject[1][3];
+			T const rObjectI = rObject[2][0];
+			T const rObjectJ = rObject[2][1];
+			T const rObjectK = rObject[2][2];
+			T const rObjectL = rObject[2][3];
+
 			return TMatrix<2, 4, T>
 			(
-				lObject[0][0] * rObject[0][0] + lObject[0][1] * rObject[1][0] + lObject[0][2] * rObject[2][0],
-				lObject[0][0] * rObject[0][1] + lObject[0][1] * rObject[1][1] + lObject[0][2] * rObject[2][1],
-				lObject[0][0] * rObject[0][2] + lObject[0][1] * rObject[1][2] + lObject[0][2] * rObject[2][2],
-				lObject[0][0] * rObject[0][3] + lObject[0][1] * rObject[1][3] + lObject[0][2] * rObject[2][3],
-				lObject[1][0] * rObject[0][0] + lObject[1][1] * rObject[1][0] + lObject[1][2] * rObject[2][0],
-				lObject[1][0] * rObject[0][1] + lObject[1][1] * rObject[1][1] + lObject[1][2] * rObject[2][1],
-				lObject[1][0] * rObject[0][2] + lObject[1][1] * rObject[1][2] + lObject[1][2] * rObject[2][2],
-				lObject[1][0] * rObject[0][3] + lObject[1][1] * rObject[1][3] + lObject[1][2] * rObject[2][3]
+				lObjectA * rObjectA + lObjectB * rObjectE + lObjectC * rObjectI,
+				lObjectA * rObjectB + lObjectB * rObjectF + lObjectC * rObjectJ,
+				lObjectA * rObjectC + lObjectB * rObjectG + lObjectC * rObjectK,
+				lObjectA * rObjectD + lObjectB * rObjectH + lObjectC * rObjectL,
+				lObjectD * rObjectA + lObjectE * rObjectE + lObjectF * rObjectI,
+				lObjectD * rObjectB + lObjectE * rObjectF + lObjectF * rObjectJ,
+				lObjectD * rObjectC + lObjectE * rObjectG + lObjectF * rObjectK,
+				lObjectD * rObjectD + lObjectE * rObjectH + lObjectF * rObjectL
 			);
 		}
 		template <typename T>
