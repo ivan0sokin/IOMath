@@ -104,15 +104,6 @@ namespace IOMath
 				this->data[1] = row_t(other[1]);
 			}
 
-			static constexpr TMatrix<2, 3, T> Identity() noexcept
-			{
-				return TMatrix<2, 3, T>
-				(
-					1, 0, 0,
-					0, 1, 0
-				);
-			}
-
 			static constexpr size_t Rows() noexcept
 			{
 				return column_t::Size();

@@ -103,14 +103,10 @@ namespace IOMath
 				this->data[0] = other[0];
 				this->data[1] = other[1];
 			}
-
-			static constexpr TMatrix<2, 4, T> Identity() noexcept
+			constexpr TMatrix(TMatrix<2, 2, T> const &otherA, TMatrix<2, 2, T> const &otherB) noexcept
 			{
-				return TMatrix<2, 4, T>
-				(
-					1, 0, 0, 0,
-					0, 1, 0, 0
-				);
+				this->data[0] = row_t(otherA[0], otherB[0]);
+				this->data[1] = row_t(otherA[1], otherB[1]);
 			}
 
 			static constexpr size_t Rows() noexcept

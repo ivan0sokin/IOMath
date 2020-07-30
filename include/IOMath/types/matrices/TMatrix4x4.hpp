@@ -2,7 +2,7 @@
 #define _IO_MATH_TMATRIX_4X4_HPP
 
 #include "../vectors/TVector4.hpp"
-#include "../../detail/ComputeMatrixFunctions.hpp"
+#include "../../detail/ComputeBasicMatrixFunctions.hpp"
 
 #include <cassert>
 

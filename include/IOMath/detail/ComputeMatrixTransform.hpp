@@ -22,29 +22,27 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_MATRIX_FUNCTIONS_HPP
-#define _IO_MATH_MATRIX_FUNCTIONS_HPP
+#ifndef _IO_MATH_COMPUTE_MATRIX_TRANSFORM_HPP
+#define _IO_MATH_COMPUTE_MATRIX_TRANSFORM_HPP
 
-#include "detail/ComputeBasicMatrixFunctions.hpp"
+#include "../types/matrices/TMatrix4x4.hpp"
+#include "../types/vectors/TVector3.hpp"
 
 namespace IOMath
 {
-    template <size_t R, size_t C, typename T>
-    constexpr Types::TMatrix<C, R, T> Transpose(Types::TMatrix<R, C, T> const &object) noexcept
+    namespace detail
     {
-        return detail::ComputeTranspose(object);
-    }
+        template <typename T>
+        constexpr Types::TMatrix<4, 4, T> ComputeMatrixTranslate(Types::TMatrix<4, 4, T> const &object, Types::TVector<3, T> const &translation) noexcept
+        {
+            Types::TMatrix<4, 4, T> result = Types::TMatrix<4, 4, T>(object);
 
-    template <size_t R, size_t C, typename T>
-    constexpr T Determinant(Types::TMatrix<R, C, T> const &object) noexcept
-    {
-        return detail::ComputeDeterminant(object);
-    }
+            result[3][0] += translation.x;
+            result[3][1] += translation.y;
+            result[3][2] += translation.z;
 
-    template <size_t R, size_t C, typename T>
-    constexpr Types::TMatrix<R, C, T> Inverse(Types::TMatrix<R, C, T> const &object) noexcept
-    {
-        return detail::ComputeInverse(object);
+            return result;
+        }
     }
 }
 

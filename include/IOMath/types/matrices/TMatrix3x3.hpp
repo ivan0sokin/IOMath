@@ -1,8 +1,8 @@
 #ifndef _IO_MATH_TMATRIX_3X3_HPP
 #define _IO_MATH_TMATRIX_3X3_HPP
 
-#include "../vectors/TVector4.hpp"
-#include "../../detail/ComputeMatrixFunctions.hpp"
+#include "../vectors/TVector3.hpp"
+#include "../../detail/ComputeBasicMatrixFunctions.hpp"
 
 #include <cassert>
 

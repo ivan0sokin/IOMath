@@ -26,7 +26,7 @@
 #define _IO_MATH_TMATRIX_2X2_HPP
 
 #include "../vectors/TVector2.hpp"
-#include "../../detail/ComputeMatrixFunctions.hpp"
+#include "../../detail/ComputeBasicMatrixFunctions.hpp"
 
 namespace IOMath
 {
