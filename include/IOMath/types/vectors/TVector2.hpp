@@ -40,53 +40,54 @@ namespace IOMath
 			{
 				struct { T x, y; };
 				struct { T r, g; };
+				struct { T b, w; };
 			};
 
-			constexpr TVector() noexcept
-			{
-				this->x = static_cast<T>(0);
-				this->y = static_cast<T>(0);
-			}
-			constexpr TVector(TVector const &other) noexcept
-			{
-				this->x = other.x;
-				this->y = other.y;
-			}
-			constexpr TVector(T scalar) noexcept
-			{
-				this->x = scalar;
-				this->y = scalar;
-			}
-			constexpr TVector(T a, T b) noexcept
-			{
-				this->x = a;
-				this->y = b;
-			}
+			constexpr TVector() noexcept = default;
+			constexpr TVector(TVector const &other) noexcept = default;
+			constexpr explicit TVector(T scalar) noexcept :
+				x{scalar},
+				y{scalar} {}
+			constexpr TVector(T x, T y) noexcept :
+				x{x},
+				y{y} {}
 
-			template<typename A, typename B>
-			constexpr TVector(A a, B b) noexcept
-			{
-				this->x = static_cast<T>(a);
-				this->y = static_cast<T>(b);
-			}
+			template<typename X, typename Y>
+			constexpr TVector(X x, Y y) noexcept :
+				x{static_cast<T>(x)},
+				y{static_cast<T>(y)} {}
 
 			template <typename U>
-			constexpr TVector(TVector<2, U> const &other) noexcept
+			constexpr TVector(TVector<2, U> const &other) noexcept :
+				x{static_cast<T>(other.x)},
+				y{static_cast<T>(other.y)} {}
+
+			template <typename U>
+			static constexpr TVector<2, T> FromVector3(TVector<3, U> const &vector) noexcept
 			{
-				this->x = static_cast<T>(other.x);
-				this->y = static_cast<T>(other.y);
+				return TVector<2, T>
+				(
+					vector.x,
+					vector.y
+				);
 			}
 			template <typename U>
-			constexpr TVector(TVector<3, U> const &other) noexcept
+			static constexpr TVector<2, T> FromVector4(TVector<4, U> const &vector) noexcept
 			{
-				this->x = static_cast<T>(other.x);
-				this->y = static_cast<T>(other.y);
+				return TVector<2, T>
+				(
+					vector.x,
+					vector.y
+				);
 			}
 			template <typename U>
-			constexpr TVector(TVector<4, U> const &other) noexcept
+			static constexpr TVector<2, T> FromQuaternion(TQuaternion<U> const &quaternion) noexcept
 			{
-				this->x = static_cast<T>(other.x);
-				this->y = static_cast<T>(other.y);
+				return TVector<2, T>
+				(
+					quaternion.x,
+					quaternion.y
+				);
 			}
 
 			static constexpr size_t Size() noexcept
@@ -120,6 +121,7 @@ namespace IOMath
 						return y;
 				}
 			}
+			
 			constexpr TVector<2, T>& operator=(TVector<2, T> const &other) noexcept
 			{
 				this->x = other.x;
@@ -214,19 +216,19 @@ namespace IOMath
 
 				return *this;
 			}
-			constexpr TVector<2, T>& operator++(int) noexcept
+			constexpr TVector<2, T> operator++(int) noexcept
 			{
 				TVector<2, T> result = TVector<2, T>(*this);
 
-				++*this;
+				++(*this);
 
 				return result;
 			}
-			constexpr TVector<2, T>& operator--(int) noexcept
+			constexpr TVector<2, T> operator--(int) noexcept
 			{
 				TVector<2, T> result = TVector<2, T>(*this);
 
-				--*this;
+				--(*this);
 
 				return result;
 			}
@@ -348,123 +350,273 @@ namespace IOMath
 		template <typename T>
 		constexpr TVector<2, T> operator+(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) += object;
+			return TVector<2, T>
+			(
+				scalar + object.x,
+				scalar + object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator+(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) += scalar;
+			return TVector<2, T>
+			(
+				object.x + scalar,
+				object.y + scalar
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator+(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
 		{
-			return TVector<2, T>(lObject) += rObject;
+			return TVector<2, T>
+			(
+				lObject.x + rObject.x,
+				lObject.y + rObject.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator-(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) -= object;
+			return TVector<2, T>
+			(
+				scalar - object.x,
+				scalar - object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator-(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) -= scalar;
+			return TVector<2, T>
+			(
+				object.x - scalar,
+				object.y - scalar
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator-(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
 		{
-			return TVector<2, T>(lObject) -= rObject;
+			return TVector<2, T>
+			(
+				lObject.x - rObject.x,
+				lObject.y - rObject.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator*(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) *= object;
+			return TVector<2, T>
+			(
+				scalar * object.x,
+				scalar * object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator*(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) *= scalar;
+			return TVector<2, T>
+			(
+				object.x * scalar,
+				object.y * scalar
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator*(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
 		{
-			return TVector<2, T>(lObject) *= rObject;
+			return TVector<2, T>
+			(
+				lObject.x * rObject.x,
+				lObject.y * rObject.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator/(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) /= object;
+			return TVector<2, T>
+			(
+				scalar / object.x,
+				scalar / object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator/(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) /= scalar;
+			return TVector<2, T>
+			(
+				object.x / scalar,
+				object.y / scalar
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator/(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
 		{
-			return TVector<2, T>(lObject) /= rObject;
+			return TVector<2, T>
+			(
+				lObject.x / rObject.x,
+				lObject.y / rObject.y
+			);
 		}
 
 		template <typename T>
 		constexpr TVector<2, T> operator%(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) %= object;
+			return TVector<2, T>
+			(
+				scalar % object.x,
+				scalar % object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator%(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) %= scalar;
+			return TVector<2, T>
+			(
+				object.x % scalar,
+				object.y % scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<2, T> operator%(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
+		{
+			return TVector<2, T>
+			(
+				lObject.x % rObject.x,
+				lObject.y % rObject.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator&(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) &= object;
+			return TVector<2, T>
+			(
+				scalar & object.x,
+				scalar & object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator&(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) &= scalar;
+			return TVector<2, T>
+			(
+				object.x & scalar,
+				object.y & scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<2, T> operator&(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
+		{
+			return TVector<2, T>
+			(
+				lObject.x & rObject.x,
+				lObject.y & rObject.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator|(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) |= object;
+			return TVector<2, T>
+			(
+				scalar | object.x,
+				scalar | object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator|(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) |= scalar;
+			return TVector<2, T>
+			(
+				object.x | scalar,
+				object.y | scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<2, T> operator|(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
+		{
+			return TVector<2, T>
+			(
+				lObject.x | rObject.x,
+				lObject.y | rObject.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator^(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) ^= object;
+			return TVector<2, T>
+			(
+				scalar ^ object.x,
+				scalar ^ object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator^(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) ^= scalar;
+			return TVector<2, T>
+			(
+				object.x ^ scalar,
+				object.y ^ scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<2, T> operator^(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
+		{
+			return TVector<2, T>
+			(
+				lObject.x ^ rObject.x,
+				lObject.y ^ rObject.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator<<(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) <<= object;
+			return TVector<2, T>
+			(
+				scalar << object.x,
+				scalar << object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator<<(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) <<= scalar;
+			return TVector<2, T>
+			(
+				object.x << scalar,
+				object.y << scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<2, T> operator<<(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
+		{
+			return TVector<2, T>
+			(
+				lObject.x << rObject.x,
+				lObject.y << rObject.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator>>(T scalar, TVector<2, T> const &object) noexcept
 		{
-			return TVector<2, T>(scalar) >>= object;
+			return TVector<2, T>
+			(
+				scalar >> object.x,
+				scalar >> object.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator>>(TVector<2, T> const &object, T scalar) noexcept
 		{
-			return TVector<2, T>(object) >>= scalar;
+			return TVector<2, T>
+			(
+				object.x >> scalar,
+				object.y >> scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<2, T> operator>>(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
+		{
+			return TVector<2, T>
+			(
+				lObject.x >> rObject.x,
+				lObject.y >> rObject.y
+			);
 		}
 		template <typename T>
 		constexpr TVector<2, T> operator~(TVector<2, T> const &object) noexcept
@@ -488,15 +640,27 @@ namespace IOMath
 		template <typename T>
 		constexpr bool operator!=(TVector<2, T> const &lObject, TVector<2, T> const &rObject) noexcept
 		{
-			return !(lObject == rObject);
+			return
+			(
+				lObject.x != rObject.x ||
+				lObject.y != rObject.y
+			);
 		}
 		constexpr TVector<2, bool> operator&&(TVector<2, bool> const &lObject, TVector<2, bool> const &rObject) noexcept
 		{
-			return TVector<2, bool>(lObject.x && rObject.x, lObject.y && rObject.y);
+			return TVector<2, bool>
+			(
+				lObject.x && rObject.x,
+				lObject.y && rObject.y
+			);
 		}
 		constexpr TVector<2, bool> operator||(TVector<2, bool> const &lObject, TVector<2, bool> const &rObject) noexcept
 		{
-			return TVector<2, bool>(lObject.x || rObject.x, lObject.y || rObject.y);
+			return TVector<2, bool>
+			(
+				lObject.x || rObject.x,
+				lObject.y || rObject.y
+			);
 		}
 	}
 }

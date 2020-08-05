@@ -36,67 +36,238 @@ namespace IOMath
 		template <typename T>
 		constexpr T ComputeDot(Types::TVector<2, T> const &lObject, Types::TVector<2, T> const &rObject) noexcept
 		{
-			return (lObject.x * rObject.x + lObject.y * rObject.y);
+			return
+			(
+				lObject.x * rObject.x +
+				lObject.y * rObject.y
+			);
 		}
 		template <typename T>
 		constexpr T ComputeDot(Types::TVector<3, T> const &lObject, Types::TVector<3, T> const &rObject) noexcept
 		{
-			return (lObject.x * rObject.x + lObject.y * rObject.y + lObject.z * rObject.z);
+			return
+			(
+				lObject.x * rObject.x +
+				lObject.y * rObject.y +
+				lObject.z * rObject.z
+			);
 		}
 		template <typename T>
 		constexpr T ComputeDot(Types::TVector<4, T> const &lObject, Types::TVector<4, T> const &rObject) noexcept
 		{
-			return (lObject.x * rObject.x + lObject.y * rObject.y + lObject.z * rObject.z + lObject.w * rObject.w);
+			return
+			(
+				lObject.x * rObject.x + 
+				lObject.y * rObject.y +
+				lObject.z * rObject.z +
+				lObject.w * rObject.w
+			);
+		}
+		template <typename T>
+		constexpr T ComputeDot(Types::TQuaternion<T> const &lObject, Types::TQuaternion<T> const &rObject) noexcept
+		{
+			return
+			(
+				lObject.w * rObject.w +
+				lObject.x * rObject.x +
+				lObject.y * rObject.y +
+				lObject.z * rObject.z
+			);
 		}
 	
-		template <size_t S, typename T>
-		constexpr T ComputeLength(Types::TVector<S, T> const &object) noexcept
+		template <typename T>
+		constexpr T ComputeLength(Types::TVector<2, T> const &object) noexcept
 		{
-			return std::sqrt(ComputeDot(object, object));
+			T const objectX = object.x;
+			T const objectY = object.y;
+
+			return std::sqrt(objectX * objectX + objectY * objectY);
+		}
+		template <typename T>
+		constexpr T ComputeLength(Types::TVector<3, T> const &object) noexcept
+		{
+			T const objectX = object.x;
+			T const objectY = object.y;
+			T const objectZ = object.z;
+
+			return std::sqrt(objectX * objectX + objectY * objectY + objectZ * objectZ);
+		}
+		template <typename T>
+		constexpr T ComputeLength(Types::TVector<4, T> const &object) noexcept
+		{
+			T const objectX = object.x;
+			T const objectY = object.y;
+			T const objectZ = object.z;
+			T const objectW = object.w;
+
+			return std::sqrt(objectX * objectX + objectY * objectY + objectZ * objectZ + objectW * objectW);
+		}
+		template <typename T>
+		constexpr T ComputeLength(Types::TQuaternion<T> const &object) noexcept
+		{
+			T const objectX = object.x;
+			T const objectY = object.y;
+			T const objectZ = object.z;
+			T const objectW = object.w;
+
+			return std::sqrt(objectW * objectW * objectX * objectX + objectY * objectY + objectZ * objectZ);
 		}
 
-		template <size_t S, typename T>
-		constexpr T ComputeDistance(Types::TVector<S, T> const &lObject, Types::TVector<S, T> const &rObject) noexcept
+		template <typename T>
+		constexpr T ComputeDistance(Types::TVector<2, T> const &lObject, Types::TVector<2, T> const &rObject) noexcept
 		{
-			return ComputeLength(rObject - lObject);
+			T const resultX = lObject.x - rObject.x;
+			T const resultY = lObject.y - rObject.y;
+
+			return std::sqrt(resultX * resultX + resultY * resultY);
+		}
+		template <typename T>
+		constexpr T ComputeDistance(Types::TVector<3, T> const &lObject, Types::TVector<3, T> const &rObject) noexcept
+		{
+			T const resultX = lObject.x - rObject.x;
+			T const resultY = lObject.y - rObject.y;
+			T const resultZ = lObject.z - rObject.z;
+
+			return std::sqrt(resultX * resultX + resultY * resultY + resultZ * resultZ);
+		}
+		template <typename T>
+		constexpr T ComputeDistance(Types::TVector<4, T> const &lObject, Types::TVector<4, T> const &rObject) noexcept
+		{
+			T const resultX = lObject.x - rObject.x;
+			T const resultY = lObject.y - rObject.y;
+			T const resultZ = lObject.z - rObject.z;
+			T const resultW = lObject.w - rObject.w;
+
+			return std::sqrt(resultX * resultX + resultY * resultY + resultZ * resultZ + resultW * resultW);
 		}
 
-		template <size_t S, typename T>
-		constexpr Types::TVector<S, T> ComputeNormalize(Types::TVector<S, T> const &object) noexcept
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeNormalize(Types::TVector<2, T> const &object) noexcept
 		{
-			T objectLength = ComputeLength(object);
-			if (objectLength < static_cast<T>(0))
-				return Types::TVector<S, T>(0);
+			T const objectX = object.x;
+			T const objectY = object.y;
 
-			return Types::TVector<S, T>(object) /= objectLength;
+			return object * (static_cast<T>(1) / std::sqrt(objectX * objectX + objectY * objectY));
+		}
+		template <typename T>
+		constexpr Types::TVector<3, T> ComputeNormalize(Types::TVector<3, T> const &object) noexcept
+		{
+			T const objectX = object.x;
+			T const objectY = object.y;
+			T const objectZ = object.z;
+
+			return object * (static_cast<T>(1) / std::sqrt(objectX * objectX + objectY * objectY + objectZ * objectZ));
+		}
+		template <typename T>
+		constexpr Types::TVector<4, T> ComputeNormalize(Types::TVector<4, T> const &object) noexcept
+		{
+			T const objectX = object.x;
+			T const objectY = object.y;
+			T const objectZ = object.z;
+			T const objectW = object.w;
+
+			return object * (static_cast<T>(1) / std::sqrt(objectX * objectX + objectY * objectY + objectZ * objectZ + objectW * objectW));
+		}
+		template <typename T>
+		constexpr Types::TQuaternion<T> ComputeNormalize(Types::TQuaternion<T> const &object) noexcept
+		{
+			T const objectW = object.w;
+			T const objectX = object.x;
+			T const objectY = object.y;
+			T const objectZ = object.z;
+
+			return object * (static_cast<T>(1) / std::sqrt(objectW * objectW + objectX * objectX + objectY * objectY + objectZ * objectZ));
+		
 		}
 	
 		template <typename T>
 		constexpr Types::TVector<3, T> ComputeCross(Types::TVector<3, T> const &lObject, Types::TVector<3, T> const &rObject) noexcept
 		{
+			T const lObjectX = lObject.x;
+			T const lObjectY = lObject.y;
+			T const lObjectZ = lObject.z;
+
+			T const rObjectX = rObject.x;
+			T const rObjectY = rObject.y;
+			T const rObjectZ = rObject.z;
+
 			return Types::TVector<3, T>
 			(
-				lObject.y * rObject.z - rObject.y * lObject.z,
-				lObject.z * rObject.x - rObject.z * lObject.x,
-				lObject.x * rObject.y - rObject.x * lObject.y
+				lObjectY * rObjectZ - rObjectY * lObjectZ,
+				lObjectZ * rObjectX - rObjectZ * lObjectX,
+				lObjectX * rObjectY - rObjectX * lObjectY
+			);
+		}
+		template <typename T>
+		constexpr Types::TQuaternion<T> ComputeCross(Types::TQuaternion<T> const &lObject, Types::TQuaternion<T> const &rObject) noexcept
+		{
+			T const lObjectW = lObject.w;
+			T const lObjectX = lObject.x;
+			T const lObjectY = lObject.y;
+			T const lObjectZ = lObject.z;
+
+			T const rObjectW = rObject.w;
+			T const rObjectX = rObject.x;
+			T const rObjectY = rObject.y;
+			T const rObjectZ = rObject.z;
+
+			return Types::TQuaternion<T>
+			(
+				lObjectW * rObjectW - lObjectX * rObjectX - lObjectY * rObjectY - lObjectZ * rObjectZ,
+				lObjectW * rObjectX + lObjectX * rObjectW + lObjectY * rObjectZ - lObjectZ * rObjectY,
+				lObjectW * rObjectY + lObjectY * rObjectW + lObjectZ * rObjectX - lObjectX * rObjectZ,
+				lObjectW * rObjectZ + lObjectZ * rObjectW + lObjectX * rObjectY - lObjectY * rObjectX
 			);
 		}
 
-		template <size_t S, typename T>
-		constexpr Types::TVector<S, T> ComputeReflect(Types::TVector<S, T> const &object, Types::TVector<S, T> const &normal) noexcept
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeReflect(Types::TVector<2, T> const &object, Types::TVector<2, T> const &normal) noexcept
 		{
-			return object - static_cast<T>(2) * ComputeDot(normal, object) * normal;
+			return object - static_cast<T>(2) * (object.x * normal.x + object.y * normal.y) * normal;
 		}
-		template <size_t S, typename T>
-		constexpr Types::TVector<S, T> ComputeRefract(Types::TVector<S, T> const &object, Types::TVector<S, T> const &normal, T eta) noexcept
+		template <typename T>
+		constexpr Types::TVector<3, T> ComputeReflect(Types::TVector<3, T> const &object, Types::TVector<3, T> const &normal) noexcept
 		{
-			T dotOfNormalAndObject = ComputeDot(normal, object);
-			T k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dotOfNormalAndObject * dotOfNormalAndObject);
+			return object - static_cast<T>(2) * (object.x * normal.x + object.y * normal.y + object.z * normal.z) * normal;
+		}
+		template <typename T>
+		constexpr Types::TVector<4, T> ComputeReflect(Types::TVector<4, T> const &object, Types::TVector<4, T> const &normal) noexcept
+		{
+			return object - static_cast<T>(2) * (object.x * normal.x + object.y * normal.y + object.z * normal.z + object.w * normal.w) * normal;
+		}
+
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeRefract(Types::TVector<2, T> const &object, Types::TVector<2, T> const &normal, T eta) noexcept
+		{
+			T dot = object.x * normal.x + object.y * normal.y;
+			T k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dot * dot);
 			
 			if (k < static_cast<T>(0))
-				return Types::TVector<S, T>(0);
+				return Types::TVector<2, T>(0);
 
-			return eta * object - (eta * dotOfNormalAndObject + std::sqrt(k)) * normal;
+			return eta * object - (eta * dot + std::sqrt(k)) * normal;
+		}
+		template <typename T>
+		constexpr Types::TVector<3, T> ComputeRefract(Types::TVector<3, T> const &object, Types::TVector<3, T> const &normal, T eta) noexcept
+		{
+			T dot = object.x * normal.x + object.y * normal.y + object.z * normal.z;
+			T k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dot * dot);
+			
+			if (k < static_cast<T>(0))
+				return Types::TVector<3, T>(0);
+
+			return eta * object - (eta * dot + std::sqrt(k)) * normal;
+		}
+		template <typename T>
+		constexpr Types::TVector<4, T> ComputeRefract(Types::TVector<4, T> const &object, Types::TVector<4, T> const &normal, T eta) noexcept
+		{
+			T dot = object.x * normal.x + object.y * normal.y + object.z * normal.z + object.w * normal.w;
+			T k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dot * dot);
+			
+			if (k < static_cast<T>(0))
+				return Types::TVector<4, T>(0);
+
+			return eta * object - (eta * dot + std::sqrt(k)) * normal;
 		}
 	}
 }

@@ -29,16 +29,65 @@
 
 namespace IOMath
 {
-	template <size_t S, typename T>
-	constexpr Types::TVector<S, T> Sin(Types::TVector<S, T> const &object) noexcept
+	template <typename T>
+	constexpr T Radians(T degrees) noexcept
 	{
-		return detail::ComputeSin(object);
+		return detail::ComputeRadians(degrees);
 	}
-	template <size_t S, typename T>
-	constexpr Types::TVector<S, T> Cos(Types::TVector<S, T> const &object) noexcept
+
+	template <typename T>
+	constexpr T Degrees(T radians) noexcept
 	{
-		return detail::ComputeCos(object);
+		return detail::ComputeDegrees(radians);
 	}
+
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Radians(Types::TVector<S, T> const &object) noexcept
+	{
+		return detail::ComputeRadians(object);
+	}
+
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Degrees(Types::TVector<S, T> const &object) noexcept
+	{
+		return detail::ComputeDegrees(object);
+	}
+
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Sine(Types::TVector<S, T> const &object) noexcept
+	{
+		return detail::ComputeSine(object);
+	}
+
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Cosine(Types::TVector<S, T> const &object) noexcept
+	{
+		return detail::ComputeCosine(object);
+	}
+	
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Tangent(Types::TVector<S, T> const &object) noexcept
+	{
+		return detail::ComputeTangent(object);
+	}
+	
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Arsine(Types::TVector<S, T> const &object) noexcept
+	{
+		return detail::ComputeArcsine(object);
+	}
+
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Arccosine(Types::TVector<S, T> const &object) noexcept
+	{
+		return detail::ComputeArccosine(object);
+	}
+	
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> Arctangent(Types::TVector<S, T> const &object) noexcept
+	{
+		return detail::ComputeArctangent(object);
+	}	
 }
 
 #endif

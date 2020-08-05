@@ -34,173 +34,92 @@ namespace IOMath
         template <typename T>
         constexpr Types::TMatrix<2, 2, T> ComputeTranspose(Types::TMatrix<2, 2, T> const &object) noexcept
         {
-            Types::TMatrix<2, 2, T> result = Types::TMatrix<2, 2, T>();
-
-            result[0][0] = object[0][0];
-            result[0][1] = object[1][0];
-
-            result[1][0] = object[0][1];
-            result[1][1] = object[1][1];
-
-            return result;
+            return Types::TMatrix<2, 2, T>
+            (
+                object[0][0], object[1][0],
+                object[0][1], object[1][1]
+            );
         }
         template <typename T>
         constexpr Types::TMatrix<3, 2, T> ComputeTranspose(Types::TMatrix<2, 3, T> const &object) noexcept
         {
-            Types::TMatrix<3, 2, T> result = Types::TMatrix<3, 2, T>();
-
-            result[0][0] = object[0][0];
-            result[0][1] = object[1][0];
-
-            result[1][0] = object[0][1];
-            result[1][1] = object[1][1];
-
-            result[2][0] = object[0][2];
-            result[2][1] = object[1][2];
-
-            return result;
+            return Types::TMatrix<3, 2, T>
+            (
+                object[0][0], object[1][0],
+                object[0][1], object[1][1],
+                object[0][2], object[1][2]
+            );
         }
         template <typename T>
         constexpr Types::TMatrix<4, 2, T> ComputeTranspose(Types::TMatrix<2, 4, T> const &object) noexcept
         {
-            Types::TMatrix<4, 2, T> result = Types::TMatrix<4, 2, T>();
-
-            result[0][0] = object[0][0];
-            result[0][1] = object[1][0];
-
-            result[1][0] = object[0][1];
-            result[1][1] = object[1][1];
-
-            result[2][0] = object[0][2];
-            result[2][1] = object[1][2];
-
-            result[3][0] = object[0][3];
-            result[3][1] = object[1][3];
-
-            return result;
+            return Types::TMatrix<4, 2, T>
+            (
+                object[0][0], object[1][0],
+                object[0][1], object[1][1],
+                object[0][2], object[1][2],
+                object[0][3], object[1][3]
+            );
         }
         template <typename T>
         constexpr Types::TMatrix<2, 3, T> ComputeTranspose(Types::TMatrix<3, 2, T> const &object) noexcept
         {
-            Types::TMatrix<2, 3, T> result = Types::TMatrix<2, 3, T>();
-
-            result[0][0] = object[0][0];
-            result[0][1] = object[1][0];
-            result[0][2] = object[2][0];
-
-            result[1][0] = object[0][1];
-            result[1][1] = object[1][1];
-            result[1][2] = object[2][1];
-
-            return result;
+            return Types::TMatrix<2, 3, T>
+            (
+                object[0][0], object[1][0], object[2][0],
+                object[0][1], object[1][1], object[2][1]
+            );
         }
         template <typename T>
         constexpr Types::TMatrix<3, 3, T> ComputeTranspose(Types::TMatrix<3, 3, T> const &object) noexcept
         {
-            Types::TMatrix<3, 3, T> result = Types::TMatrix<3, 3, T>();
-
-            result[0][0] = object[0][0];
-            result[0][1] = object[1][0];
-            result[0][2] = object[2][0];
-
-            result[1][0] = object[0][1];
-            result[1][1] = object[1][1];
-            result[1][2] = object[2][1];
-
-            result[2][0] = object[0][2];
-            result[2][1] = object[1][2];
-            result[2][2] = object[2][2];
-
-            return result;
+            return Types::TMatrix<3, 3, T>
+            (
+                object[0][0], object[1][0], object[2][0],
+                object[0][1], object[1][1], object[2][1],
+                object[0][2], object[1][2], object[2][2]
+            );
         }
         template <typename T>
         constexpr Types::TMatrix<4, 3, T> ComputeTranspose(Types::TMatrix<3, 4, T> const &object) noexcept
         {
-            Types::TMatrix<4, 3, T> result = Types::TMatrix<4, 3, T>();
-
-            result[0][0] = object[0][0];
-            result[0][1] = object[1][0];
-            result[0][2] = object[2][0];
-
-            result[1][0] = object[0][1];
-            result[1][1] = object[1][1];
-            result[1][2] = object[2][1];
-
-            result[2][0] = object[0][2];
-            result[2][1] = object[1][2];
-            result[2][2] = object[2][2];
-
-            result[3][0] = object[0][3];
-            result[3][1] = object[1][3];
-            result[3][2] = object[2][3];
-
-            return result;
+            return Types::TMatrix<4, 3, T>
+            (
+                object[0][0], object[1][0], object[2][0],
+                object[0][1], object[1][1], object[2][1],
+                object[0][2], object[1][2], object[2][2],
+                object[0][3], object[1][3], object[2][3]
+            );
         }
         template <typename T>
         constexpr Types::TMatrix<2, 4, T> ComputeTranspose(Types::TMatrix<4, 2, T> const &object) noexcept
         {
-            Types::TMatrix<2, 4, T> result = Types::TMatrix<2, 4, T>();
-
-            result[0][0] = object[0][0];
-            result[0][1] = object[1][0];
-            result[0][2] = object[2][0];
-            result[0][3] = object[3][0];
-
-            result[1][0] = object[0][1];
-            result[1][1] = object[1][1];
-            result[1][2] = object[2][1];
-            result[1][3] = object[3][1];
-
-            return result;
+            return Types::TMatrix<2, 4, T>
+            (
+                object[0][0], object[1][0], object[2][0], object[3][0],
+                object[0][1], object[1][1], object[2][1], object[3][1]
+            );
         }
         template <typename T>
         constexpr Types::TMatrix<3, 4, T> ComputeTranspose(Types::TMatrix<4, 3, T> const &object) noexcept
         {
-            Types::TMatrix<3, 4, T> result = Types::TMatrix<3, 4, T>();
-
-            result[0][0] = object[0][0];
-            result[0][1] = object[1][0];
-            result[0][2] = object[2][0];
-            result[0][3] = object[3][0];
-
-            result[1][0] = object[0][1];
-            result[1][1] = object[1][1];
-            result[1][2] = object[2][1];
-            result[1][3] = object[3][1];
-
-            result[2][0] = object[0][2];
-            result[2][1] = object[1][2];
-            result[2][2] = object[2][2];
-            result[2][3] = object[3][2];
-
-            return result;
+            return Types::TMatrix<3, 4, T>
+            (
+                object[0][0], object[1][0], object[2][0], object[3][0],
+                object[0][1], object[1][1], object[2][1], object[3][1],
+                object[0][2], object[1][2], object[2][2], object[3][2]
+            );
         }
         template <typename T>
         constexpr Types::TMatrix<4, 4, T> ComputeTranspose(Types::TMatrix<4, 4, T> const &object) noexcept
         {
-            Types::TMatrix<4, 4, T> result = Types::TMatrix<4, 4, T>();
-
-            result[0][0] = object[0][0];
-            result[0][1] = object[1][0];
-            result[0][2] = object[2][0];
-            result[0][3] = object[3][0];
-
-            result[1][0] = object[0][1];
-            result[1][1] = object[1][1];
-            result[1][2] = object[2][1];
-            result[1][3] = object[3][1];
-
-            result[2][0] = object[0][2];
-            result[2][1] = object[1][2];
-            result[2][2] = object[2][2];
-            result[2][3] = object[3][2];
-
-            result[3][0] = object[0][3];
-            result[3][1] = object[1][3];
-            result[3][2] = object[2][3];
-            result[3][3] = object[3][3];
-
-            return result;
+            return Types::TMatrix<4, 4, T>
+            (
+                object[0][0], object[1][0], object[2][0], object[3][0],
+                object[0][1], object[1][1], object[2][1], object[3][1],
+                object[0][2], object[1][2], object[2][2], object[3][2],
+                object[0][3], object[1][3], object[2][3], object[3][3]
+            );
         }
     
         template <typename T>
@@ -266,21 +185,24 @@ namespace IOMath
         template <typename T>
         constexpr Types::TMatrix<2, 2, T> ComputeInverse(Types::TMatrix<2, 2, T> const &object) noexcept
         {
-            T oneOverDeterminant = static_cast<T>(1) / ComputeDeterminant(object);
+            T const objectA = object[0][0];
+            T const objectB = object[0][1];
+            T const objectC = object[1][0];
+            T const objectD = object[1][1];
+
+            T oneOverDeterminant = static_cast<T>(1) / (objectA * objectD - objectB * objectC);
             
 			return Types::TMatrix<2, 2, T>
             (
-                  object[1][1] * oneOverDeterminant,
-                -(object[0][1] * oneOverDeterminant),
-                -(object[1][0] * oneOverDeterminant),
-                  object[0][0] * oneOverDeterminant
+                  objectD * oneOverDeterminant,
+                -(objectB * oneOverDeterminant),
+                -(objectC * oneOverDeterminant),
+                  objectA * oneOverDeterminant
             );
         }
         template <typename T>
         constexpr Types::TMatrix<3, 3, T> ComputeInverse(Types::TMatrix<3, 3, T> const &object) noexcept
         {
-            T oneOverDeterminant = static_cast<T>(1) / ComputeDeterminant(object);
-
             T const objectA = object[0][0];
 			T const objectB = object[0][1];
 			T const objectC = object[0][2];
@@ -290,6 +212,10 @@ namespace IOMath
 			T const objectG = object[2][0];
 			T const objectH = object[2][1];
 			T const objectI = object[2][2];
+
+            T oneOverDeterminant = static_cast<T>(1) / (objectA * (objectE * objectI - objectF * objectH) -
+                                                        objectB * (objectD * objectI - objectF * objectG) -
+                                                        objectC * (objectE * objectG - objectD * objectH));
 
             return Types::TMatrix<3, 3, T>
             (

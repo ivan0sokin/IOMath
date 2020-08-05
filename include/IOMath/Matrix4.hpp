@@ -22,13 +22,14 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_HPP
-#define _IO_MATH_HPP
+#ifndef _IO_MATH_MATRIX_4_HPP
+#define _IO_MATH_MATRIX_4_HPP
 
-#include "Vectors.hpp"
-#include "Geometric.hpp"
-#include "Trigonometric.hpp"
-#include "Matrices.hpp"
-#include "MatrixFunctions.hpp"
+#include "extended/matrices/FMatrix4x2.hpp"
+#include "extended/matrices/FMatrix4x3.hpp"
+#include "extended/matrices/FMatrix4x4.hpp"
+#include "extended/matrices/DMatrix4x2.hpp"
+#include "extended/matrices/DMatrix4x3.hpp"
+#include "extended/matrices/DMatrix4x4.hpp"
 
 #endif

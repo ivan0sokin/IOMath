@@ -22,13 +22,15 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_VECTORS_HPP
-#define _IO_MATH_VECTORS_HPP
+#ifndef _IO_MATH_DMATRIX_4X4_HPP
+#define _IO_MATH_DMATRIX_4X4_HPP
 
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
-#include "Geometric.hpp"
-#include "Trigonometric.hpp"
+#include "../../types/matrices/TMatrix4x4.hpp"
+
+namespace IOMath
+{
+    typedef Types::TMatrix<4, 4, double> DMatrix4x4;
+    typedef Types::TMatrix<4, 4, double> DMatrix4;
+}
 
 #endif

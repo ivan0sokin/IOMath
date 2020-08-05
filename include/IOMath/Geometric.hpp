@@ -34,6 +34,12 @@ namespace IOMath
 	{
 		return detail::ComputeLength(object);
 	}
+	template <typename T>
+	constexpr T Length(Types::TQuaternion<T> const &object) noexcept
+	{
+		return detail::ComputeLength(object);
+	}
+
 	template <size_t S, typename T>
 	constexpr T Distance(Types::TVector<S, T> const &lObject, Types::TVector<S, T> const &rObject) noexcept
 	{
@@ -45,6 +51,11 @@ namespace IOMath
 	{
 		return detail::ComputeNormalize(object);
 	}
+	template <typename T>
+	constexpr Types::TQuaternion<T> Normalize(Types::TQuaternion<T> const &object) noexcept
+	{
+		return detail::ComputeNormalize(object);
+	}
 
 	template <size_t S, typename T>
 	constexpr T Dot(Types::TVector<S, T> const &lObject, Types::TVector<S, T> const &rObject) noexcept
@@ -52,7 +63,18 @@ namespace IOMath
 		return detail::ComputeDot(lObject, rObject);
 	}
 	template <typename T>
+	constexpr T Dot(Types::TQuaternion<T> const &lObject, Types::TQuaternion<T> const &rObject) noexcept
+	{
+		return detail::ComputeDot(lObject, rObject);
+	}
+
+	template <typename T>
 	constexpr Types::TVector<3, T> Cross(Types::TVector<3, T> const &lObject, Types::TVector<3, T> const &rObject) noexcept
+	{
+		return detail::ComputeCross(lObject, rObject);
+	}
+	template <typename T>
+	constexpr Types::TQuaternion<T> Cross(Types::TQuaternion<T> const &lObject, Types::TQuaternion<T> const &rObject) noexcept
 	{
 		return detail::ComputeCross(lObject, rObject);
 	}

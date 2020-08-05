@@ -18,112 +18,126 @@ namespace IOMath
 		private:
 			row_t data[3];
 		public:
-			constexpr TMatrix() noexcept
-			{
-				this->data[0] = row_t();
-				this->data[1] = row_t();
-				this->data[2] = row_t();
-			}
-			constexpr TMatrix(TMatrix const &other) noexcept
-			{
-				*this = other;
-			}
-			constexpr TMatrix(T scalar) noexcept
-			{
-				this->data[0] = row_t(scalar, 0, 0);
-				this->data[1] = row_t(0, scalar, 0);
-				this->data[2] = row_t(0, 0, scalar);
-			}
-			constexpr TMatrix(T a1, T a2, T a3, T b1, T b2, T b3, T c1, T c2, T c3) noexcept
-			{
-				this->data[0] = row_t(a1, a2, a3);
-				this->data[1] = row_t(b1, b2, b3);
-				this->data[2] = row_t(c1, c2, c3);
-			}
-			constexpr TMatrix(row_t const &firstRow, row_t const &secondRow, row_t const& thirdRow) noexcept
-			{
-				this->data[0] = firstRow;
-				this->data[1] = secondRow;
-				this->data[2] = thirdRow;
-			}
+			constexpr TMatrix() noexcept = default;
+			constexpr TMatrix(TMatrix const &other) noexcept = default;
+			constexpr explicit TMatrix(T scalar) noexcept :
+				data
+				{
+					row_t(scalar, 0, 0),
+					row_t(0, scalar, 0),
+					row_t(0, 0, scalar)
+				} {}
+			constexpr TMatrix(T a1, T a2, T a3, T b1, T b2, T b3, T c1, T c2, T c3) noexcept :
+				data
+				{
+					row_t(a1, a2, a3),
+					row_t(b1, b2, b3),
+					row_t(c1, c2, c3)
+				} {}
+			constexpr TMatrix(row_t const &firstRow, row_t const &secondRow, row_t const& thirdRow) noexcept :
+				data
+				{
+					row_t(firstRow),
+					row_t(secondRow),
+					row_t(thirdRow)
+				} {}
 
 			template <typename A, typename B, typename C, typename D, typename E, typename F, typename G, typename H, typename I>
-			constexpr TMatrix(A a, B b, C c, D d, E e, F f, G g, H h, I i) noexcept
-			{
-				this->data[0] = row_t(a, b, c);
-				this->data[1] = row_t(d, e, f);
-				this->data[2] = row_t(g, h, i);
-			}
+			constexpr TMatrix(A a, B b, C c, D d, E e, F f, G g, H h, I i) noexcept :
+				data
+				{
+					row_t(a, b, c),
+					row_t(d, e, f),
+					row_t(g, h, i)
+				} {}
 			template <typename A, typename B, typename C>
-			constexpr TMatrix(TVector<2, A> const &firstRow, TVector<2, B> const &secondRow, TVector<2, C> const &thirdRow) noexcept
-			{
-				this->data[0] = row_t(firstRow, 0);
-				this->data[1] = row_t(secondRow, 0);
-				this->data[2] = row_t(thirdRow, 0);
-			}
-			template <typename A, typename B, typename C>
-			constexpr TMatrix(TVector<3, A> const &firstRow, TVector<3, B> const &secondRow, TVector<3, C> const &thirdRow) noexcept
-			{
-				this->data[0] = firstRow;
-				this->data[1] = secondRow;
-				this->data[2] = thirdRow;
-			}
+			constexpr TMatrix(TVector<3, A> const &firstRow, TVector<3, B> const &secondRow, TVector<3, C> const &thirdRow) noexcept :
+				data
+				{
+					row_t(firstRow),
+					row_t(secondRow),
+					row_t(thirdRow)
+				} {}
 
 			template <typename U>
-			constexpr TMatrix(TMatrix<3, 3, U> const &other) noexcept
-			{
-				this->data[0] = other[0];
-				this->data[1] = other[1];
-				this->data[2] = other[2];
-			}
+			constexpr TMatrix(TMatrix<3, 3, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0]),
+					row_t(other[1]),
+					row_t(other[2])
+				} {}
 			
-			constexpr TMatrix(TMatrix<2, 2, T> const &other) noexcept
+			template <typename U>
+			constexpr TMatrix(TMatrix<2, 2, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0], 0),
+					row_t(other[1], 0),
+					row_t()
+				} {}
+			template <typename U>
+			constexpr TMatrix(TMatrix<2, 3, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0]),
+					row_t(other[1]),
+					row_t()
+				} {}
+			template <typename U>
+			constexpr TMatrix(TMatrix<2, 4, U> const &other) noexcept :
+				data
+				{
+					row_t::FromVector4(other[0]),
+					row_t::FromVector4(other[1]),
+					row_t()
+				} {}
+			template <typename U>
+			constexpr TMatrix(TMatrix<3, 2, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0], 0),
+					row_t(other[1], 0),
+					row_t(other[2], 0)
+				} {}
+			template <typename U>
+			constexpr TMatrix(TMatrix<4, 2, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0], 0),
+					row_t(other[1], 0),
+					row_t(other[2], 0)
+				} {}
+			
+			template <typename U>
+			static constexpr TMatrix<3, 3, T> FromMatrix3x4(TMatrix<3, 4, U> const &other) noexcept
 			{
-				this->data[0] = row_t(other[0], 0);
-				this->data[1] = row_t(other[1], 0);
-				this->data[2] = row_t();
+				return TMatrix<3, 3, T>
+				(
+					row_t::FromVector4(other[0]),
+					row_t::FromVector4(other[1]),
+					row_t::FromVector4(other[2])
+				);
 			}
-			constexpr TMatrix(TMatrix<2, 3, T> const &other) noexcept
+			template <typename U>
+			static constexpr TMatrix<3, 3, T> FromMatrix4x3(TMatrix<4, 3, T> const &other) noexcept
 			{
-				this->data[0] = row_t(other[0]);
-				this->data[1] = row_t(other[1]);
-				this->data[2] = row_t();
+				return TMatrix<3, 3, T>
+				(
+					row_t(other[0]),
+					row_t(other[1]),
+					row_t(other[2])
+				);
 			}
-			constexpr TMatrix(TMatrix<2, 4, T> const &other) noexcept
+			template <typename U>
+			static constexpr TMatrix<3, 3, T> FromMatrix4x4(TMatrix<4, 4, T> const &other) noexcept
 			{
-				this->data[0] = row_t(other[0]);
-				this->data[1] = row_t(other[1]);
-				this->data[2] = row_t();
-			}
-			constexpr TMatrix(TMatrix<3, 2, T> const &other) noexcept
-			{
-				this->data[0] = row_t(other[0], 0);
-				this->data[1] = row_t(other[1], 0);
-				this->data[2] = row_t(other[2], 0);
-			}
-			constexpr TMatrix(TMatrix<3, 4, T> const &other) noexcept
-			{
-				this->data[0] = row_t(other[0]);
-				this->data[1] = row_t(other[1]);
-				this->data[2] = row_t(other[2]);
-			}
-			constexpr TMatrix(TMatrix<4, 2, T> const &other) noexcept
-			{
-				this->data[0] = row_t(other[0], 0);
-				this->data[1] = row_t(other[1], 0);
-				this->data[2] = row_t(other[2], 0);
-			}
-			constexpr TMatrix(TMatrix<4, 3, T> const &other) noexcept
-			{
-				this->data[0] = other[0];
-				this->data[1] = other[1];
-				this->data[2] = other[2];
-			}
-			constexpr TMatrix(TMatrix<4, 4, T> const &other) noexcept
-			{
-				this->data[0] = row_t(other[0]);
-				this->data[1] = row_t(other[1]);
-				this->data[2] = row_t(other[2]);
+				return TMatrix<3, 3, T>
+				(
+					row_t::FromVector4(other[0]),
+					row_t::FromVector4(other[1]),
+					row_t::FromVector4(other[2])
+				);
 			}
 
 			static constexpr TMatrix<3, 3, T> Identity() noexcept
@@ -326,16 +340,6 @@ namespace IOMath
 			return TMatrix<3, 3, T>(object) *= scalar;
 		}
 		template <typename T>
-		constexpr typename TMatrix<3, 3, T>::column_t operator*(TMatrix<3, 3, T> const &matrix, typename TMatrix<3, 3, T>::row_t const &vector) noexcept
-		{
-			return typename TMatrix<3, 3, T>::column_t
-			(
-				matrix[0][0] * vector.x + matrix[0][1] * vector.y + matrix[0][2] * vector.z,
-				matrix[1][0] * vector.x + matrix[1][1] * vector.y + matrix[1][2] * vector.z,
-				matrix[2][0] * vector.x + matrix[2][1] * vector.y + matrix[2][2] * vector.z
-			);
-		}
-		template <typename T>
 		constexpr TMatrix<3, 2, T> operator*(TMatrix<3, 3, T> const &lObject, TMatrix<3, 2, T> const &rObject) noexcept
 		{
 			T const lObjectA = lObject[0][0];
@@ -444,6 +448,16 @@ namespace IOMath
 			);
 		}
 		template <typename T>
+		constexpr typename TMatrix<3, 3, T>::column_t operator*(TMatrix<3, 3, T> const &matrix, typename TMatrix<3, 3, T>::row_t const &vector) noexcept
+		{
+			return typename TMatrix<3, 3, T>::column_t
+			(
+				matrix[0][0] * vector.x + matrix[0][1] * vector.y + matrix[0][2] * vector.z,
+				matrix[1][0] * vector.x + matrix[1][1] * vector.y + matrix[1][2] * vector.z,
+				matrix[2][0] * vector.x + matrix[2][1] * vector.y + matrix[2][2] * vector.z
+			);
+		}
+		template <typename T>
 		constexpr TMatrix<3, 3, T> operator/(T scalar, TMatrix<3, 3, T> const &object) noexcept
 		{
 			return TMatrix<3, 3, T>
@@ -459,14 +473,14 @@ namespace IOMath
 			return TMatrix<3, 3, T>(object) /= scalar;
 		}
 		template <typename T>
-		constexpr typename TMatrix<3, 3, T>::column_t operator/(TMatrix<3, 3, T> const &matrix, typename TMatrix<3, 3, T>::row_t const &vector) noexcept
-		{
-			return detail::ComputeInverse(matrix) * vector;
-		}
-		template <typename T>
 		constexpr TMatrix<3, 3, T> operator/(TMatrix<3, 3, T> const &lObject, TMatrix<3, 3, T> const &rObject) noexcept
 		{
 			return TMatrix<3, 3, T>(lObject) /= rObject;
+		}
+		template <typename T>
+		constexpr typename TMatrix<3, 3, T>::column_t operator/(TMatrix<3, 3, T> const &matrix, typename TMatrix<3, 3, T>::row_t const &vector) noexcept
+		{
+			return detail::ComputeInverse(matrix) * vector;
 		}
 	
 		template <typename T>

@@ -22,13 +22,14 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_VECTORS_HPP
-#define _IO_MATH_VECTORS_HPP
+#ifndef _IO_MATH_IVECTOR_3_HPP
+#define _IO_MATH_IVECTOR_3_HPP
 
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
-#include "Geometric.hpp"
-#include "Trigonometric.hpp"
+#include "../../types/vectors/TVector3.hpp"
+
+namespace IOMath
+{
+    typedef Types::TVector<3, int> IVector3;
+}
 
 #endif

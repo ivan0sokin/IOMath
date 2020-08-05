@@ -25,7 +25,9 @@
 #ifndef _IO_MATH_MATRICES_HPP
 #define _IO_MATH_MATRICES_HPP
 
-#include "extended/matrices/FMatrix.hpp"
-#include "extended/matrices/DMatrix.hpp"
+#include "Matrix2.hpp"
+#include "Matrix3.hpp"
+#include "Matrix4.hpp"
+#include "MatrixFunctions.hpp"
 
 #endif

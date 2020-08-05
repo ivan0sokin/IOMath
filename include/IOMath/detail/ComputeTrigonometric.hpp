@@ -34,7 +34,80 @@ namespace IOMath
 	namespace detail
 	{
 		template <typename T>
-		constexpr Types::TVector<2, T> ComputeSin(Types::TVector<2, T> const &object) noexcept
+		constexpr T ComputeRadians(T degrees) noexcept
+		{
+			return degrees * static_cast<T>(0.0174532925199432957692369);
+		}
+		template <typename T>
+		constexpr T ComputeDegrees(T radians) noexcept
+		{
+			return radians * static_cast<T>(57.2957795130823208767981548);
+		}
+
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeRadians(Types::TVector<2, T> degrees) noexcept
+		{
+			return Types::TVector<2, T>
+			(
+				degrees.x * static_cast<T>(0.0174532925199432957692369),
+				degrees.y * static_cast<T>(0.0174532925199432957692369)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<3, T> ComputeRadians(Types::TVector<3, T> degrees) noexcept
+		{
+			return Types::TVector<2, T>
+			(
+				degrees.x * static_cast<T>(0.0174532925199432957692369),
+				degrees.y * static_cast<T>(0.0174532925199432957692369),
+				degrees.z * static_cast<T>(0.0174532925199432957692369)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<4, T> ComputeRadians(Types::TVector<4, T> degrees) noexcept
+		{
+			return Types::TVector<2, T>
+			(
+				degrees.x * static_cast<T>(0.0174532925199432957692369),
+				degrees.y * static_cast<T>(0.0174532925199432957692369),
+				degrees.z * static_cast<T>(0.0174532925199432957692369),
+				degrees.w * static_cast<T>(0.0174532925199432957692369)
+			);
+		}
+
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeDegrees(Types::TVector<2, T> radians) noexcept
+		{
+			return Types::TVector<2, T>
+			(
+				radians.x * static_cast<T>(57.2957795130823208767981548),
+				radians.y * static_cast<T>(57.2957795130823208767981548)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<3, T> ComputeDegrees(Types::TVector<3, T> radians) noexcept
+		{
+			return Types::TVector<3, T>
+			(
+				radians.x * static_cast<T>(57.2957795130823208767981548),
+				radians.y * static_cast<T>(57.2957795130823208767981548),
+				radians.z * static_cast<T>(57.2957795130823208767981548)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<4, T> ComputeDegrees(Types::TVector<4, T> radians) noexcept
+		{
+			return Types::TVector<3, T>
+			(
+				radians.x * static_cast<T>(57.2957795130823208767981548),
+				radians.y * static_cast<T>(57.2957795130823208767981548),
+				radians.z * static_cast<T>(57.2957795130823208767981548),
+				radians.w * static_cast<T>(57.2957795130823208767981548)
+			);
+		}
+
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeSine(Types::TVector<2, T> const &object) noexcept
 		{
 			return Types::TVector<2, T>
 			(
@@ -43,7 +116,7 @@ namespace IOMath
 			);
 		}
 		template <typename T>
-		constexpr Types::TVector<3, T> ComputeSin(Types::TVector<3, T> const &object) noexcept
+		constexpr Types::TVector<3, T> ComputeSine(Types::TVector<3, T> const &object) noexcept
 		{
 			return Types::TVector<3, T>
 			(
@@ -53,7 +126,7 @@ namespace IOMath
 			);
 		}
 		template <typename T>
-		constexpr Types::TVector<4, T> ComputeSin(Types::TVector<4, T> const &object) noexcept
+		constexpr Types::TVector<4, T> ComputeSine(Types::TVector<4, T> const &object) noexcept
 		{
 			return Types::TVector<4, T>
 			(
@@ -65,7 +138,7 @@ namespace IOMath
 		}
 		
 		template <typename T>
-		constexpr Types::TVector<2, T> ComputeCos(Types::TVector<2, T> const &object) noexcept
+		constexpr Types::TVector<2, T> ComputeCosine(Types::TVector<2, T> const &object) noexcept
 		{
 			return Types::TVector<2, T>
 			(
@@ -74,7 +147,7 @@ namespace IOMath
 			);
 		}
 		template <typename T>
-		constexpr Types::TVector<3, T> ComputeCos(Types::TVector<3, T> const &object) noexcept
+		constexpr Types::TVector<3, T> ComputeCosine(Types::TVector<3, T> const &object) noexcept
 		{
 			return Types::TVector<3, T>
 			(
@@ -84,7 +157,7 @@ namespace IOMath
 			);
 		}
 		template <typename T>
-		constexpr Types::TVector<4, T> ComputeCos(Types::TVector<4, T> const &object) noexcept
+		constexpr Types::TVector<4, T> ComputeCosine(Types::TVector<4, T> const &object) noexcept
 		{
 			return Types::TVector<4, T>
 			(
@@ -92,6 +165,130 @@ namespace IOMath
 				std::cos(object.y),
 				std::cos(object.z),
 				std::cos(object.w)
+			);
+		}
+	
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeTangent(Types::TVector<2, T> const &object) noexcept
+		{
+			return Types::TVector<2, T>
+			(
+				std::tan(object.x),
+				std::tan(object.y)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<3, T> ComputeTangent(Types::TVector<3, T> const &object) noexcept
+		{
+			return Types::TVector<3, T>
+			(
+				std::tan(object.x),
+				std::tan(object.y),
+				std::tan(object.z)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<4, T> ComputeTangent(Types::TVector<4, T> const &object) noexcept
+		{
+			return Types::TVector<4, T>
+			(
+				std::tan(object.x),
+				std::tan(object.y),
+				std::tan(object.z),
+				std::tan(object.w)
+			);
+		}
+	
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeArcsine(Types::TVector<2, T> const &object) noexcept
+		{
+			return Types::TVector<2, T>
+			(
+				std::asin(object.x),
+				std::asin(object.y)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<3, T> ComputeArcsine(Types::TVector<3, T> const &object) noexcept
+		{
+			return Types::TVector<3, T>
+			(
+				std::asin(object.x),
+				std::asin(object.y),
+				std::asin(object.z)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<4, T> ComputeArcsine(Types::TVector<4, T> const &object) noexcept
+		{
+			return Types::TVector<4, T>
+			(
+				std::asin(object.x),
+				std::asin(object.y),
+				std::asin(object.z),
+				std::asin(object.w)
+			);
+		}
+
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeArccosine(Types::TVector<2, T> const &object) noexcept
+		{
+			return Types::TVector<2, T>
+			(
+				std::acos(object.x),
+				std::acos(object.y)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<3, T> ComputeArccosine(Types::TVector<3, T> const &object) noexcept
+		{
+			return Types::TVector<3, T>
+			(
+				std::acos(object.x),
+				std::acos(object.y),
+				std::acos(object.z)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<4, T> ComputeArccosine(Types::TVector<4, T> const &object) noexcept
+		{
+			return Types::TVector<4, T>
+			(
+				std::acos(object.x),
+				std::acos(object.y),
+				std::acos(object.z),
+				std::acos(object.w)
+			);
+		}
+
+		template <typename T>
+		constexpr Types::TVector<2, T> ComputeArctangent(Types::TVector<2, T> const &object) noexcept
+		{
+			return Types::TVector<2, T>
+			(
+				std::atan(object.x),
+				std::atan(object.y)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<3, T> ComputeArctangent(Types::TVector<3, T> const &object) noexcept
+		{
+			return Types::TVector<3, T>
+			(
+				std::atan(object.x),
+				std::atan(object.y),
+				std::atan(object.z)
+			);
+		}
+		template <typename T>
+		constexpr Types::TVector<4, T> ComputeArctangent(Types::TVector<4, T> const &object) noexcept
+		{
+			return Types::TVector<4, T>
+			(
+				std::atan(object.x),
+				std::atan(object.y),
+				std::atan(object.z),
+				std::atan(object.w)
 			);
 		}
 	}

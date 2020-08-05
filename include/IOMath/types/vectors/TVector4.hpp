@@ -42,98 +42,79 @@ namespace IOMath
 				struct { T r, g, b, a; };
 			};
 
-			constexpr TVector() noexcept
-			{
-				this->x = static_cast<T>(0);
-				this->y = static_cast<T>(0);
-				this->z = static_cast<T>(0);
-				this->w = static_cast<T>(0);
-			}
-			constexpr TVector(TVector const &other) noexcept
-			{
-				this->x = other.x;
-				this->y = other.y;
-				this->z = other.z;
-				this->w = other.w;
-			}
-			constexpr TVector(T scalar) noexcept
-			{
-				this->x = scalar;
-				this->y = scalar;
-				this->z = scalar;
-				this->w = scalar;
-			}
-			constexpr TVector(T a, T b, T c, T d) noexcept
-			{
-				this->x = a;
-				this->y = b;
-				this->z = c;
-				this->w = d;
-			}
+			constexpr TVector() noexcept = default;
+			constexpr TVector(TVector const &other) noexcept = default;
+			constexpr explicit TVector(T scalar) :
+				x{scalar},
+				y{scalar},
+				z{scalar},
+				w{scalar} {}
+			constexpr TVector(T x, T y, T z, T w) noexcept :
+				x{x},
+				y{y},
+				z{z},
+				w{w} {}
 
-			template <typename A, typename B, typename C, typename D>
-			constexpr TVector(A a, B b, C c, D d) noexcept
-			{
-				this->x = static_cast<T>(a);
-				this->y = static_cast<T>(b);
-				this->z = static_cast<T>(c);
-				this->w = static_cast<T>(d);
-			}
-			template <typename A, typename B, typename C>
-			constexpr TVector(A a, B b, TVector<2, C> const &other) noexcept
-			{
-				this->x = static_cast<T>(a);
-				this->y = static_cast<T>(b);
-				this->z = static_cast<T>(other.x);
-				this->w = static_cast<T>(other.y);
-			}
-			template <typename A, typename B, typename C>
-			constexpr TVector(A a, TVector<2, B> const &other, C c) noexcept
-			{
-				this->x = static_cast<T>(a);
-				this->y = static_cast<T>(other.x);
-				this->z = static_cast<T>(other.y);
-				this->w = static_cast<T>(c);
-			}
-			template <typename A, typename B, typename C>
-			constexpr TVector(TVector<2, A> const &other, B b, C c) noexcept
-			{
-				this->x = static_cast<T>(other.x);
-				this->y = static_cast<T>(other.y);
-				this->z = static_cast<T>(b);
-				this->w = static_cast<T>(c);
-			}
-			template <typename A, typename B>
-			constexpr TVector(TVector<2, A> const &a, TVector<2, B> const &b) noexcept
-			{
-				this->x = static_cast<T>(a.x);
-				this->y = static_cast<T>(a.y);
-				this->z = static_cast<T>(b.x);
-				this->w = static_cast<T>(b.y);
-			}
-			template <typename A, typename B>
-			constexpr TVector(A a, TVector<3, B> const &other) noexcept
-			{
-				this->x = static_cast<T>(a);
-				this->y = static_cast<T>(other.x);
-				this->z = static_cast<T>(other.y);
-				this->w = static_cast<T>(other.z);
-			}
-			template <typename A, typename B>
-			constexpr TVector(TVector<3, A> const &other, B b) noexcept
-			{
-				this->x = static_cast<T>(other.x);
-				this->y = static_cast<T>(other.y);
-				this->z = static_cast<T>(other.z);
-				this->w = static_cast<T>(b);
-			}
+			template <typename X, typename Y, typename Z, typename W>
+			constexpr TVector(X x, Y y, Z z, W w) noexcept :
+				x{static_cast<T>(x)},
+				y{static_cast<T>(y)},
+				z{static_cast<T>(z)},
+				w{static_cast<T>(w)} {}
+
+			template <typename X, typename Y, typename ZW>
+			constexpr TVector(X x, Y y, TVector<2, ZW> const &otherZW) noexcept :
+				x{static_cast<T>(x)},
+				y{static_cast<T>(y)},
+				z{static_cast<T>(otherZW.x)},
+				w{static_cast<T>(otherZW.y)} {}
+			template <typename X, typename YZ, typename W>
+			constexpr TVector(X x, TVector<2, YZ> const &otherYZ, W w) noexcept :
+				x{static_cast<T>(x)},
+				y{static_cast<T>(otherYZ.x)},
+				z{static_cast<T>(otherYZ.y)},
+				w{static_cast<T>(w)} {}
+			template <typename XY, typename Z, typename W>
+			constexpr TVector(TVector<2, XY> const &otherXY, Z z, W w) noexcept :
+				x{static_cast<T>(otherXY.x)},
+				y{static_cast<T>(otherXY.y)},
+				z{static_cast<T>(z)},
+				w{static_cast<T>(w)} {}
+			template <typename XY, typename ZW>
+			constexpr TVector(TVector<2, XY> const &otherXY, TVector<2, ZW> const &otherZW) noexcept :
+				x{static_cast<T>(otherXY.x)},
+				y{static_cast<T>(otherXY.y)},
+				z{static_cast<T>(otherZW.x)},
+				w{static_cast<T>(otherZW.y)} {}
+			template <typename X, typename YZW>
+			constexpr TVector(X x, TVector<3, YZW> const &otherYZW) noexcept :
+				x{static_cast<T>(x)},
+				y{static_cast<T>(otherYZW.x)},
+				z{static_cast<T>(otherYZW.y)},
+				w{static_cast<T>(otherYZW.z)} {}
+			template <typename XYZ, typename W>
+			constexpr TVector(TVector<3, XYZ> const &otherXYZ, W w) noexcept :
+				x{static_cast<T>(otherXYZ.x)},
+				y{static_cast<T>(otherXYZ.y)},
+				z{static_cast<T>(otherXYZ.z)},
+				w{static_cast<T>(w)} {}
 			template <typename U>
-			constexpr TVector(TVector<4, U> const &other) noexcept
+			constexpr TVector(TVector<4, U> const &other) noexcept :
+				x{static_cast<T>(other.x)},
+				y{static_cast<T>(other.y)},
+				z{static_cast<T>(other.z)},
+				w{static_cast<T>(other.w)} {}
+
+			template <typename U>
+			static constexpr TVector<4, T> FromQuaternion(TQuaternion<U> const &quaternion) noexcept
 			{
-				this->x = static_cast<T>(other.x);
-				this->y = static_cast<T>(other.y);
-				this->z = static_cast<T>(other.z);
-				this->w = static_cast<T>(other.w);
+				return TVector<4, T>
+				(
+					quaternion.x,
+					quaternion.y,
+					quaternion.z,
+					quaternion.w
+				);
 			}
 
 			static constexpr size_t Size() noexcept
@@ -294,19 +275,19 @@ namespace IOMath
 
 				return *this;
 			}
-			constexpr TVector<4, T>& operator++(int) noexcept
+			constexpr TVector<4, T> operator++(int) noexcept
 			{
 				TVector<4, T> result = TVector<4, T>(*this);
 
-				++*this;
+				++(*this);
 
 				return result;
 			}
-			constexpr TVector<4, T>& operator--(int) noexcept
+			constexpr TVector<4, T> operator--(int) noexcept
 			{
 				TVector<4, T> result = TVector<4, T>(*this);
 
-				--*this;
+				--(*this);
 
 				return result;
 			}
@@ -453,123 +434,333 @@ namespace IOMath
 		template <typename T>
 		constexpr TVector<4, T> operator+(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) += object;
+			return TVector<4, T>
+			(
+				scalar + object.x,
+				scalar + object.y,
+				scalar + object.z,
+				scalar + object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator+(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) += scalar;
+			return TVector<4, T>
+			(
+				object.x + scalar,
+				object.y + scalar,
+				object.z + scalar,
+				object.w + scalar
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator+(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
 		{
-			return TVector<4, T>(lObject) += rObject;
+			return TVector<4, T>
+			(
+				lObject.x + rObject.x,
+				lObject.y + rObject.y,
+				lObject.z + rObject.z,
+				lObject.w + rObject.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator-(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) -= object;
+			return TVector<4, T>
+			(
+				scalar - object.x,
+				scalar - object.y,
+				scalar - object.z,
+				scalar - object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator-(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) -= scalar;
+			return TVector<4, T>
+			(
+				object.x - scalar,
+				object.y - scalar,
+				object.z - scalar,
+				object.w - scalar
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator-(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
 		{
-			return TVector<4, T>(lObject) -= rObject;
+			return TVector<4, T>
+			(
+				lObject.x - rObject.x,
+				lObject.y - rObject.y,
+				lObject.z - rObject.z,
+				lObject.w - rObject.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator*(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) *= object;
+			return TVector<4, T>
+			(
+				scalar * object.x,
+				scalar * object.y,
+				scalar * object.z,
+				scalar * object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator*(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) *= scalar;
+			return TVector<4, T>
+			(
+				object.x * scalar,
+				object.y * scalar,
+				object.z * scalar,
+				object.w * scalar
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator*(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
 		{
-			return TVector<4, T>(lObject) *= rObject;
+			return TVector<4, T>
+			(
+				lObject.x * rObject.x,
+				lObject.y * rObject.y,
+				lObject.z * rObject.z,
+				lObject.w * rObject.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator/(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) /= object;
+			return TVector<4, T>
+			(
+				scalar / object.x,
+				scalar / object.y,
+				scalar / object.z,
+				scalar / object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator/(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) /= scalar;
+			return TVector<4, T>
+			(
+				object.x / scalar,
+				object.y / scalar,
+				object.z / scalar,
+				object.w / scalar
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator/(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
 		{
-			return TVector<4, T>(lObject) /= rObject;
+			return TVector<4, T>
+			(
+				lObject.x / rObject.x,
+				lObject.y / rObject.y,
+				lObject.z / rObject.z,
+				lObject.w / rObject.w
+			);
 		}
 
 		template <typename T>
 		constexpr TVector<4, T> operator%(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) %= object;
+			return TVector<4, T>
+			(
+				scalar % object.x,
+				scalar % object.y,
+				scalar % object.z,
+				scalar % object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator%(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) %= scalar;
+			return TVector<4, T>
+			(
+				object.x % scalar,
+				object.y % scalar,
+				object.z % scalar,
+				object.w % scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<4, T> operator%(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
+		{
+			return TVector<4, T>
+			(
+				lObject.x % rObject.x,
+				lObject.y % rObject.y,
+				lObject.z % rObject.z,
+				lObject.w % rObject.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator&(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) &= object;
+			return TVector<4, T>
+			(
+				scalar & object.x,
+				scalar & object.y,
+				scalar & object.z,
+				scalar & object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator&(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) &= scalar;
+			return TVector<4, T>
+			(
+				object.x & scalar,
+				object.y & scalar,
+				object.z & scalar,
+				object.w & scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<4, T> operator&(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
+		{
+			return TVector<4, T>
+			(
+				lObject.x & rObject.x,
+				lObject.y & rObject.y,
+				lObject.z & rObject.z,
+				lObject.w & rObject.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator|(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) |= object;
+			return TVector<4, T>
+			(
+				scalar | object.x,
+				scalar | object.y,
+				scalar | object.z,
+				scalar | object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator|(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) |= scalar;
+			return TVector<4, T>
+			(
+				object.x | scalar,
+				object.y | scalar,
+				object.z | scalar,
+				object.w | scalar				
+			);
+		}
+		template <typename T>
+		constexpr TVector<4, T> operator|(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
+		{
+			return TVector<4, T>
+			(
+				lObject.x | rObject.x,
+				lObject.y | rObject.y,
+				lObject.z | rObject.z,
+				lObject.w | rObject.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator^(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) ^= object;
+			return TVector<4, T>
+			(
+				scalar ^ object.x,
+				scalar ^ object.y,
+				scalar ^ object.z,
+				scalar ^ object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator^(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) ^= scalar;
+			return TVector<4, T>
+			(
+				object.x ^ scalar,
+				object.y ^ scalar,
+				object.z ^ scalar,
+				object.w ^ scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<4, T> operator^(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
+		{
+			return TVector<4, T>
+			(
+				lObject.x ^ rObject.x,
+				lObject.y ^ rObject.y,
+				lObject.z ^ rObject.z,
+				lObject.w ^ rObject.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator<<(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) <<= object;
+			return TVector<4, T>
+			(
+				scalar << object.x,
+				scalar << object.y,
+				scalar << object.z,
+				scalar << object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator<<(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) <<= scalar;
+			return TVector<4, T>
+			(
+				object.x << scalar,
+				object.y << scalar,
+				object.z << scalar,
+				object.w << scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<4, T> operator<<(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
+		{
+			return TVector<4, T>
+			(
+				lObject.x << rObject.x,
+				lObject.y << rObject.y,
+				lObject.z << rObject.z,
+				lObject.w << rObject.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator>>(T scalar, TVector<4, T> const &object) noexcept
 		{
-			return TVector<4, T>(scalar) >>= object;
+			return TVector<4, T>
+			(
+				scalar >> object.x,
+				scalar >> object.y,
+				scalar >> object.z,
+				scalar >> object.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator>>(TVector<4, T> const &object, T scalar) noexcept
 		{
-			return TVector<4, T>(object) >>= scalar;
+			return TVector<4, T>
+			(
+				object.x >> scalar,
+				object.y >> scalar,
+				object.z >> scalar,
+				object.w >> scalar
+			);
+		}
+		template <typename T>
+		constexpr TVector<4, T> operator>>(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
+		{
+			return TVector<4, T>
+			(
+				lObject.x >> rObject.x,
+				lObject.y >> rObject.y,
+				lObject.z >> rObject.z,
+				lObject.w >> rObject.w
+			);
 		}
 		template <typename T>
 		constexpr TVector<4, T> operator~(TVector<4, T> const &object) noexcept
@@ -578,7 +769,8 @@ namespace IOMath
 			(
 				~object.x,
 				~object.y,
-				~object.z
+				~object.z,
+				~object.w
 			);
 		}
 
@@ -596,17 +788,34 @@ namespace IOMath
 		template <typename T>
 		constexpr bool operator!=(TVector<4, T> const &lObject, TVector<4, T> const &rObject) noexcept
 		{
-			return !(lObject == rObject);
+			return
+			(
+				lObject.x != rObject.x ||
+				lObject.y != rObject.y ||
+				lObject.z != rObject.z ||
+				lObject.w != rObject.w
+			);
 		}
 		constexpr TVector<4, bool> operator&&(TVector<4, bool> const &lObject, TVector<4, bool> const &rObject) noexcept
 		{
-			return TVector<4, bool>(lObject.x && rObject.x, lObject.y && rObject.y, lObject.z && rObject.z, lObject.w && rObject.w);
+			return TVector<4, bool>
+			(
+				lObject.x && rObject.x,
+				lObject.y && rObject.y,
+				lObject.z && rObject.z, 
+				lObject.w && rObject.w
+			);
 		}
 		constexpr TVector<4, bool> operator||(TVector<4, bool> const &lObject, TVector<4, bool> const &rObject) noexcept
 		{
-			return TVector<4, bool>(lObject.x || rObject.x, lObject.y || rObject.y, lObject.z || rObject.z, lObject.w || rObject.w);
+			return TVector<4, bool>
+			(
+				lObject.x || rObject.x,
+				lObject.y || rObject.y,
+				lObject.z || rObject.z,
+				lObject.w || rObject.w
+			);
 		}
-
 	}
 }
 

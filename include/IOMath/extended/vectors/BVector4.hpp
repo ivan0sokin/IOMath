@@ -22,13 +22,14 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_VECTORS_HPP
-#define _IO_MATH_VECTORS_HPP
+#ifndef _IO_MATH_BVECTOR_4_HPP
+#define _IO_MATH_BVECTOR_4_HPP
 
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
-#include "Geometric.hpp"
-#include "Trigonometric.hpp"
+#include "../../types/vectors/TVector4.hpp"
+
+namespace IOMath
+{
+    typedef Types::TVector<4, bool> BVector4;
+}
 
 #endif

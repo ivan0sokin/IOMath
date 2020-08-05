@@ -22,13 +22,10 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_VECTORS_HPP
-#define _IO_MATH_VECTORS_HPP
+#ifndef _IO_MATH_QUATERNION_HPP
+#define _IO_MATH_QUATERNION_HPP
 
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
-#include "Geometric.hpp"
-#include "Trigonometric.hpp"
+#include "extended/quaternions/DQuaternion.hpp"
+#include "extended/quaternions/FQuaternion.hpp"
 
 #endif

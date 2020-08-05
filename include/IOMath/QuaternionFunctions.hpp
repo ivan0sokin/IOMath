@@ -22,13 +22,24 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_VECTORS_HPP
-#define _IO_MATH_VECTORS_HPP
+#ifndef _IO_MATH_QUATERNION_FUNCTIONS_HPP
+#define _IO_MATH_QUATERNION_FUNCTIONS_HPP
 
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
-#include "Geometric.hpp"
-#include "Trigonometric.hpp"
+#include "detail/ComputeBasicQuaternionFunctions.hpp"
+
+namespace IOMath
+{
+    template <typename T>
+    constexpr Types::TQuaternion<T> Conjugate(Types::TQuaternion<T> const &object) noexcept
+    {
+        return detail::ComputeConjugate(object);
+    }
+
+    template <typename T>
+    constexpr Types::TQuaternion<T> Inverse(Types::TQuaternion<T> const &object) noexcept
+    {
+        return detail::ComputeInverse(object);
+    }
+}
 
 #endif

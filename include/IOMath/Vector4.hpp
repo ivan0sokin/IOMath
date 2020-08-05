@@ -22,13 +22,13 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_VECTORS_HPP
-#define _IO_MATH_VECTORS_HPP
+#ifndef _IO_MATH_VECTOR_4_HPP
+#define _IO_MATH_VECTOR_4_HPP
 
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
-#include "Geometric.hpp"
-#include "Trigonometric.hpp"
+#include "extended/vectors/BVector4.hpp"
+#include "extended/vectors/DVector4.hpp"
+#include "extended/vectors/FVector4.hpp"
+#include "extended/vectors/IVector4.hpp"
+#include "extended/vectors/UVector4.hpp"
 
 #endif

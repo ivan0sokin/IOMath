@@ -22,18 +22,13 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_DVECTOR_HPP
-#define _IO_MATH_DVECTOR_HPP
+#ifndef _IO_MATH_VECTOR_2_HPP
+#define _IO_MATH_VECTOR_2_HPP
 
-#include "../../types/vectors/TVector2.hpp"
-#include "../../types/vectors/TVector3.hpp"
-#include "../../types/vectors/TVector4.hpp"
-
-namespace IOMath
-{
-	typedef Types::TVector<2, double> DVector2;
-	typedef Types::TVector<3, double> DVector3;
-	typedef Types::TVector<4, double> DVector4;
-}
+#include "extended/vectors/BVector2.hpp"
+#include "extended/vectors/DVector2.hpp"
+#include "extended/vectors/FVector2.hpp"
+#include "extended/vectors/IVector2.hpp"
+#include "extended/vectors/UVector2.hpp"
 
 #endif

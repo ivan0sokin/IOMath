@@ -22,38 +22,15 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_DMATRIX_HPP
-#define _IO_MATH_DMATRIX_HPP
+#ifndef _IO_MATH_FMATRIX_2X4_HPP
+#define _IO_MATH_FMATRIX_2X4_HPP
 
-#include "../../types/matrices/TMatrix2x2.hpp"
-#include "../../types/matrices/TMatrix2x3.hpp"
 #include "../../types/matrices/TMatrix2x4.hpp"
-#include "../../types/matrices/TMatrix3x2.hpp"
-#include "../../types/matrices/TMatrix3x3.hpp"
-#include "../../types/matrices/TMatrix3x4.hpp"
-#include "../../types/matrices/TMatrix4x2.hpp"
-#include "../../types/matrices/TMatrix4x3.hpp"
-#include "../../types/matrices/TMatrix4x4.hpp"
 
 namespace IOMath
 {
-	typedef Types::TMatrix<2, 2, double> DMatrix2;
-
-	typedef Types::TMatrix<2, 2, double> DMatrix2x2;
-	typedef Types::TMatrix<2, 3, double> DMatrix2x3;
-	typedef Types::TMatrix<2, 4, double> DMatrix2x4;
-
-	typedef Types::TMatrix<3, 3, double> DMatrix3;
-
-	typedef Types::TMatrix<3, 2, double> DMatrix3x2;
-	typedef Types::TMatrix<3, 3, double> DMatrix3x3;
-	typedef Types::TMatrix<3, 4, double> DMatrix3x4;
-
-	typedef Types::TMatrix<4, 4, double> DMatrix4;
-
-	typedef Types::TMatrix<4, 2, double> DMatrix4x2;
-	typedef Types::TMatrix<4, 3, double> DMatrix4x3;
-	typedef Types::TMatrix<4, 4, double> DMatrix4x4;
+    typedef Types::TMatrix<2, 4, float> FMatrix2x4;
+    typedef Types::TMatrix<2, 4, float> Matrix2x4;
 }
 
 #endif

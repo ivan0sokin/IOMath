@@ -22,18 +22,15 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_UVECTOR_HPP
-#define _IO_MATH_UVECTOR_HPP
+#ifndef _IO_MATH_DMATRIX_3X3_HPP
+#define _IO_MATH_DMATRIX_3X3_HPP
 
-#include "../../types/vectors/TVector2.hpp"
-#include "../../types/vectors/TVector3.hpp"
-#include "../../types/vectors/TVector4.hpp"
+#include "../../types/matrices/TMatrix3x3.hpp"
 
 namespace IOMath
 {
-	typedef Types::TVector<2, unsigned int> UVector2;
-	typedef Types::TVector<3, unsigned int> UVector3;
-	typedef Types::TVector<4, unsigned int> UVector4;
+    typedef Types::TMatrix<3, 3, double> DMatrix3x3;
+    typedef Types::TMatrix<3, 3, double> DMatrix3;
 }
 
 #endif
