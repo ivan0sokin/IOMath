@@ -18,7 +18,7 @@ namespace IOMath
 		private:
 			row_t data[4];
 		public:
-			constexpr TMatrix() noexcept = default
+			constexpr TMatrix() noexcept = default;
 			constexpr TMatrix(TMatrix const &other) noexcept = default;
 			constexpr explicit TMatrix(T scalar) noexcept :
 				data
