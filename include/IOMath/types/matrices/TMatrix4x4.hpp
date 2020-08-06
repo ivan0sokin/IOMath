@@ -65,16 +65,6 @@ namespace IOMath
 				} {}
 
 			template <typename U>
-			constexpr TMatrix(TMatrix<4, 4, U> const &other) noexcept :
-				data
-				{
-					row_t(other[0]),
-					row_t(other[1]),
-					row_t(other[2]),
-					row_t(other[3])
-				} {}
-			
-			template <typename U>
 			constexpr TMatrix(TMatrix<2, 2, U> const &other) noexcept :
 				data
 				{
@@ -145,6 +135,34 @@ namespace IOMath
 					row_t(other[1], 0),
 					row_t(other[2], 0),
 					row_t(other[3], 0)
+				} {}
+			template <typename U>
+			constexpr TMatrix(TMatrix<4, 4, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0]),
+					row_t(other[1]),
+					row_t(other[2]),
+					row_t(other[3])
+				} {}
+			
+			template <typename U>
+			constexpr TMatrix(TMatrix<2, 4, T> const &otherA, TMatrix<2, 4, T> const &otherB) noexcept :
+				data
+				{
+					row_t(otherA[0]),
+					row_t(otherA[1]),
+					row_t(otherB[0]),
+					row_t(otherB[1])
+				} {}
+			template <typename U>
+			constexpr TMatrix(TMatrix<4, 2, T> const &otherA, TMatrix<4, 2, T> const &otherB) noexcept :
+				data
+				{
+					row_t(otherA[0], otherB[0]),
+					row_t(otherA[1], otherB[1]),
+					row_t(otherA[2], otherB[2]),
+					row_t(otherA[3], otherB[3])
 				} {}
 			template <typename U>
 			constexpr TMatrix(TMatrix<2, 2, U> const &otherA, TMatrix<2, 2, U> const &otherB, TMatrix<2, 2, U> const &otherC, TMatrix<2, 2, U> const &otherD) noexcept :

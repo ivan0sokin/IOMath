@@ -83,7 +83,21 @@ namespace IOMath
 					row_t(other[0]),
 					row_t(other[1])
 				} {}
-			
+			template <typename U>
+			constexpr TMatrix(TMatrix<3, 2, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0]),
+					row_t(other[1])
+				} {}
+			template <typename U>
+			constexpr TMatrix(TMatrix<4, 2, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0]),
+					row_t(other[1])
+				} {}
+
 			template <typename U>
 			static constexpr TMatrix<2, 2, T> FromMatrix2x3(TMatrix<2, 3, U> const &matrix) noexcept
 			{
@@ -103,15 +117,6 @@ namespace IOMath
 				);
 			}
 			template <typename U>
-			static constexpr TMatrix<2, 2, T> FromMatrix3x2(TMatrix<3, 2, U> const &matrix) noexcept
-			{
-				return TMatrix<2, 2, T>
-				(
-					row_t(matrix[0]),
-					row_t(matrix[1])
-				);
-			}
-			template <typename U>
 			static constexpr TMatrix<2, 2, T> FromMatrix3x3(TMatrix<3, 3, U> const &matrix) noexcept
 			{
 				return TMatrix<2, 2, T>
@@ -127,15 +132,6 @@ namespace IOMath
 				(
 					row_t::FromVector4(matrix[0]),
 					row_t::FromVector4(matrix[1])
-				);
-			}
-			template <typename U>
-			static constexpr TMatrix<2, 2, T> FromMatrix4x2(TMatrix<4, 2, U> const &matrix) noexcept
-			{
-				return TMatrix<2, 2, T>
-				(
-					row_t(matrix[0]),
-					row_t(matrix[1])
 				);
 			}
 			template <typename U>

@@ -60,15 +60,6 @@ namespace IOMath
 				} {}
 
 			template <typename U>
-			constexpr TMatrix(TMatrix<3, 3, U> const &other) noexcept :
-				data
-				{
-					row_t(other[0]),
-					row_t(other[1]),
-					row_t(other[2])
-				} {}
-			
-			template <typename U>
 			constexpr TMatrix(TMatrix<2, 2, U> const &other) noexcept :
 				data
 				{
@@ -85,20 +76,20 @@ namespace IOMath
 					row_t()
 				} {}
 			template <typename U>
-			constexpr TMatrix(TMatrix<2, 4, U> const &other) noexcept :
-				data
-				{
-					row_t::FromVector4(other[0]),
-					row_t::FromVector4(other[1]),
-					row_t()
-				} {}
-			template <typename U>
 			constexpr TMatrix(TMatrix<3, 2, U> const &other) noexcept :
 				data
 				{
 					row_t(other[0], 0),
 					row_t(other[1], 0),
 					row_t(other[2], 0)
+				} {}
+			template <typename U>
+			constexpr TMatrix(TMatrix<3, 3, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0]),
+					row_t(other[1]),
+					row_t(other[2])
 				} {}
 			template <typename U>
 			constexpr TMatrix(TMatrix<4, 2, U> const &other) noexcept :
@@ -108,25 +99,33 @@ namespace IOMath
 					row_t(other[1], 0),
 					row_t(other[2], 0)
 				} {}
+			template <typename U>
+			constexpr TMatrix(TMatrix<4, 3, U> const &other) noexcept :
+				data
+				{
+					row_t(other[0]),
+					row_t(other[1]),
+					row_t(other[2])
+				} {}
 			
 			template <typename U>
-			static constexpr TMatrix<3, 3, T> FromMatrix3x4(TMatrix<3, 4, U> const &other) noexcept
+			static constexpr TMatrix<3, 3, T> FromMatrix2x4(TMatrix<2, 4, T> const &other) noexcept
 			{
 				return TMatrix<3, 3, T>
 				(
 					row_t::FromVector4(other[0]),
-					row_t::FromVector4(other[1]),
-					row_t::FromVector4(other[2])
+					row_t::FromVector4(other[0]),
+					row_t()
 				);
 			}
 			template <typename U>
-			static constexpr TMatrix<3, 3, T> FromMatrix4x3(TMatrix<4, 3, T> const &other) noexcept
+			static constexpr TMatrix<3, 3, T> FromMatrix3x4(TMatrix<3, 4, T> const &other) noexcept
 			{
 				return TMatrix<3, 3, T>
 				(
-					row_t(other[0]),
-					row_t(other[1]),
-					row_t(other[2])
+					row_t::FromVector4(other[0]),
+					row_t::FromVector4(other[0]),
+					row_t::FromVector4(other[2])
 				);
 			}
 			template <typename U>
@@ -135,7 +134,7 @@ namespace IOMath
 				return TMatrix<3, 3, T>
 				(
 					row_t::FromVector4(other[0]),
-					row_t::FromVector4(other[1]),
+					row_t::FromVector4(other[0]),
 					row_t::FromVector4(other[2])
 				);
 			}
