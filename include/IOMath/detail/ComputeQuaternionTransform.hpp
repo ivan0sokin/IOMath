@@ -22,36 +22,45 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_COMPUTE_BASIC_QUATERNION_FUNCTIONS_HPP
-#define _IO_MATH_COMPUTE_BASIC_QUATERNION_FUNCTIONS_HPP
+#ifndef _IO_MATH_COMPUTE_QUATERNION_TRANSFORM_HPP
+#define _IO_MATH_COMPUTE_QUATERNION_TRANSFORM_HPP
 
 #include "../types/BasicTypes.hpp"
+
+#include <cmath>
 
 namespace IOMath
 {
     namespace detail
     {
         template <typename T>
-        constexpr Types::TQuaternion<T> ComputeConjugate(Types::TQuaternion<T> const &object) noexcept
+        constexpr Types::TQuaternion<T> ComputeRotate(Types::TQuaternion<T> const &quaternion, Types::TVector<3, T> const &_axis, T _angle) noexcept
         {
-            return Types::TQuaternion<T>
-            (
-                object.w,
-               -object.x,
-               -object.y,
-               -object.z
-            );
-        }
-        
-        template <typename T>
-        constexpr Types::TQuaternion<T> ComputeInverse(Types::TQuaternion<T> const &object) noexcept
-        {
-            T const objectW = object.w;
-            T const objectX = object.x;
-            T const objectY = object.y;
-            T const objectZ = object.z;
+            Types::TVector<3, T> axis = _axis;
 
-            return Types::TQuaternion<T>(objectW, -objectX, -objectY, -objectZ) / (objectW * objectW + objectX * objectX + objectY * objectY + objectZ * objectZ);
+            T const half = static_cast<T>(0.5);
+            T const one = static_cast<T>(1);
+
+            T length = std::sqrt(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
+            if(std::abs(length - one) > static_cast<T>(0.001))
+            {
+                T oneOverLength = one / length;
+                axis.x *= oneOverLength;
+                axis.y *= oneOverLength;
+                axis.z *= oneOverLength;
+            }
+
+            T const angle = _angle;
+            T const halfAngle = angle * half;
+            T const sinHalfAngle = std::sin(halfAngle);
+
+            return quaternion * Types::TQuaternion<T>
+            (
+                std::cos(halfAngle),
+                sinHalfAngle * axis.x,
+                sinHalfAngle * axis.y,
+                sinHalfAngle * axis.z
+            );
         }
     }
 }

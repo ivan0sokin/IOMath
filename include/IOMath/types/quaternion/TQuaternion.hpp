@@ -26,6 +26,7 @@
 #define _IO_MATH_TQUATERNION_HPP
 
 #include "../../detail/ComputeBasicQuaternionFunctions.hpp"
+#include "../../detail/ComputeGeometric.hpp"
 
 namespace IOMath
 {
@@ -74,8 +75,9 @@ namespace IOMath
 
             static constexpr TQuaternion<T> FromAxisAngle(TVector<3, T> const &axis, T angle) noexcept
             {
-                T const sinHalfAngle = std::sin(angle / static_cast<T>(2));
-                T const cosHalfAngle = std::cos(angle / static_cast<T>(2));
+                T const halfAngle = angle / static_cast<T>(2);
+                T const sinHalfAngle = std::sin(halfAngle);
+                T const cosHalfAngle = std::cos(halfAngle);
 
                 return TQuaternion<T>
                 (
@@ -124,6 +126,19 @@ namespace IOMath
             static constexpr TQuaternion<T> FromMatrix4x4(TMatrix<4, 4, U> const &matrix) noexcept
             {
                 return TQuaternion<T>();
+            }
+
+            static constexpr TQuaternion<T> Identity() noexcept
+            {
+                T const zero = static_cast<T>(0);
+
+                return TQuaternion<T>
+                (
+                    static_cast<T>(1),
+                    zero,
+                    zero,
+                    zero
+                );
             }
 
             static constexpr size_t Size() noexcept

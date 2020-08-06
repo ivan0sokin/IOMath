@@ -155,10 +155,13 @@ namespace IOMath
 
 			static constexpr TMatrix<2, 2, T> Identity() noexcept
 			{
+				T const zero = static_cast<T>(0);
+				T const one = static_cast<T>(1);
+
 				return TMatrix<2, 2, T>
 				(
-					1, 0,
-					0, 1
+					one, zero,
+					zero, one
 				);
 			}
 

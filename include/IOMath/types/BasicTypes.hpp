@@ -33,9 +33,10 @@ namespace IOMath
 {
 	namespace Types
 	{
-		template<size_t S, typename T> struct TVector;
-		template<size_t R, size_t C, typename T> struct TMatrix;
-		template<typename T> struct TQuaternion;
+		template <size_t S, typename T> struct TVector;
+		template <size_t S, typename T> struct TColor;
+		template <size_t R, size_t C, typename T> struct TMatrix;
+		template <typename T> struct TQuaternion;
 	}
 }
 

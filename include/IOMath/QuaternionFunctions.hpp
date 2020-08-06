@@ -26,6 +26,8 @@
 #define _IO_MATH_QUATERNION_FUNCTIONS_HPP
 
 #include "detail/ComputeBasicQuaternionFunctions.hpp"
+#include "detail/ComputeQuaternionEquations.hpp"
+#include "detail/ComputeQuaternionTransform.hpp"
 
 namespace IOMath
 {
@@ -40,6 +42,36 @@ namespace IOMath
     {
         return detail::ComputeInverse(object);
     }
+
+	template <typename T>
+	constexpr Types::TVector<3, T> EulerAngles(Types::TQuaternion<T> const &quaternion) noexcept
+	{
+		return detail::ComputeEulerAngles(quaternion);
+	}
+
+	template <typename T>
+	constexpr T Roll(Types::TQuaternion<T> const &quaternion) noexcept
+	{
+		return detail::ComputeRoll(quaternion);
+	}
+
+	template <typename T>
+	constexpr T Pitch(Types::TQuaternion<T> const &quaternion) noexcept
+	{
+		return detail::ComputePitch(quaternion);
+	}
+
+	template <typename T>
+	constexpr T Yaw(Types::TQuaternion<T> const &quaternion) noexcept
+	{
+		return detail::ComputeYaw(quaternion);
+	}
+
+	template <typename T>
+	constexpr Types::TQuaternion<T> Rotate(Types::TQuaternion<T> const &quaternion, Types::TVector<3, T> const &axis, T angle) noexcept
+	{
+		return detail::ComputeRotate(quaternion, axis, angle);
+	}
 }
 
 #endif

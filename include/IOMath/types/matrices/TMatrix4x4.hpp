@@ -174,14 +174,48 @@ namespace IOMath
 					row_t(otherC[1], otherD[1])
 				} {}
 
-			static constexpr TMatrix<4, 4, T> Identity() noexcept
+			template <typename U>
+			static constexpr TMatrix<4, 4, T> FromQuaternion(TQuaternion<U> const &quaternion) noexcept
 			{
+				T const quatW = quaternion.w;
+				T const quatX = quaternion.x;
+				T const quatY = quaternion.y;
+				T const quatZ = quaternion.z;
+
+				T const qxx = quatX * quatX;
+				T const qyy = quatY * quatY;
+				T const qzz = quatZ * quatZ;
+				T const qxz = quatX * quatZ;
+				T const qxy = quatX * quatY;
+				T const qyz = quatY * quatZ;
+				T const qwx = quatW * quatX;
+				T const qwy = quatW * quatY;
+				T const qwz = quatW * quatZ;
+
+				T const zero = static_cast<T>(0);
+				T const one = static_cast<T>(1);
+				T const two = static_cast<T>(2);
+
 				return TMatrix<4, 4, T>
 				(
-					1, 0, 0, 0,
-					0, 1, 0, 0,
-					0, 0, 1, 0,
-					0, 0, 0, 1
+					one - two * (qyy +  qzz), two * (qxy - qwz), two * (qxz + qwy), zero,
+					two * (qxy + qwz), one - two * (qxx +  qzz), two * (qyz - qwx), zero,
+					two * (qxz - qwy), two * (qyz + qwx), one - two * (qxx +  qyy), zero,
+					zero, zero, zero, one
+				);
+			}
+
+			static constexpr TMatrix<4, 4, T> Identity() noexcept
+			{
+				T const zero = static_cast<T>(0);
+				T const one = static_cast<T>(1);
+
+				return TMatrix<4, 4, T>
+				(
+					one, zero, zero, zero,
+					zero, one, zero, zero,
+					zero, zero, one, zero,
+					zero, zero, zero, one
 				);
 			}
 
