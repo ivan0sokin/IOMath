@@ -22,20 +22,14 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_MATRIX_2_HPP
-#define _IO_MATH_MATRIX_2_HPP
+#ifndef _IO_MATH_IMATRIX_3X2_HPP
+#define _IO_MATH_IMATRIX_3X2_HPP
 
-#include "extended/matrices/DMatrix2x2.hpp"
-#include "extended/matrices/DMatrix2x3.hpp"
-#include "extended/matrices/DMatrix2x4.hpp"
-#include "extended/matrices/FMatrix2x2.hpp"
-#include "extended/matrices/FMatrix2x3.hpp"
-#include "extended/matrices/FMatrix2x4.hpp"
-#include "extended/matrices/IMatrix2x2.hpp"
-#include "extended/matrices/IMatrix2x3.hpp"
-#include "extended/matrices/IMatrix2x4.hpp"
-#include "extended/matrices/UMatrix2x2.hpp"
-#include "extended/matrices/UMatrix2x3.hpp"
-#include "extended/matrices/UMatrix2x4.hpp"
+#include "../../types/matrices/TMatrix3x2.hpp"
+
+namespace IOMath
+{
+    typedef Types::TMatrix<3, 2, int> IMatrix3x2;
+}
 
 #endif

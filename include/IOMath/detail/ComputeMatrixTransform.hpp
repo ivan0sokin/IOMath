@@ -27,7 +27,7 @@
 
 #include "../types/matrices/TMatrix4x4.hpp"
 #include "../types/vectors/TVector3.hpp"
-#include "ComputeGeometric.hpp"
+#include "ComputeVectorGeometric.hpp"
 
 #include <cmath>
 

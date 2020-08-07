@@ -26,7 +26,8 @@
 #define _IO_MATH_TQUATERNION_HPP
 
 #include "../../detail/ComputeBasicQuaternionFunctions.hpp"
-#include "../../detail/ComputeGeometric.hpp"
+#include "../../detail/ComputeVectorGeometric.hpp"
+#include "../../detail/ComputeQuaternionGeometric.hpp"
 
 namespace IOMath
 {

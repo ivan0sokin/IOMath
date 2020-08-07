@@ -22,8 +22,8 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_COMPUTE_GEOMETRIC_HPP
-#define _IO_MATH_COMPUTE_GEOMETRIC_HPP
+#ifndef _IO_MATH_COMPUTE_VECTOR_GEOMETRIC_HPP
+#define _IO_MATH_COMPUTE_VECTOR_GEOMETRIC_HPP
 
 #include "../types/BasicTypes.hpp"
 
@@ -63,18 +63,7 @@ namespace IOMath
 				lObject.w * rObject.w
 			);
 		}
-		template <typename T>
-		constexpr T ComputeDot(Types::TQuaternion<T> const &lObject, Types::TQuaternion<T> const &rObject) noexcept
-		{
-			return
-			(
-				lObject.w * rObject.w +
-				lObject.x * rObject.x +
-				lObject.y * rObject.y +
-				lObject.z * rObject.z
-			);
-		}
-	
+		
 		template <typename T>
 		constexpr T ComputeLength(Types::TVector<2, T> const &object) noexcept
 		{
@@ -101,16 +90,6 @@ namespace IOMath
 			T const objectW = object.w;
 
 			return std::sqrt(objectX * objectX + objectY * objectY + objectZ * objectZ + objectW * objectW);
-		}
-		template <typename T>
-		constexpr T ComputeLength(Types::TQuaternion<T> const &object) noexcept
-		{
-			T const objectX = object.x;
-			T const objectY = object.y;
-			T const objectZ = object.z;
-			T const objectW = object.w;
-
-			return std::sqrt(objectW * objectW * objectX * objectX + objectY * objectY + objectZ * objectZ);
 		}
 
 		template <typename T>
@@ -168,18 +147,7 @@ namespace IOMath
 
 			return object * (static_cast<T>(1) / std::sqrt(objectX * objectX + objectY * objectY + objectZ * objectZ + objectW * objectW));
 		}
-		template <typename T>
-		constexpr Types::TQuaternion<T> ComputeNormalize(Types::TQuaternion<T> const &object) noexcept
-		{
-			T const objectW = object.w;
-			T const objectX = object.x;
-			T const objectY = object.y;
-			T const objectZ = object.z;
-
-			return object * (static_cast<T>(1) / std::sqrt(objectW * objectW + objectX * objectX + objectY * objectY + objectZ * objectZ));
 		
-		}
-	
 		template <typename T>
 		constexpr Types::TVector<3, T> ComputeCross(Types::TVector<3, T> const &lObject, Types::TVector<3, T> const &rObject) noexcept
 		{
@@ -196,27 +164,6 @@ namespace IOMath
 				lObjectY * rObjectZ - rObjectY * lObjectZ,
 				lObjectZ * rObjectX - rObjectZ * lObjectX,
 				lObjectX * rObjectY - rObjectX * lObjectY
-			);
-		}
-		template <typename T>
-		constexpr Types::TQuaternion<T> ComputeCross(Types::TQuaternion<T> const &lObject, Types::TQuaternion<T> const &rObject) noexcept
-		{
-			T const lObjectW = lObject.w;
-			T const lObjectX = lObject.x;
-			T const lObjectY = lObject.y;
-			T const lObjectZ = lObject.z;
-
-			T const rObjectW = rObject.w;
-			T const rObjectX = rObject.x;
-			T const rObjectY = rObject.y;
-			T const rObjectZ = rObject.z;
-
-			return Types::TQuaternion<T>
-			(
-				lObjectW * rObjectW - lObjectX * rObjectX - lObjectY * rObjectY - lObjectZ * rObjectZ,
-				lObjectW * rObjectX + lObjectX * rObjectW + lObjectY * rObjectZ - lObjectZ * rObjectY,
-				lObjectW * rObjectY + lObjectY * rObjectW + lObjectZ * rObjectX - lObjectX * rObjectZ,
-				lObjectW * rObjectZ + lObjectZ * rObjectW + lObjectX * rObjectY - lObjectY * rObjectX
 			);
 		}
 

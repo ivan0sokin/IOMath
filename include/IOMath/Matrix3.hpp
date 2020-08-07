@@ -25,11 +25,17 @@
 #ifndef _IO_MATH_MATRIX_3_HPP
 #define _IO_MATH_MATRIX_3_HPP
 
-#include "extended/matrices/FMatrix3x2.hpp"
-#include "extended/matrices/FMatrix3x3.hpp"
-#include "extended/matrices/FMatrix3x4.hpp"
 #include "extended/matrices/DMatrix3x2.hpp"
 #include "extended/matrices/DMatrix3x3.hpp"
 #include "extended/matrices/DMatrix3x4.hpp"
+#include "extended/matrices/FMatrix3x2.hpp"
+#include "extended/matrices/FMatrix3x3.hpp"
+#include "extended/matrices/FMatrix3x4.hpp"
+#include "extended/matrices/IMatrix3x2.hpp"
+#include "extended/matrices/IMatrix3x3.hpp"
+#include "extended/matrices/IMatrix3x4.hpp"
+#include "extended/matrices/UMatrix3x2.hpp"
+#include "extended/matrices/UMatrix3x3.hpp"
+#include "extended/matrices/UMatrix3x4.hpp"
 
 #endif

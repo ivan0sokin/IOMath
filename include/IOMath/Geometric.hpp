@@ -25,7 +25,8 @@
 #ifndef _IO_MATH_GEOMETRIC_HPP
 #define _IO_MATH_GEOMETRIC_HPP
 
-#include "detail/ComputeGeometric.hpp"
+#include "detail/ComputeVectorGeometric.hpp"
+#include "detail/ComputeQuaternionGeometric.hpp"
 
 namespace IOMath
 {
