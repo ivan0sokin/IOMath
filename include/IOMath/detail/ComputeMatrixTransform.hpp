@@ -86,6 +86,60 @@ namespace IOMath
 		}
     
 		template <typename T>
+		constexpr Types::TMatrix<4, 4, T> ComputeTranslate(Types::TMatrix<4, 4, T> const &object, Types::TVector<3, T> const &_translate) noexcept
+		{
+			Types::TMatrix<4, 4, T> result = object;
+
+			Types::TVector<4, T> translate = Types::TVector<4, T>(_translate, 1);
+			result[0][3] = detail::ComputeDot(result[0], translate);
+			result[1][3] = detail::ComputeDot(result[1], translate);
+			result[2][3] = detail::ComputeDot(result[2], translate);
+
+			return result;
+		}
+
+		template <typename T>
+		constexpr Types::TMatrix<4, 4, T> ComputeRotate(Types::TMatrix<4, 4, T> const &object, Types::TVector<3, T> const &axis, T angle) noexcept
+		{
+			T const sinAngle = std::sin(angle);
+			T const cosAngle = std::cos(angle);
+
+			Types::TVector<3, T> normalizedAxis = Types::TVector<3, T>(ComputeNormalize(axis));
+			Types::TVector<3, T> modifier = Types::TVector<3, T>(normalizedAxis * (static_cast<T>(1) - cosAngle));
+
+			Types::TMatrix<3, 3, T> transposedRotateMatrix = Types::TMatrix<3, 3, T>
+			(
+				cosAngle + modifier.x * normalizedAxis.x, modifier.x * normalizedAxis.y + sinAngle * normalizedAxis.z, modifier.x * normalizedAxis.z - sinAngle * normalizedAxis.y,
+				modifier.y * normalizedAxis.x - sinAngle * normalizedAxis.z, cosAngle + modifier.y * normalizedAxis.y, modifier.y * normalizedAxis.z + sinAngle * normalizedAxis.x,
+				modifier.z * normalizedAxis.x + sinAngle * normalizedAxis.y, modifier.z * normalizedAxis.y - sinAngle * normalizedAxis.x, cosAngle + modifier.z * normalizedAxis.z
+			);
+
+			Types::TMatrix<4, 3, T> object4x3 = Types::TMatrix<4, 3, T>::FromMatrix4x4(object);
+
+			return Types::TMatrix<4, 4, T>
+			(
+				detail::ComputeDot(object4x3[0], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[0], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[0], transposedRotateMatrix[2]), object[0][3],
+				detail::ComputeDot(object4x3[1], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[1], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[1], transposedRotateMatrix[2]), object[1][3],
+				detail::ComputeDot(object4x3[2], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[2], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[2], transposedRotateMatrix[2]), object[2][3],
+				detail::ComputeDot(object4x3[3], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[3], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[3], transposedRotateMatrix[2]), object[3][3]
+			);
+		}
+
+		template <typename T>
+		constexpr Types::TMatrix<4, 4, T> ComputeScale(Types::TMatrix<4, 4, T> const &object, Types::TVector<3, T> const &_scale) noexcept
+		{
+			Types::TMatrix<4, 4, T> result = object;
+
+			Types::TVector<4, T> scale = Types::TVector<4, T>(_scale, 1);
+			result[0] *= scale;
+			result[1] *= scale;
+			result[2] *= scale;
+			result[3] *= scale;
+
+			return result;
+		}
+
+		template <typename T>
 		constexpr Types::TMatrix<4, 4, T> ComputeLookAtRightHandedMatrix(Types::TVector<3, T> const &eye, Types::TVector<3, T> const &target, Types::TVector<3, T> const &_up) noexcept
 		{
 			Types::TVector<3, T> const forward = Types::TVector<3, T>(detail::ComputeNormalize(target - eye));

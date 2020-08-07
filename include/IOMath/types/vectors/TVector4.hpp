@@ -56,11 +56,11 @@ namespace IOMath
 				w{w} {}
 
 			template <typename X, typename Y, typename Z, typename W>
-			constexpr TVector(X x, Y y, Z z, W w) noexcept :
-				x{static_cast<T>(x)},
-				y{static_cast<T>(y)},
-				z{static_cast<T>(z)},
-				w{static_cast<T>(w)} {}
+			constexpr TVector(X _x, Y _y, Z _z, W _w) noexcept :
+				x{static_cast<T>(_x)},
+				y{static_cast<T>(_y)},
+				z{static_cast<T>(_z)},
+				w{static_cast<T>(_w)} {}
 
 			template <typename X, typename Y, typename ZW>
 			constexpr TVector(X x, Y y, TVector<2, ZW> const &otherZW) noexcept :

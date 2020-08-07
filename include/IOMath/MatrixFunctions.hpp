@@ -67,6 +67,24 @@ namespace IOMath
 	}
 
 	template <typename T>
+	constexpr Types::TMatrix<4, 4, T> Translate(Types::TMatrix<4, 4, T> const &object, Types::TVector<3, T> const &translate) noexcept
+	{
+		return detail::ComputeTranslate(object, translate);
+	}
+
+	template <typename T>
+	constexpr Types::TMatrix<4, 4, T> Rotate(Types::TMatrix<4, 4, T> const &object, Types::TVector<3, T> const &axis, T angle) noexcept
+	{
+		return detail::ComputeRotate(object, axis, angle);
+	}
+
+	template <typename T>
+	constexpr Types::TMatrix<4, 4, T> Scale(Types::TMatrix<4, 4, T> const &object, Types::TVector<3, T> const &scale) noexcept
+	{
+		return detail::ComputeScale(object, scale);
+	}
+
+	template <typename T>
 	constexpr Types::TMatrix<4, 4, T> LookAtMatrix(Types::TVector<3, T> const &eye, Types::TVector<3, T> const &target, Types::TVector<3, T> const &up) noexcept
 	{
 		#ifdef IO_MATH_LH_SYSTEM

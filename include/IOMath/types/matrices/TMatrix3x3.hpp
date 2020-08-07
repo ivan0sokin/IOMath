@@ -109,7 +109,7 @@ namespace IOMath
 				} {}
 			
 			template <typename U>
-			static constexpr TMatrix<3, 3, T> FromMatrix2x4(TMatrix<2, 4, T> const &other) noexcept
+			static constexpr TMatrix<3, 3, T> FromMatrix2x4(TMatrix<2, 4, U> const &other) noexcept
 			{
 				return TMatrix<3, 3, T>
 				(
@@ -119,7 +119,7 @@ namespace IOMath
 				);
 			}
 			template <typename U>
-			static constexpr TMatrix<3, 3, T> FromMatrix3x4(TMatrix<3, 4, T> const &other) noexcept
+			static constexpr TMatrix<3, 3, T> FromMatrix3x4(TMatrix<3, 4, U> const &other) noexcept
 			{
 				return TMatrix<3, 3, T>
 				(
@@ -129,7 +129,7 @@ namespace IOMath
 				);
 			}
 			template <typename U>
-			static constexpr TMatrix<3, 3, T> FromMatrix4x4(TMatrix<4, 4, T> const &other) noexcept
+			static constexpr TMatrix<3, 3, T> FromMatrix4x4(TMatrix<4, 4, U> const &other) noexcept
 			{
 				return TMatrix<3, 3, T>
 				(
