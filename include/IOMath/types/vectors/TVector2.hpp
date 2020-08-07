@@ -39,6 +39,8 @@ namespace IOMath
 			union
 			{
 				struct { T x, y; };
+				struct { T r, g; };
+				struct { T b, w; };
 			};
 
 			constexpr TVector() noexcept = default;
@@ -340,8 +342,7 @@ namespace IOMath
 			return TVector<2, T>
 			(
 				-object.x,
-				-object.y,
-				-object.z
+				-object.y
 			);
 		}
 

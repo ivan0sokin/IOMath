@@ -39,6 +39,7 @@ namespace IOMath
 			union
 			{
 				struct { T x, y, z; };
+				struct { T r, g, b; };
 			};
 
 			constexpr TVector() noexcept = default;
