@@ -33,10 +33,10 @@ void TestVectorSubtract()
 
 void TestVectorMultiply()
 {
-    FVector3 firstMultiplier = FVector3(0.5f, 3.0f, 1.5f);
+    FVector3 firstMultiplier = FVector3(0.5f, 3.0f, 2.0f);
     FVector3 secondMultiplier = FVector3(10.0f, 2.0f, -3.0f);
     
-    AssertVector(firstMultiplier * secondMultiplier, 5.0f, 6.0f, -4.5f);
+    AssertVector(firstMultiplier * secondMultiplier, 5.0f, 6.0f, -6.0f);
 }
 
 void TestVectorDivide()
