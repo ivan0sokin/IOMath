@@ -5,8 +5,8 @@ using namespace IOMath;
 
 void TestZeroVector()
 {
-    FVector3 zeroVector;
-    //AssertVector(zeroVector, 0.0f);
+    FVector3 zeroVector = FVector3();
+    AssertVector(zeroVector, 0.0f);
 }
 
 void TestScalarVector()
