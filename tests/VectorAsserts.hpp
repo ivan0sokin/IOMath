@@ -47,3 +47,25 @@ void AssertVector(TVector<4, T> const &vector, T x, T y, T z, T w)
     assert(vector.z == z);
     assert(vector.w == w);
 }
+
+template <typename T>
+void AssertVector(TVector<2, T> const &vector, TVector<2, T> const &other)
+{
+    assert(vector.x == other.x);
+    assert(vector.y == other.y);
+}
+template <typename T>
+void AssertVector(TVector<3, T> const &vector, TVector<3, T> const &other)
+{
+    assert(vector.x == other.x);
+    assert(vector.y == other.y);
+    assert(vector.z == other.z);
+}
+template <typename T>
+void AssertVector(TVector<4, T> const &vector, TVector<4, T> const &other)
+{
+    assert(vector.x == other.x);
+    assert(vector.y == other.y);
+    assert(vector.z == other.z);
+    assert(vector.w == other.w);
+}

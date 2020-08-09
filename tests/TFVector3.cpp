@@ -54,6 +54,14 @@ void TestVectorBracketsOperator()
     AssertVector(vector, vector[0], vector[1], vector[2]);
 }
 
+void TestVectorFromOther()
+{
+    FVector3 other = FVector3(1.0f, 2.0f, 3.0f);
+    FVector3 vector = FVector3(other);
+
+    AssertVector(vector, other);
+}
+
 void Test()
 {
     TestZeroVector();
