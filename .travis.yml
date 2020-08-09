@@ -1,5 +1,5 @@
 language: c++
 
 script:
-  - g++ tests/TFVector3.cpp -o Test
+  - g++ tests/TFVector3.cpp -o Test -std=c++17
   - ./Test
