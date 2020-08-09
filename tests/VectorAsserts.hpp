@@ -4,29 +4,26 @@
 
 using namespace IOMath::Types;
 
-template <size_t S, typename T>
-void AssertVector(TVector<S, T> const &vector, T value)
+template <typename T>
+void AssertVector(TVector<2, T> const &vector, T value)
 {
-    switch (vector::Size())
-    {
-        case 2:
-            assert(vector.x == value);
-            assert(vector.y == value);
-            break;
-        case 3:
-            assert(vector.x == value);
-            assert(vector.y == value);
-            assert(vector.z == value);
-            break;
-        case 4:
-            assert(vector.x == value);
-            assert(vector.y == value);
-            assert(vector.z == value);
-            assert(vector.w == value);
-            break;
-        default:
-            assert(false);
-    }
+    assert(vector.x == value);
+    assert(vector.y == value);
+}
+template <typename T>
+void AssertVector(TVector<3, T> const &vector, T value)
+{
+    assert(vector.x == value);
+    assert(vector.y == value);
+    assert(vector.z == value);
+}
+template <typename T>
+void AssertVector(TVector<4, T> const &vector, T value)
+{
+    assert(vector.x == value);
+    assert(vector.y == value);
+    assert(vector.z == value);
+    assert(vector.w == value);
 }
 
 template <typename T>
