@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./TestFVectors.sh
+./tests/TestFVectors.sh
