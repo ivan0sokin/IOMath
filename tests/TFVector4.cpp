@@ -20,7 +20,7 @@ void TestVectorAdd()
     FVector4 firstAdd = FVector4(1.0f, 2.0f, 3.0f, -3.0f);
     FVector4 secondAdd = FVector4(5.0f, 4.0f, 3.0f, -3.0f);
 
-    AssertVector(firstAdd + secondAdd, 6.0f, 6.0f, 6.0f, 6.0f);
+    AssertVector(firstAdd + secondAdd, 6.0f, 6.0f, 6.0f, -6.0f);
 }
 
 void TestVectorSubtract()
