@@ -1,6 +1,5 @@
 language: c++
 
 script:
-  - echo "FVector3 Test"
-  - g++ test/TFVector3.cpp -o Test
+  - g++ tests/TFVector3.cpp -o Test
   - ./Test
