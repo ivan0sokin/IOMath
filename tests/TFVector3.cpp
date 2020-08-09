@@ -12,7 +12,7 @@ void TestZeroVector()
 void TestScalarVector()
 {
     FVector3 scalarVector = FVector3(1.7f);
-    //AssertVector(scalarVector, 1.7f);
+    AssertVector(scalarVector, 1.7f);
 }
 
 void TestVectorAdd()
