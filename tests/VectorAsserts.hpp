@@ -7,7 +7,7 @@ using namespace IOMath::Types;
 template <size_t S, typename T>
 void AssertVector(TVector<S, T> const &vector, T value)
 {
-    switch (S)
+    switch (vector::Size())
     {
         case 2:
             assert(vector.x == value);
