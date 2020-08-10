@@ -7,3 +7,4 @@ script:
   - ./tests/TestDVectors.sh
   - ./tests/TestFVectors.sh
   - ./tests/TestIVectors.sh
+  - ./tests/TestUVectors.sh
