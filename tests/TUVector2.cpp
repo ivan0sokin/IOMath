@@ -41,10 +41,10 @@ void TestVectorMultiply()
 
 void TestVectorDivide()
 {
-    UVector2 dividend = UVector2(1u, 7u);
-    UVector2 divider = UVector2(-1u, 2u);
+    UVector2 dividend = UVector2(2u, 7u);
+    UVector2 divider = UVector2(2u, 2u);
 
-    AssertVector(dividend / divider, -1u, 3u);
+    AssertVector(dividend / divider, 1u, 3u);
 }
 
 void TestVectorBracketsOperator()
