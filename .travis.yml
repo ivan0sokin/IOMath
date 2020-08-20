@@ -1,10 +1,6 @@
 language: c++
 
-before_script:
-  - chmod +x tests/*.sh
-
 script:
-  - ./tests/TestDVectors.sh
-  - ./tests/TestFVectors.sh
-  - ./tests/TestIVectors.sh
-  - ./tests/TestUVectors.sh
+  - cd tests/
+  - cmake CMakeLists.txt -Wno-dev && cmake --build .
+  - ctest
