@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/x4kkk3r/IOMath.svg?branch=master)](https://travis-ci.com/x4kkk3r/IOMath)
 [![License](https://img.shields.io/github/license/x4kkk3r/IOMath)]()
+[![Latest Release](https://img.shields.io/github/v/release/x4kkk3r/IOMath?include_prereleases)]()
 # IOMath
 
 ## About
@@ -14,8 +15,8 @@ git clone https://github.com/x4kkk3r/IOMath.git
 ## Using
 **Example**:
 ```c++
-#include <IOMath/src/Vectors.hpp>
-#include <IOMath/src/Matrices.hpp>
+#include <IOMath/Vectors.hpp>
+#include <IOMath/Matrices.hpp>
 using namespace IOMath;
 
 int main(int, char**)
