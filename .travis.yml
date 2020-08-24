@@ -3,4 +3,4 @@ language: c++
 script:
   - cd tests/
   - cmake CMakeLists.txt -Wno-dev && cmake --build .
-  - ctest
+  - ctest --output-on-failure

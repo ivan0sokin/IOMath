@@ -89,6 +89,8 @@ namespace IOMath
 	{
 		#ifdef IO_MATH_LH_SYSTEM
 			return detail::ComputeLookAtLeftHandedMatrix(eye, target, up);
+		#elif IO_MATH_RH_SYSTEM
+			return detail::ComputeLookAtRightHandedMatrix(eye, target, up);
 		#endif
 
 		return detail::ComputeLookAtRightHandedMatrix(eye, target, up);
@@ -106,12 +108,15 @@ namespace IOMath
 		#ifdef IO_MATH_LH_SYSTEM
 			#ifdef IO_MATH_ORTHO_NEGATIVE_TO_ONE
 				return detail::ComputeOrthoLeftHandedNegativeToOneMatrix(left, top, right, bottom, zNear, zFar);
+			#elif IO_MATH_ORTHO_ZERO_TO_ONE
+				return detail::ComputeOrthoLeftHandedZeroToOneMatrix(left, top, right, bottom, zNear, zFar);
 			#endif
-			return detail::ComputeOrthoLeftHandedZeroToOneMatrix(left, top, right, bottom, zNear, zFar);
-		#endif
-
-		#ifdef IO_MATH_ORTHO_NEGATIVE_TO_ONE
-			return detail::ComputeOrthoRightHandedNegativeToOneMatrix(left, top, right, bottom, zNear, zFar);
+		#elif IO_MATH_RH_SYSTEM
+			#ifdef IO_MATH_ORTHO_NEGATIVE_TO_ONE
+				return detail::ComputeOrthoRightHandedNegativeToOneMatrix(left, top, right, bottom, zNear, zFar);
+			#elif IO_MATH_ORTHO_ZERO_TO_ONE
+				return detail::ComputeOrthoRightHandedZeroToOneMatrix(left, top, right, bottom, zNear, zFar);
+			#endif
 		#endif
 
 		return detail::ComputeOrthoRightHandedZeroToOneMatrix(left, top, right, bottom, zNear, zFar);
@@ -123,13 +128,15 @@ namespace IOMath
 		#ifdef IO_MATH_LH_SYSTEM
 			#ifdef IO_MATH_PERSPECTIVE_NEGATIVE_TO_ONE
 				return detail::ComputePerspectiveLeftHandedNegativeToOneMatrix(fovy, aspect, zNear, zFar);
+			#elif IO_MATH_PERSPECTIVE_ZERO_TO_ONE
+				return detail::ComputePerspectiveLeftHandedZeroToOneMatrix(fovy, aspect, zNear, zFar);
 			#endif
-			
-			return detail::ComputePerspectiveLeftHandedZeroToOneMatrix(fovy, aspect, zNear, zFar);
-		#endif
-
-		#ifdef IO_MATH_PERSPECTIVE_NEGATIVE_TO_ONE
-			return detail::ComputePerspectiveRightHandedNegativeToOneMatrix(fovy, aspect, zNear, zFar);
+		#elif IO_MATH_RH_SYSTEM
+			#ifdef IO_MATH_PERSPECTIVE_NEGATIVE_TO_ONE
+				return detail::ComputePerspectiveRightHandedNegativeToOneMatrix(fovy, aspect, zNear, zFar);
+			#elif IO_MATH_PERSPECTIVE_ZERO_TO_ONE
+				return detail::ComputePerspectiveRightHandedZeroToOneMatrix(fovy, aspect, zNear, zFar);
+			#endif
 		#endif
 
 		return detail::ComputePerspectiveRightHandedZeroToOneMatrix(fovy, aspect, zNear, zFar);

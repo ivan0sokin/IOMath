@@ -228,6 +228,206 @@ void Vector2_PostifxDecrement()
     assert(vector == Vector2(4.5f, 0.2999999523162841796875));
 }
 
+void Bit_Vector2_AndScalar()
+{
+    UVector2 vector = UVector2(2u, 4u);
+    UVector2 result = vector & 2u;
+
+    assert(result == UVector2(2u, 0u));
+}
+
+void Bit_Vector2_AndVector()
+{
+    UVector2 vector = UVector2(4u, 1u);
+    UVector2 result = vector & UVector2(1u, 1u);
+
+    assert(result == UVector2(0u, 1u));
+}
+
+void Bit_Vector2_AndAssignScalar()
+{
+    UVector2 vector = UVector2(3u, 7u);
+    vector &= 3u;
+
+    assert(vector == UVector2(3u, 3u));
+}
+
+void Bit_Vector2_AndAssignVector()
+{
+    UVector2 vector = UVector2(9u, 3u);
+    vector &= UVector2(3u, 9u);
+
+    assert (vector == UVector2(1u, 1u));
+}
+
+void Bit_Vector2_OrScalar()
+{
+    UVector2 vector = UVector2(2u, 4u);
+    UVector2 result = vector | 2u;
+
+    assert(result == UVector2(2u, 6u));
+}
+
+void Bit_Vector2_OrVector()
+{
+    UVector2 vector = UVector2(4u, 1u);
+    UVector2 result = vector | UVector2(1u, 1u);
+
+    assert(result == UVector2(5u, 1u));
+}
+
+void Bit_Vector2_OrAssignScalar()
+{
+    UVector2 vector = UVector2(3u, 7u);
+    vector |= 3u;
+
+    assert(vector == UVector2(3u, 7u));
+}
+
+void Bit_Vector2_OrAssignVector()
+{
+    UVector2 vector = UVector2(9u, 3u);
+    vector |= UVector2(3u, 9u);
+
+    assert (vector == UVector2(11u, 11u));
+}
+
+void Bit_Vector2_XorScalar()
+{
+    UVector2 vector = UVector2(2u, 4u);
+    UVector2 result = vector ^ 2u;
+
+    assert(result == UVector2(0u, 6u));
+}
+
+void Bit_Vector2_XorVector()
+{
+    UVector2 vector = UVector2(4u, 1u);
+    UVector2 result = vector ^ UVector2(1u, 1u);
+
+    assert(result == UVector2(5u, 0u));
+}
+
+void Bit_Vector2_XorAssignScalar()
+{
+    UVector2 vector = UVector2(3u, 7u);
+    vector ^= 3u;
+
+    assert(vector == UVector2(0u, 4u));
+}
+
+void Bit_Vector2_XorAssignVector()
+{
+    UVector2 vector = UVector2(9, 3);
+    vector ^= UVector2(3, 9);
+
+    assert (vector == UVector2(10, 10));
+}
+
+void Bit_Vector2_RemainderScalar()
+{
+    UVector2 vector = UVector2(15u, 11u);
+    UVector2 result = vector % 10u;
+
+    assert(result == UVector2(5u, 1u));
+}
+
+void Bit_Vector2_RemainderVector()
+{
+    UVector2 vector = UVector2(5u, 7u);
+    UVector2 result = vector % UVector2(5u, 3u);
+
+    assert(result == UVector2(0u, 1u));
+}
+
+void Bit_Vector2_RemainderAssignScalar()
+{
+    UVector2 vector = UVector2(15u, 11u);
+    vector %= 10u;
+
+    assert(vector == UVector2(5u, 1u));
+}
+
+void Bit_Vector2_RemainderAssignVector()
+{
+    UVector2 vector = UVector2(5u, 7u);
+    vector %= UVector2(5u, 3u);
+
+    assert(vector == UVector2(0u, 1u));
+}
+
+void Bit_Vector2_Not()
+{
+    IVector2 vector = IVector2(14, 5);
+    IVector2 result = ~vector;
+
+    assert(result == IVector2(-15, -6));
+}
+
+void Bit_Vector2_ShiftLeftScalar()
+{
+    UVector2 vector = UVector2(2u, 3u);
+    UVector2 result = vector << 4u;
+
+    assert(result == UVector2(32u, 48u));
+}
+
+void Bit_Vector2_ShiftLeftVector()
+{
+    UVector2 vector = UVector2(4u, 5u);
+    UVector2 result = vector << UVector2(1u, 2u);
+
+    assert(result == UVector2(8u, 20u));
+}
+
+void Bit_Vector2_ShiftLeftAssignScalar()
+{
+    UVector2 vector = UVector2(2u, 3u);
+    vector <<= 4u;
+
+    assert(vector == UVector2(32u, 48u));
+}
+
+void Bit_Vector2_ShiftLeftAssignVector()
+{
+    UVector2 vector = UVector2(4u, 5u);
+    vector <<= UVector2(1u, 2u);
+
+    assert(vector == UVector2(8u, 20u));
+}
+
+void Bit_Vector2_ShiftRightScalar()
+{
+    UVector2 vector = UVector2(2u, 10u);
+    UVector2 result = vector >> 3u;
+
+    assert(result == UVector2(0u, 1u));
+}
+
+void Bit_Vector2_ShiftRightVector()
+{
+    UVector2 vector = UVector2(17u, 26u);
+    UVector2 result = vector >> UVector2(4u, 2u);
+
+    assert(result == UVector2(1u, 6u));
+}
+
+void Bit_Vector2_ShiftRightAssignScalar()
+{
+    UVector2 vector = UVector2(2u, 10u);
+    vector >>= 3u;
+
+    assert(vector == UVector2(0u, 1u));
+}
+
+void Bit_Vector2_ShiftRightAssignVector()
+{
+    UVector2 vector = UVector2(17u, 26u);
+    vector >>= UVector2(4u, 2u);
+
+    assert(vector == UVector2(1u, 6u));
+}
+
 int main(int, char**)
 {
     Vector2_DefaultConstructor();
@@ -259,6 +459,31 @@ int main(int, char**)
     Vector2_PrefixDecrement();
     Vector2_PostfixIncrement();
     Vector2_PostifxDecrement();
+    Bit_Vector2_AndScalar();
+    Bit_Vector2_AndVector();
+    Bit_Vector2_AndAssignScalar();
+    Bit_Vector2_AndAssignVector();
+    Bit_Vector2_OrScalar();
+    Bit_Vector2_OrVector();
+    Bit_Vector2_OrAssignScalar();
+    Bit_Vector2_OrAssignVector();
+    Bit_Vector2_XorScalar();
+    Bit_Vector2_XorVector();
+    Bit_Vector2_XorAssignScalar();
+    Bit_Vector2_XorAssignVector();
+    Bit_Vector2_RemainderScalar();
+    Bit_Vector2_RemainderVector();
+    Bit_Vector2_RemainderAssignScalar();
+    Bit_Vector2_RemainderAssignVector();
+    Bit_Vector2_Not();
+    Bit_Vector2_ShiftLeftScalar();
+    Bit_Vector2_ShiftLeftVector();
+    Bit_Vector2_ShiftLeftScalar();
+    Bit_Vector2_ShiftLeftAssignVector();
+    Bit_Vector2_ShiftRightScalar();
+    Bit_Vector2_ShiftRightVector();
+    Bit_Vector2_ShiftRightScalar();
+    Bit_Vector2_ShiftRightAssignVector();
 
     return 0;
 }
