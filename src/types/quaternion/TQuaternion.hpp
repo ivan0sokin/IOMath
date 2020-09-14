@@ -147,42 +147,57 @@ namespace IOMath
                 return static_cast<T>(4);
             }
 
-            constexpr T& operator[](size_t index) noexcept
+            constexpr T & operator[](size_t index) noexcept
 			{
-				assert(index >= 0 && index < TQuaternion::Size());
+				#ifdef IO_MATH_SAFE_BRACKETS_OPERATOR
+					assert(index >= 0 && index < 4);
+				#endif
 
-				switch (index)
-				{
-				default:
-					case 0:
-						return x;
-					case 1:
-						return y;
-                    case 2:
-                        return z;
-                    case 3:
-                        return w;
-				}
+				return (&this->w)[index];
 			}
-			constexpr T const& operator[](size_t index) const noexcept
+			constexpr T const & operator[](size_t index) const noexcept
 			{
-				assert(index >= 0 && index < TQuaternion::Size());
+				#ifdef IO_MATH_SAFE_BRACKETS_OPERATOR
+					assert(index >= 0 && index < 4);
+				#endif
 
-				switch (index)
-				{
-				default:
-					case 0:
-						return x;
-					case 1:
-						return y;
-                    case 2:
-                        return z;
-                    case 3:
-                        return w;
-				}
+				return (&this->w)[index];
 			}
 
-            constexpr TQuaternion<T>& operator=(TQuaternion<T> const &other) noexcept
+            constexpr T & ValueByIndex(size_t index) noexcept
+            {
+                switch (index)
+                {
+                    case 0:
+                        return this->w;
+                    case 1:
+                        return this->x;
+                    case 2:
+                        return this->y;
+                    case 3:
+                        return this->z;
+                    default:
+                        return this->w;
+                }
+            }
+            constexpr T const & ValueByIndex(size_t index) const noexcept
+            {
+                switch (index)
+                {
+                    case 0:
+                        return this->w;
+                    case 1:
+                        return this->x;
+                    case 2:
+                        return this->y;
+                    case 3:
+                        return this->z;
+                    default:
+                        return this->w;
+                }
+            }
+
+            constexpr TQuaternion<T> & operator=(TQuaternion<T> const &other) noexcept
             {
                 this->w = other.w;
                 this->x = other.x;
@@ -192,7 +207,7 @@ namespace IOMath
                 return *this;
             }
             template <typename U>
-            constexpr TQuaternion<T>& operator=(TQuaternion<U> const &other) noexcept
+            constexpr TQuaternion<T> & operator=(TQuaternion<U> const &other) noexcept
             {
                 this->w = static_cast<T>(other.w);
                 this->x = static_cast<T>(other.x);
@@ -202,7 +217,7 @@ namespace IOMath
                 return *this;
             }
             template <typename U>
-            constexpr TQuaternion<T>& operator+=(TQuaternion<U> const &other) noexcept
+            constexpr TQuaternion<T> & operator+=(TQuaternion<U> const &other) noexcept
             {
                 this->w += static_cast<T>(other.w);
                 this->x += static_cast<T>(other.x);
@@ -210,7 +225,7 @@ namespace IOMath
                 this->z += static_cast<T>(other.z);
             }
             template <typename U>
-            constexpr TQuaternion<T>& operator-=(TQuaternion<U> const &other) noexcept
+            constexpr TQuaternion<T> & operator-=(TQuaternion<U> const &other) noexcept
             {
                 this->w -= static_cast<T>(other.w);
                 this->x -= static_cast<T>(other.x);
@@ -218,7 +233,7 @@ namespace IOMath
                 this->z -= static_cast<T>(other.z);
             }
             template <typename U>
-            constexpr TQuaternion<T>& operator*=(U scalar) noexcept
+            constexpr TQuaternion<T> & operator*=(U scalar) noexcept
             {
                 this->w *= static_cast<T>(scalar);
                 this->x *= static_cast<T>(scalar);
@@ -228,7 +243,7 @@ namespace IOMath
                 return *this;
             }
             template <typename U>
-            constexpr TQuaternion<T>& operator*=(TQuaternion<U> const &other) noexcept
+            constexpr TQuaternion<T> & operator*=(TQuaternion<U> const &other) noexcept
             {
                 T const thisW = this->w;
                 T const thisX = this->x;
@@ -248,7 +263,7 @@ namespace IOMath
                 return *this;
             }
             template <typename U>
-            constexpr TQuaternion<T>& operator/=(U scalar) noexcept
+            constexpr TQuaternion<T> & operator/=(U scalar) noexcept
             {
                 this->w /= static_cast<T>(scalar);
                 this->x /= static_cast<T>(scalar);

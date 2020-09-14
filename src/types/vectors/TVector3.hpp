@@ -27,6 +27,7 @@
 
 #include "../BasicTypes.hpp"
 
+#include <memory.h>
 #include <cassert>
 
 namespace IOMath
@@ -101,47 +102,60 @@ namespace IOMath
 				return static_cast<size_t>(3);
 			}
 
-			constexpr T& operator[](size_t index) noexcept
+			constexpr T & operator[](size_t index) noexcept
 			{
-				assert(index >= 0 && index < TVector::Size());
+				#ifdef IO_MATH_SAFE_BRACKETS_OPERATOR
+					assert(index >= 0 && index < 3);
+				#endif
 
-				switch (index)
-				{
-				default:
-					case 0:
-						return x;
-					case 1:
-						return y;
-					case 2:
-						return z;
-				}
+				return (&this->x)[index];
 			}
-			constexpr T const& operator[](size_t index) const noexcept
+			constexpr T const & operator[](size_t index) const noexcept
 			{
-				assert(index >= 0 && index < TVector::Size());
+				#ifndef IO_MATH_SAFE_BRACKETS_OPERATOR
+					assert(index >= 0 && index < 3);
+				#endif
 
-				switch (index)
-				{
-				default:
-					case 0:
-						return x;
-					case 1:
-						return y;
-					case 2:
-						return z;
-				}
+				return (&this->x)[index];
 			}
 
-			constexpr TVector<3, T>& operator=(TVector<3, T> const &other) noexcept
+			constexpr T & ValueByIndex(size_t index) noexcept
 			{
-				this->x = other.x;
-				this->y = other.y;
-				this->z = other.z;
+				switch (index)
+				{
+					case 0:
+						return this->x;
+					case 1:
+						return this->y;
+					case 2:
+						return this->z;
+					default:
+						return this->z;
+				}
+			}
+			constexpr T const & ValueByIndex(size_t index) const noexcept
+			{
+				switch (index)
+				{
+					case 0:
+						return this->x;
+					case 1:
+						return this->y;
+					case 2:
+						return this->z;
+					default:
+						return this->z;
+				}
+			}
+
+			constexpr TVector<3, T> & operator=(TVector<3, T> const &other) noexcept
+			{
+				memcpy(&this->x, &other.x, sizeof(T) * 3);
 
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator=(TVector<3, U> const &other) noexcept
 			{
 				this->x = static_cast<T>(other.x);
 				this->y = static_cast<T>(other.y);
@@ -150,7 +164,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator+=(U scalar) noexcept
+			constexpr TVector<3, T> & operator+=(U scalar) noexcept
 			{
 				this->x += static_cast<T>(scalar);
 				this->y += static_cast<T>(scalar);
@@ -159,7 +173,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator+=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator+=(TVector<3, U> const &other) noexcept
 			{
 				this->x += static_cast<T>(other.x);
 				this->y += static_cast<T>(other.y);
@@ -168,7 +182,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator-=(U scalar) noexcept
+			constexpr TVector<3, T> & operator-=(U scalar) noexcept
 			{
 				this->x -= static_cast<T>(scalar);
 				this->y -= static_cast<T>(scalar);
@@ -177,7 +191,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator-=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator-=(TVector<3, U> const &other) noexcept
 			{
 				this->x -= static_cast<T>(other.x);
 				this->y -= static_cast<T>(other.y);
@@ -186,7 +200,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator*=(U scalar) noexcept
+			constexpr TVector<3, T> & operator*=(U scalar) noexcept
 			{
 				this->x *= static_cast<T>(scalar);
 				this->y *= static_cast<T>(scalar);
@@ -195,7 +209,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator*=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator*=(TVector<3, U> const &other) noexcept
 			{
 				this->x *= static_cast<T>(other.x);
 				this->y *= static_cast<T>(other.y);
@@ -204,7 +218,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator/=(U scalar) noexcept
+			constexpr TVector<3, T> & operator/=(U scalar) noexcept
 			{
 				this->x /= static_cast<T>(scalar);
 				this->y /= static_cast<T>(scalar);
@@ -213,7 +227,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator/=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator/=(TVector<3, U> const &other) noexcept
 			{
 				this->x /= static_cast<T>(other.x);
 				this->y /= static_cast<T>(other.y);
@@ -222,7 +236,7 @@ namespace IOMath
 				return *this;
 			}
 
-			constexpr TVector<3, T>& operator++() noexcept
+			constexpr TVector<3, T> & operator++() noexcept
 			{
 				++this->x;
 				++this->y;
@@ -230,7 +244,7 @@ namespace IOMath
 
 				return *this;
 			}
-			constexpr TVector<3, T>& operator--() noexcept
+			constexpr TVector<3, T> & operator--() noexcept
 			{
 				--this->x;
 				--this->y;
@@ -256,7 +270,7 @@ namespace IOMath
 			}
 
 			template <typename U>
-			constexpr TVector<3, T>& operator%=(U scalar) noexcept
+			constexpr TVector<3, T> & operator%=(U scalar) noexcept
 			{
 				this->x %= scalar;
 				this->y %= scalar;
@@ -265,7 +279,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator%=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator%=(TVector<3, U> const &other) noexcept
 			{
 				this->x %= other.x;
 				this->y %= other.y;
@@ -274,7 +288,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator&=(U scalar) noexcept
+			constexpr TVector<3, T> & operator&=(U scalar) noexcept
 			{
 				this->x &= scalar;
 				this->y &= scalar;
@@ -283,7 +297,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator&=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator&=(TVector<3, U> const &other) noexcept
 			{
 				this->x &= other.x;
 				this->y &= other.y;
@@ -292,7 +306,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator|=(U scalar) noexcept
+			constexpr TVector<3, T> & operator|=(U scalar) noexcept
 			{
 				this->x |= scalar;
 				this->y |= scalar;
@@ -301,7 +315,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator|=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator|=(TVector<3, U> const &other) noexcept
 			{
 				this->x |= other.x;
 				this->y |= other.y;
@@ -310,7 +324,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator^=(U scalar) noexcept
+			constexpr TVector<3, T> & operator^=(U scalar) noexcept
 			{
 				this->x ^= scalar;
 				this->y ^= scalar;
@@ -319,7 +333,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator^=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator^=(TVector<3, U> const &other) noexcept
 			{
 				this->x ^= other.x;
 				this->y ^= other.y;
@@ -328,7 +342,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator<<=(U scalar) noexcept
+			constexpr TVector<3, T> & operator<<=(U scalar) noexcept
 			{
 				this->x <<= scalar;
 				this->y <<= scalar;
@@ -337,7 +351,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator<<=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator<<=(TVector<3, U> const &other) noexcept
 			{
 				this->x <<= other.x;
 				this->y <<= other.y;
@@ -346,7 +360,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator>>=(U scalar) noexcept
+			constexpr TVector<3, T> & operator>>=(U scalar) noexcept
 			{
 				this->x >>= scalar;
 				this->y >>= scalar;
@@ -355,7 +369,7 @@ namespace IOMath
 				return *this;
 			}
 			template <typename U>
-			constexpr TVector<3, T>& operator>>=(TVector<3, U> const &other) noexcept
+			constexpr TVector<3, T> & operator>>=(TVector<3, U> const &other) noexcept
 			{
 				this->x >>= other.x;
 				this->y >>= other.y;

@@ -4,13 +4,8 @@
 # IOMath
 
 ## About
-IOMath is a ***fast header-only cross-platform*** math library.
-
-## Installation
-Type following in the command line:
-```
-git clone https://github.com/x4kkk3r/IOMath.git
-```
+IOMath is a ***fast header-only cross-platform*** math library. It's architecture is similar to [GLM](https://github.com/g-truc/glm).
+### [**Latest release**](https://github.com/x4kkk3r/IOMath/releases/latest)
 
 ## Using
 **Example**:
@@ -42,12 +37,14 @@ int main(int, char**)
 
 ## Tests
 To run test type followind in the command line:
-```bash
+```sh
 cd tests/
-cmake CMakeLists.txt -Wno-dev && cmake --build .
+cmake . -Wno-dev && cmake --build .
 ctest --output-on-failure
 ```
 
+## Dependecies
+[Boost](https://github.com/boostorg/boost) (only for testing)
 
 ## License
 IOMath is licensed under the [MIT license](LICENSE).

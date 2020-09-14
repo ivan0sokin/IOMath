@@ -30,5 +30,6 @@
 #include "Vector4.hpp"
 #include "Geometric.hpp"
 #include "Trigonometric.hpp"
+#include "ptr/VectorPointer.hpp"
 
 #endif

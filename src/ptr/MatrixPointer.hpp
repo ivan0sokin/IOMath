@@ -25,4 +25,44 @@
 #ifndef _IO_MATH_MATRIX_POINTER_HPP
 #define _IO_MATH_MATRIX_POINTER_HPP
 
+#include "../types/matrices/TMatrix2x2.hpp"
+#include "../types/matrices/TMatrix2x3.hpp"
+#include "../types/matrices/TMatrix2x4.hpp"
+#include "../types/matrices/TMatrix3x2.hpp"
+#include "../types/matrices/TMatrix3x3.hpp"
+#include "../types/matrices/TMatrix3x4.hpp"
+#include "../types/matrices/TMatrix4x2.hpp"
+#include "../types/matrices/TMatrix4x3.hpp"
+#include "../types/matrices/TMatrix4x4.hpp"
+#include "MakeFromPointer.hpp"
+
+namespace IOMath
+{
+	#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+		template <typename T, size_t C, size_t R>
+		constexpr T * ValuePtr(Types::TMatrix<C, R, T> &object) noexcept
+		{
+			return &(object[0][0]);
+		}
+
+		template <typename T, size_t C, size_t R>
+		constexpr T const * ValuePtr(Types::TMatrix<C, R, T> const &object) noexcept
+		{
+			return &(object[0][0]);
+		}
+	#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+		template <typename T, size_t R, size_t C>
+		constexpr T * ValuePtr(Types::TMatrix<R, C, T> &object) noexcept
+		{
+			return &(object[0][0]);
+		}
+
+		template <typename T, size_t R, size_t C>
+		constexpr T const * ValuePtr(Types::TMatrix<R, C, T> const &object) noexcept
+		{
+			return &(object[0][0]);
+		}
+	#endif
+}
+
 #endif

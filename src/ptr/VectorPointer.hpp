@@ -28,52 +28,20 @@
 #include "../types/vectors/TVector2.hpp"
 #include "../types/vectors/TVector3.hpp"
 #include "../types/vectors/TVector4.hpp"
-
-#include <memory.h>
+#include "MakeFromPointer.hpp"
 
 namespace IOMath
 {
-    namespace Pointers
+    template <typename T, size_t S>
+    constexpr T * ValuePtr(Types::TVector<S, T> &object) noexcept
     {
-        template <typename T>
-        constexpr T* Value(Types::TVector<2, T> &object)
-        {
-            return &(object.x);
-        }
-        template <typename T>
-        constexpr T* Value(Types::TVector<3, T> &object)
-        {
-            return &(object.x);
-        }
-        template <typename T>
-        constexpr T* Value(Types::TVector<4, T> &object)
-        {
-            return &(object.x);
-        }
+        return &(object.x);
+    }
 
-        template <typename T>
-        constexpr T const* ValueConst(Types::TVector<2, T> const &object)
-        {
-            return &(object.x);
-        }
-        template <typename T>
-        constexpr T const* ValueConst(Types::TVector<3, T> const &object)
-        {
-            return &(object.x);
-        }
-        template <typename T>
-        constexpr T const* ValueConst(Types::TVector<4, T> const &object)
-        {
-            return &(object.x);
-        }
-
-        template <typename V, typename T>
-        constexpr V Make(T const* ptr)
-        {
-            V result;
-            memcpy(Value(result), ptr, sizeof(V));
-            return result;
-        }
+    template <typename T, size_t S>
+    constexpr T const * ValuePtr(Types::TVector<S, T> const &object) noexcept
+    {
+        return &(object.x);
     }
 }
 

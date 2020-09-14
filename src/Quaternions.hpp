@@ -28,5 +28,6 @@
 #include "Quaternion.hpp"
 #include "QuaternionFunctions.hpp"
 #include "Geometric.hpp"
+#include "ptr/QuaternionPointer.hpp"
 
 #endif

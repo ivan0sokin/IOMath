@@ -1,5 +1,7 @@
 /.idea/
 /.vscode/
 /tests/*
+
 !/tests/CMakeLists.txt
 !/tests/*.cpp
+!/tests/internal/

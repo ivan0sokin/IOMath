@@ -90,7 +90,7 @@ namespace IOMath
 		{
 			Types::TMatrix<4, 4, T> result = object;
 
-			Types::TVector<4, T> translate = Types::TVector<4, T>(_translate, 1);
+			Types::TVector<4, T> translate = Types::TVector<4, T>(_translate, static_cast<T>(1));
 			result[0][3] = detail::ComputeDot(result[0], translate);
 			result[1][3] = detail::ComputeDot(result[1], translate);
 			result[2][3] = detail::ComputeDot(result[2], translate);
@@ -193,18 +193,7 @@ namespace IOMath
 		template <typename T>
 		constexpr Types::TMatrix<4, 4, T> ComputeOrthoRightHandedZeroToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
 		{
-			Types::TMatrix<4, 4, T> result(1);
-
-			result[0][0] = static_cast<T>(2) / (right - left);
-			result[1][1] = static_cast<T>(2) / (top - bottom);
-			result[2][2] = - static_cast<T>(1) / (zFar - zNear);
-
-			result[0][3] = - (right + left) / (right - left);
-			result[3][3] = - (top + bottom) / (top - bottom);
-			result[2][3] = - zNear / (zFar - zNear);
-
-			return result;
-			/*T const zero = static_cast<T>(0);
+			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 			T const two = static_cast<T>(2);
 
@@ -214,7 +203,7 @@ namespace IOMath
 				zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
 				zero, zero, -one / (zFar - zNear), -zNear / (zFar - zNear),
 				zero, zero, zero, one
-			);*/
+			);
 		}
 		template <typename T>
 		constexpr Types::TMatrix<4, 4, T> ComputeOrthoRightHandedNegativeToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
