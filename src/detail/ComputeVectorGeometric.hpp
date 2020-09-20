@@ -186,8 +186,8 @@ namespace IOMath
 		template <typename T>
 		constexpr Types::TVector<2, T> ComputeRefract(Types::TVector<2, T> const &object, Types::TVector<2, T> const &normal, T eta) noexcept
 		{
-			T dot = object.x * normal.x + object.y * normal.y;
-			T k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dot * dot);
+			T const dot = object.x * normal.x + object.y * normal.y;
+			T const k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dot * dot);
 			
 			if (k < static_cast<T>(0))
 				return Types::TVector<2, T>(0);
@@ -197,8 +197,8 @@ namespace IOMath
 		template <typename T>
 		constexpr Types::TVector<3, T> ComputeRefract(Types::TVector<3, T> const &object, Types::TVector<3, T> const &normal, T eta) noexcept
 		{
-			T dot = object.x * normal.x + object.y * normal.y + object.z * normal.z;
-			T k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dot * dot);
+			T const dot = object.x * normal.x + object.y * normal.y + object.z * normal.z;
+			T const k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dot * dot);
 			
 			if (k < static_cast<T>(0))
 				return Types::TVector<3, T>(0);
@@ -208,8 +208,8 @@ namespace IOMath
 		template <typename T>
 		constexpr Types::TVector<4, T> ComputeRefract(Types::TVector<4, T> const &object, Types::TVector<4, T> const &normal, T eta) noexcept
 		{
-			T dot = object.x * normal.x + object.y * normal.y + object.z * normal.z + object.w * normal.w;
-			T k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dot * dot);
+			T const dot = object.x * normal.x + object.y * normal.y + object.z * normal.z + object.w * normal.w;
+			T const k = static_cast<T>(1) - eta * eta * (static_cast<T>(1) - dot * dot);
 			
 			if (k < static_cast<T>(0))
 				return Types::TVector<4, T>(0);

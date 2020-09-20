@@ -263,7 +263,7 @@ namespace IOMath
 				return data[index];
 			}
 		
-			constexpr TMatrix<4, 4, T>& operator=(TMatrix<4, 4, T> const& other) noexcept
+			constexpr TMatrix<4, 4, T>& operator=(TMatrix<4, 4, T> const &other) noexcept
 			{
 				memcpy(&this->data, &other.data, sizeof(T) * 16);
 

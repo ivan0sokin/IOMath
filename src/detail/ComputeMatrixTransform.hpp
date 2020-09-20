@@ -196,13 +196,23 @@ namespace IOMath
 
 			T const zero = static_cast<T>(0);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				side.x,		side.y, 	side.z,   -detail::ComputeDot(side, eye),
-				up.x, 		up.y, 		up.z, 	  -detail::ComputeDot(up, eye),
-			   -forward.x, -forward.y, -forward.z, detail::ComputeDot(forward, eye),
-				zero, 		zero, 		zero, 	   static_cast<T>(1)
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					side.x, up.x, -forward.x, zero,
+					side.y, up.y, -forward.y, zero,
+					side.z, up.z, -forward.z, zero,
+					-detail::ComputeDot(side, eye), -detail::ComputeDot(up, eye), detail::ComputeDot(forward, eye), static_cast<T>(1)
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					side.x,		side.y, 	side.z,   -detail::ComputeDot(side, eye),
+					up.x, 		up.y, 		up.z, 	  -detail::ComputeDot(up, eye),
+				   -forward.x, -forward.y, -forward.z, detail::ComputeDot(forward, eye),
+					zero, 		zero, 		zero, 	   static_cast<T>(1)
+				);
+			#endif
 		}
 		template <typename T>
 		constexpr Types::TMatrix<4, 4, T> ComputeLookAtLeftHandedMatrix(Types::TVector<3, T> const &eye, Types::TVector<3, T> const &target, Types::TVector<3, T> const &_up) noexcept
@@ -213,13 +223,23 @@ namespace IOMath
 
 			T const zero = static_cast<T>(0);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				side.x,    side.y,    side.z,    -detail::ComputeDot(side, eye),
-				up.x,	   up.y,      up.z, 	 -detail::ComputeDot(up, eye),
-				forward.x, forward.y, forward.z, -detail::ComputeDot(forward, eye),
-				zero, 	   zero, 	  zero, 	  static_cast<T>(1)
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					side.x, up.x, forward.x, zero,
+					side.y, up.y, forward.y, zero,
+					side.z, up.z, forward.z, zero,
+					-detail::ComputeDot(side, eye), -detail::ComputeDot(up, eye), -detail::ComputeDot(forward, eye), static_cast<T>(1)
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					side.x,    side.y,    side.z,    -detail::ComputeDot(side, eye),
+					up.x,	   up.y,      up.z, 	 -detail::ComputeDot(up, eye),
+					forward.x, forward.y, forward.z, -detail::ComputeDot(forward, eye),
+					zero, 	   zero, 	  zero, 	  static_cast<T>(1)
+				);
+			#endif
 		}
 	
 		template <typename T>
@@ -229,139 +249,230 @@ namespace IOMath
 			T const one = static_cast<T>(1);
 			T const two = static_cast<T>(2);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				two / (right - left), zero, zero, -(right + left) / (right - left),
-				zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
-				zero, zero, -one, zero,
-				zero, zero, zero, one
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, zero,
+					zero, two / (top - bottom), zero, zero,
+					zero, zero, -one, zero,
+					-(right + left) / (right - left), -(top + bottom) / (top - bottom), zero, one
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, -(right + left) / (right - left),
+					zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
+					zero, zero, -one, zero,
+					zero, zero, zero, one
+				);
+			#endif
 		}
 
 		template <typename T>
-		constexpr Types::TMatrix<4, 4, T> ComputeOrthoRightHandedZeroToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
+		constexpr Types::TMatrix<4, 4, T> ComputeOrthoRightHandedFromZeroToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
 		{
 			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 			T const two = static_cast<T>(2);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				two / (right - left), zero, zero, -(right + left) / (right - left),
-				zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
-				zero, zero, -one / (zFar - zNear), -zNear / (zFar - zNear),
-				zero, zero, zero, one
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, zero,
+					zero, two / (top - bottom), zero, zero,
+					zero, zero, -one / (zFar - zNear), zero,
+					-(right + left) / (right - left), -(top + bottom) / (top - bottom), -zNear / (zFar - zNear), one
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, -(right + left) / (right - left),
+					zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
+					zero, zero, -one / (zFar - zNear), -zNear / (zFar - zNear),
+					zero, zero, zero, one
+				);
+			#endif
 		}
 		template <typename T>
-		constexpr Types::TMatrix<4, 4, T> ComputeOrthoRightHandedNegativeToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
+		constexpr Types::TMatrix<4, 4, T> ComputeOrthoRightHandedFromNegativeToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
 		{
 			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 			T const two = static_cast<T>(2);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				two / (right - left), zero, zero, -(right + left) / (right - left),
-				zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
-				zero, zero, -two / (zFar - zNear), -(zFar + zNear) / (zFar - zNear),
-				zero, zero, zero, one
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, zero,
+					zero, two / (top - bottom), zero, zero,
+					zero, zero, -two / (zFar - zNear), zero,
+					-(right + left) / (right - left), -(top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), one
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, -(right + left) / (right - left),
+					zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
+					zero, zero, -two / (zFar - zNear), -(zFar + zNear) / (zFar - zNear),
+					zero, zero, zero, one
+				);
+			#endif
 		}
 		template <typename T>
-		constexpr Types::TMatrix<4, 4, T> ComputeOrthoLeftHandedZeroToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
+		constexpr Types::TMatrix<4, 4, T> ComputeOrthoLeftHandedFromZeroToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
 		{
 			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 			T const two = static_cast<T>(2);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				two / (right - left), zero, zero, -(right + left) / (right - left),
-				zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
-				zero, zero, one / (zFar - zNear), -zNear / (zFar - zNear),
-				zero, zero, zero, one
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, zero,
+					zero, two / (top - bottom), zero, zero,
+					zero, zero, one / (zFar - zNear), zero,
+					-(right + left) / (right - left), -(top + bottom) / (top - bottom), -zNear / (zFar - zNear), one
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, -(right + left) / (right - left),
+					zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
+					zero, zero, one / (zFar - zNear), -zNear / (zFar - zNear),
+					zero, zero, zero, one
+				);
+			#endif
 		}
 		template <typename T>
-		constexpr Types::TMatrix<4, 4, T> ComputeOrthoLeftHandedNegativeToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
+		constexpr Types::TMatrix<4, 4, T> ComputeOrthoLeftHandedFromNegativeToOneMatrix(T left, T top, T right, T bottom, T zNear, T zFar) noexcept
 		{
 			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 			T const two = static_cast<T>(2);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				two / (right - left), zero, zero, -(right + left) / (right - left),
-				zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
-				zero, zero, two / (zFar - zNear), -(zFar + zNear) / (zFar - zNear),
-				zero, zero, zero, one
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, zero,
+					zero, two / (top - bottom), zero, zero,
+					zero, zero, two / (zFar - zNear), zero,
+					-(right + left) / (right - left), -(top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), one
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					two / (right - left), zero, zero, -(right + left) / (right - left),
+					zero, two / (top - bottom), zero, -(top + bottom) / (top - bottom),
+					zero, zero, two / (zFar - zNear), -(zFar + zNear) / (zFar - zNear),
+					zero, zero, zero, one
+				);
+			#endif
 		}
 
 		template <typename T>
-		constexpr Types::TMatrix<4, 4, T> ComputePerspectiveRightHandedZeroToOneMatrix(T fovy, T aspect, T zNear, T zFar) noexcept
+		constexpr Types::TMatrix<4, 4, T> ComputePerspectiveRightHandedFromZeroToOneMatrix(T fovy, T aspect, T zNear, T zFar) noexcept
 		{
 			T const tanHalfFovy = std::tan(fovy / static_cast<T>(2));
 
 			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				one / (aspect * tanHalfFovy), zero, zero, zero,
-				zero, one / tanHalfFovy, zero, zero,
-				zero, zero, zFar / (zNear - zFar), -(zFar * zNear) / (zFar - zNear),
-				zero, zero, -one, zero
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					one / (aspect * tanHalfFovy), zero, zero, zero,
+					zero, one / tanHalfFovy, zero, zero,
+					zero, zero, zFar / (zNear - zFar), -one,
+					zero, zero, -(zFar * zNear) / (zFar - zNear), zero
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					one / (aspect * tanHalfFovy), zero, zero, zero,
+					zero, one / tanHalfFovy, zero, zero,
+					zero, zero, zFar / (zNear - zFar), -(zFar * zNear) / (zFar - zNear),
+					zero, zero, -one, zero
+				);
+			#endif
 		}
 		template <typename T>
-		constexpr Types::TMatrix<4, 4, T> ComputePerspectiveRightHandedNegativeToOneMatrix(T fovy, T aspect, T zNear, T zFar) noexcept
+		constexpr Types::TMatrix<4, 4, T> ComputePerspectiveRightHandedFromNegativeToOneMatrix(T fovy, T aspect, T zNear, T zFar) noexcept
 		{
 			T const tanHalfFovy = std::tan(fovy / static_cast<T>(2));
 
 			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				one / (aspect * tanHalfFovy), zero, zero, zero,
-				zero, one / (tanHalfFovy), zero, zero,
-				zero, zero, -(zFar + zNear) / (zFar - zNear), -(static_cast<T>(2) * zFar * zNear) / (zFar - zNear),
-				zero, zero, -one, zero
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					one / (aspect * tanHalfFovy), zero, zero, zero,
+					zero, one / (tanHalfFovy), zero, zero,
+					zero, zero, -(zFar + zNear) / (zFar - zNear), -one,
+					zero, zero, -(static_cast<T>(2) * zFar * zNear) / (zFar - zNear), zero
+
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					one / (aspect * tanHalfFovy), zero, zero, zero,
+					zero, one / (tanHalfFovy), zero, zero,
+					zero, zero, -(zFar + zNear) / (zFar - zNear), -(static_cast<T>(2) * zFar * zNear) / (zFar - zNear),
+					zero, zero, -one, zero
+				);
+			#endif
 		}
 		template <typename T>
-		constexpr Types::TMatrix<4, 4, T> ComputePerspectiveLeftHandedZeroToOneMatrix(T fovy, T aspect, T zNear, T zFar) noexcept
+		constexpr Types::TMatrix<4, 4, T> ComputePerspectiveLeftHandedFromZeroToOneMatrix(T fovy, T aspect, T zNear, T zFar) noexcept
 		{
 			T const tanHalfFovy = std::tan(fovy / static_cast<T>(2));
 
 			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				one / (aspect * tanHalfFovy), zero, zero, zero,
-				zero, one / (tanHalfFovy), zero, zero,
-				zero, zero, zFar / (zFar - zNear), -(zFar * zNear) / (zFar - zNear),
-				zero, zero, one, zero
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					one / (aspect * tanHalfFovy), zero, zero, zero,
+					zero, one / (tanHalfFovy), zero, zero,
+					zero, zero, zFar / (zFar - zNear), one,
+					zero, zero, -(zFar * zNear) / (zFar - zNear), zero
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					one / (aspect * tanHalfFovy), zero, zero, zero,
+					zero, one / (tanHalfFovy), zero, zero,
+					zero, zero, zFar / (zFar - zNear), -(zFar * zNear) / (zFar - zNear),
+					zero, zero, one, zero
+				);
+			#endif
 		}
 		template <typename T>
-		constexpr Types::TMatrix<4, 4, T> ComputePerspectiveLeftHandedNegativeToOneMatrix(T fovy, T aspect, T zNear, T zFar) noexcept
+		constexpr Types::TMatrix<4, 4, T> ComputePerspectiveLeftHandedFromNegativeToOneMatrix(T fovy, T aspect, T zNear, T zFar) noexcept
 		{
 			T const tanHalfFovy = std::tan(fovy / static_cast<T>(2));
 
 			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				one / (aspect * tanHalfFovy), zero, zero,zero,
-				zero, one / (tanHalfFovy), zero, zero,
-				zero, zero, (zFar + zNear) / (zFar - zNear), -(static_cast<T>(2) * zFar * zNear) / (zFar - zNear),
-				zero, zero, one, zero
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					one / (aspect * tanHalfFovy), zero, zero, zero,
+					zero, one / (tanHalfFovy), zero, zero,
+					zero, zero, (zFar + zNear) / (zFar - zNear), one,
+					zero, zero, -(static_cast<T>(2) * zFar * zNear) / (zFar - zNear), zero
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					one / (aspect * tanHalfFovy), zero, zero, zero,
+					zero, one / (tanHalfFovy), zero, zero,
+					zero, zero, (zFar + zNear) / (zFar - zNear), -(static_cast<T>(2) * zFar * zNear) / (zFar - zNear),
+					zero, zero, one, zero
+				);
+			#endif
 		}
 	}
 }

@@ -76,7 +76,7 @@ namespace IOMath
 	{
 		return detail::ComputeArcsine(object);
 	}
-
+	
 	template <size_t S, typename T>
 	constexpr Types::TVector<S, T> Arccosine(Types::TVector<S, T> const &object) noexcept
 	{
