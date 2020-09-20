@@ -41,13 +41,23 @@ namespace IOMath
 			T const zero = static_cast<T>(0);
 			T const one = static_cast<T>(1);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				one, zero, zero, translate.x,
-				zero, one, zero, translate.y,
-				zero, zero, one, translate.z,
-				zero, zero, zero, one
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					one, 		 zero,		  zero, 	   zero,
+					zero, 		 one, 		  zero, 	   zero,
+					zero, 		 zero, 		  one,  	   zero,
+					translate.x, translate.y, translate.z, one
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					one, zero, zero, translate.x,
+					zero, one, zero, translate.y,
+					zero, zero, one, translate.z,
+					zero, zero, zero, one
+				);
+			#endif
 		}
 		
 		template <typename T>
@@ -62,20 +72,30 @@ namespace IOMath
 			Types::TVector<3, T> normalizedAxis = Types::TVector<3, T>(ComputeNormalize(axis));
 			Types::TVector<3, T> modifier = Types::TVector<3, T>(normalizedAxis * (one - cosAngle));
 
-			return Types::TMatrix<4, 4, T>
-			(
-				cosAngle + modifier.x * normalizedAxis.x, modifier.y * normalizedAxis.x - sinAngle * normalizedAxis.z, modifier.z * normalizedAxis.x + sinAngle * normalizedAxis.y, zero,
-				modifier.x * normalizedAxis.y + sinAngle * normalizedAxis.z, cosAngle + modifier.y * normalizedAxis.y,  modifier.z * normalizedAxis.y - sinAngle * normalizedAxis.x, zero,
-				modifier.x * normalizedAxis.z - sinAngle * normalizedAxis.y, modifier.y * normalizedAxis.z + sinAngle * normalizedAxis.x, cosAngle + modifier.z * normalizedAxis.z, zero,
-				zero, zero, zero, one
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				return Types::TMatrix<4, 4, T>
+				(
+					cosAngle + modifier.x * normalizedAxis.x, modifier.x * normalizedAxis.y + sinAngle * normalizedAxis.z, modifier.x * normalizedAxis.z - sinAngle * normalizedAxis.y, zero,
+					modifier.y * normalizedAxis.x - sinAngle * normalizedAxis.z, cosAngle + modifier.y * normalizedAxis.y, modifier.y * normalizedAxis.z + sinAngle * normalizedAxis.x, zero,
+					modifier.z * normalizedAxis.x + sinAngle * normalizedAxis.y, modifier.z * normalizedAxis.y - sinAngle * normalizedAxis.x, cosAngle + modifier.z * normalizedAxis.z, zero,
+					zero, zero, zero, one
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				return Types::TMatrix<4, 4, T>
+				(
+					cosAngle + modifier.x * normalizedAxis.x, modifier.y * normalizedAxis.x - sinAngle * normalizedAxis.z, modifier.z * normalizedAxis.x + sinAngle * normalizedAxis.y, zero,
+					modifier.x * normalizedAxis.y + sinAngle * normalizedAxis.z, cosAngle + modifier.y * normalizedAxis.y,  modifier.z * normalizedAxis.y - sinAngle * normalizedAxis.x, zero,
+					modifier.x * normalizedAxis.z - sinAngle * normalizedAxis.y, modifier.y * normalizedAxis.z + sinAngle * normalizedAxis.x, cosAngle + modifier.z * normalizedAxis.z, zero,
+					zero, zero, zero, one
+				);
+			#endif
 		}
 		
 		template <typename T>
 		constexpr Types::TMatrix<4, 4, T> ComputeScaleMatrix(Types::TVector<3, T> const &scale) noexcept
 		{
 			T const zero = static_cast<T>(0);
-
+			
 			return Types::TMatrix<4, 4, T>
 			(
 				scale.x, zero, zero, zero,
@@ -89,11 +109,15 @@ namespace IOMath
 		constexpr Types::TMatrix<4, 4, T> ComputeTranslate(Types::TMatrix<4, 4, T> const &object, Types::TVector<3, T> const &_translate) noexcept
 		{
 			Types::TMatrix<4, 4, T> result = object;
-
-			Types::TVector<4, T> translate = Types::TVector<4, T>(_translate, static_cast<T>(1));
-			result[0][3] = detail::ComputeDot(result[0], translate);
-			result[1][3] = detail::ComputeDot(result[1], translate);
-			result[2][3] = detail::ComputeDot(result[2], translate);
+			
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				result[3] = object[0] * _translate[0] + object[1] * _translate[1] + object[2] * _translate[2] + object[3];
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				Types::TVector<4, T> translate = Types::TVector<4, T>(_translate, static_cast<T>(1));
+				result[0][3] = detail::ComputeDot(result[0], translate);
+				result[1][3] = detail::ComputeDot(result[1], translate);
+				result[2][3] = detail::ComputeDot(result[2], translate);
+			#endif
 
 			return result;
 		}
@@ -107,22 +131,39 @@ namespace IOMath
 			Types::TVector<3, T> normalizedAxis = Types::TVector<3, T>(ComputeNormalize(axis));
 			Types::TVector<3, T> modifier = Types::TVector<3, T>(normalizedAxis * (static_cast<T>(1) - cosAngle));
 
-			Types::TMatrix<3, 3, T> transposedRotateMatrix = Types::TMatrix<3, 3, T>
-			(
-				cosAngle + modifier.x * normalizedAxis.x, modifier.x * normalizedAxis.y + sinAngle * normalizedAxis.z, modifier.x * normalizedAxis.z - sinAngle * normalizedAxis.y,
-				modifier.y * normalizedAxis.x - sinAngle * normalizedAxis.z, cosAngle + modifier.y * normalizedAxis.y, modifier.y * normalizedAxis.z + sinAngle * normalizedAxis.x,
-				modifier.z * normalizedAxis.x + sinAngle * normalizedAxis.y, modifier.z * normalizedAxis.y - sinAngle * normalizedAxis.x, cosAngle + modifier.z * normalizedAxis.z
-			);
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				Types::TMatrix<3, 3, T> rotateMatrix = Types::TMatrix<3, 3, T>
+				(
+					cosAngle + modifier.x * normalizedAxis.x, modifier.y * normalizedAxis.x - sinAngle * normalizedAxis.z, modifier.z * normalizedAxis.x + sinAngle * normalizedAxis.y,
+					modifier.x * normalizedAxis.y + sinAngle * normalizedAxis.z, cosAngle + modifier.y * normalizedAxis.y,  modifier.z * normalizedAxis.y - sinAngle * normalizedAxis.x,
+					modifier.x * normalizedAxis.z - sinAngle * normalizedAxis.y, modifier.y * normalizedAxis.z + sinAngle * normalizedAxis.x, cosAngle + modifier.z * normalizedAxis.z
+				);
 
-			Types::TMatrix<4, 3, T> object4x3 = Types::TMatrix<4, 3, T>::FromMatrix4x4(object);
+				return Types::TMatrix<4, 4, T>
+				(
+					object[0] * rotateMatrix[0][0] + object[1] * rotateMatrix[1][0] + object[2] * rotateMatrix[2][0],
+					object[0] * rotateMatrix[0][1] + object[1] * rotateMatrix[1][1] + object[2] * rotateMatrix[2][1],
+					object[0] * rotateMatrix[0][2] + object[1] * rotateMatrix[1][2] + object[2] * rotateMatrix[2][2],
+					object[3]
+				);
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				Types::TMatrix<3, 3, T> transposedRotateMatrix = Types::TMatrix<3, 3, T>
+				(
+					cosAngle + modifier.x * normalizedAxis.x, modifier.x * normalizedAxis.y + sinAngle * normalizedAxis.z, modifier.x * normalizedAxis.z - sinAngle * normalizedAxis.y,
+					modifier.y * normalizedAxis.x - sinAngle * normalizedAxis.z, cosAngle + modifier.y * normalizedAxis.y, modifier.y * normalizedAxis.z + sinAngle * normalizedAxis.x,
+					modifier.z * normalizedAxis.x + sinAngle * normalizedAxis.y, modifier.z * normalizedAxis.y - sinAngle * normalizedAxis.x, cosAngle + modifier.z * normalizedAxis.z
+				);
 
-			return Types::TMatrix<4, 4, T>
-			(
-				detail::ComputeDot(object4x3[0], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[0], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[0], transposedRotateMatrix[2]), object[0][3],
-				detail::ComputeDot(object4x3[1], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[1], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[1], transposedRotateMatrix[2]), object[1][3],
-				detail::ComputeDot(object4x3[2], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[2], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[2], transposedRotateMatrix[2]), object[2][3],
-				detail::ComputeDot(object4x3[3], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[3], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[3], transposedRotateMatrix[2]), object[3][3]
-			);
+				Types::TMatrix<4, 3, T> object4x3 = Types::TMatrix<4, 3, T>::FromMatrix4x4(object);
+
+				return Types::TMatrix<4, 4, T>
+				(
+					detail::ComputeDot(object4x3[0], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[0], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[0], transposedRotateMatrix[2]), object[0][3],
+					detail::ComputeDot(object4x3[1], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[1], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[1], transposedRotateMatrix[2]), object[1][3],
+					detail::ComputeDot(object4x3[2], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[2], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[2], transposedRotateMatrix[2]), object[2][3],
+					detail::ComputeDot(object4x3[3], transposedRotateMatrix[0]), detail::ComputeDot(object4x3[3], transposedRotateMatrix[1]), detail::ComputeDot(object4x3[3], transposedRotateMatrix[2]), object[3][3]
+				);
+			#endif
 		}
 
 		template <typename T>
@@ -130,11 +171,18 @@ namespace IOMath
 		{
 			Types::TMatrix<4, 4, T> result = object;
 
-			Types::TVector<4, T> scale = Types::TVector<4, T>(_scale, 1);
-			result[0] *= scale;
-			result[1] *= scale;
-			result[2] *= scale;
-			result[3] *= scale;
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				result[0] = object[0] * _scale[0];
+				result[1] = object[1] * _scale[1];
+				result[2] = object[2] * _scale[2];
+				result[3] = object[3];
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				Types::TVector<4, T> scale = Types::TVector<4, T>(_scale, 1);
+				result[0] *= scale;
+				result[1] *= scale;
+				result[2] *= scale;
+				result[3] *= scale;
+			#endif
 
 			return result;
 		}
