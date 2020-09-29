@@ -99,7 +99,7 @@ namespace IOMath
 			constexpr T & operator[](size_t index) noexcept
 			{
 				#ifdef IO_MATH_SAFE_BRACKETS_OPERATOR
-					assert(index >= 0 && index < 2);
+					assert(index >= 0 && index < TVector::Size());
 				#endif
 
 				return (&this->x)[index];
@@ -107,7 +107,7 @@ namespace IOMath
 			constexpr T const & operator[](size_t index) const noexcept
 			{
 				#ifdef IO_MATH_SAFE_BRACKETS_OPERATOR
-					assert(index >= 0 && index < 2);
+					assert(index >= 0 && index < TVector::Size());
 				#endif
 
 				return (&this->x)[index];

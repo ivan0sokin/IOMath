@@ -29,7 +29,7 @@
 
 namespace IOMath
 {
-    typedef Types::TQuaternion<double> DQuaternion;
+    using DQuaternion = Types::TQuaternion<double>;
 }
 
 #endif

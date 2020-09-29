@@ -29,7 +29,7 @@
 
 namespace IOMath
 {
-    typedef Types::TMatrix<2, 4, unsigned> UMatrix2x4;
+    using UMatrix2x4 = Types::TMatrix<2, 4, unsigned>;
 }
 
 #endif

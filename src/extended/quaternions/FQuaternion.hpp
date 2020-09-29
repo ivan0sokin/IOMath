@@ -29,8 +29,8 @@
 
 namespace IOMath
 {
-    typedef Types::TQuaternion<float> FQuaternion;
-    typedef Types::TQuaternion<float> Quaternion;
+    using FQuaternion = Types::TQuaternion<float>;
+    using Quaternion = Types::TQuaternion<float>;
 }
 
 #endif

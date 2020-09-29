@@ -29,8 +29,8 @@
 
 namespace IOMath
 {
-    typedef Types::TVector<3, float> FVector3;
-    typedef Types::TVector<3, float> Vector3;
+    using FVector3 = Types::TVector<3, float>;
+    using Vector3 = Types::TVector<3, float>;
 }
 
 #endif

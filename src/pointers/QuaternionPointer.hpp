@@ -22,20 +22,32 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_MAKE_FROM_POINTER_HPP
-#define _IO_MATH_MAKE_FROM_POINTER_HPP
+#ifndef _IO_MATH_QUATERNION_POINTER_HPP
+#define _IO_MATH_QUATERNION_POINTER_HPP
 
-#include "../types/BasicTypes.hpp"
+#include "../types/quaternion/TQuaternion.hpp"
 
 #include <memory.h>
 
 namespace IOMath
 {
-    template <typename Object, typename T>
-	constexpr Object MakeFromPtr(T const *ptr) noexcept
+    template <typename T>
+    constexpr T * ValuePtr(Types::TQuaternion<T> &object) noexcept
+    {
+        return &(object.w);
+    }
+
+    template <typename T>
+    constexpr T const * ValuePtr(Types::TQuaternion<T> const &object) noexcept
+    {
+        return &(object.w);
+    }
+
+	template <size_t S, typename T>
+	constexpr Types::TQuaternion<T> MakeFromPtr(T const *ptr) noexcept
 	{
-		Object result;
-		memcpy(ValuePtr(result), ptr, sizeof(Object));
+		Types::TQuaternion<T> result;
+		memcpy(ValuePtr(result), ptr, sizeof(Types::TQuaternion<T>));
 
 		return result;
 	}

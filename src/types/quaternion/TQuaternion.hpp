@@ -29,6 +29,8 @@
 #include "../../detail/ComputeVectorGeometric.hpp"
 #include "../../detail/ComputeQuaternionGeometric.hpp"
 
+#include <memory.h>
+
 namespace IOMath
 {
     namespace Types
@@ -90,7 +92,7 @@ namespace IOMath
             }
             static constexpr TQuaternion<T> FromTwoVectors(TVector<3, T> const &vectorA, TVector<3, T> const &vectorB) noexcept
             {
-                T normA_normB = std::sqrt(detail::ComputeDot(vectorA, vectorA) * detail::ComputeDot(vectorB, vectorB));
+                T const normA_normB = std::sqrt(detail::ComputeDot(vectorA, vectorA) * detail::ComputeDot(vectorB, vectorB));
                 T real = normA_normB + detail::ComputeDot(vectorA, vectorB);
         
                 TVector<3, T> temp;
@@ -199,10 +201,7 @@ namespace IOMath
 
             constexpr TQuaternion<T> & operator=(TQuaternion<T> const &other) noexcept
             {
-                this->w = other.w;
-                this->x = other.x;
-                this->y = other.y;
-                this->z = other.z;
+                memcpy(&this->w, &other.w, sizeof(T) * 4);
 
                 return *this;
             }

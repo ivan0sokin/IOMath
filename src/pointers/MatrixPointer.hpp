@@ -22,27 +22,43 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_VECTOR_POINTER_HPP
-#define _IO_MATH_VECTOR_POINTER_HPP
+#ifndef _IO_MATH_MATRIX_POINTER_HPP
+#define _IO_MATH_MATRIX_POINTER_HPP
 
-#include "../types/vectors/TVector2.hpp"
-#include "../types/vectors/TVector3.hpp"
-#include "../types/vectors/TVector4.hpp"
-#include "MakeFromPointer.hpp"
+#include "../types/matrices/TMatrix2x2.hpp"
+#include "../types/matrices/TMatrix2x3.hpp"
+#include "../types/matrices/TMatrix2x4.hpp"
+#include "../types/matrices/TMatrix3x2.hpp"
+#include "../types/matrices/TMatrix3x3.hpp"
+#include "../types/matrices/TMatrix3x4.hpp"
+#include "../types/matrices/TMatrix4x2.hpp"
+#include "../types/matrices/TMatrix4x3.hpp"
+#include "../types/matrices/TMatrix4x4.hpp"
+
+#include <memory.h>
 
 namespace IOMath
 {
-    template <typename T, size_t S>
-    constexpr T * ValuePtr(Types::TVector<S, T> &object) noexcept
-    {
-        return &(object.x);
-    }
+	template <typename T, size_t R, size_t C>
+	constexpr T * ValuePtr(Types::TMatrix<R, C, T> &object) noexcept
+	{
+		return &(object[0][0]);
+	}
 
-    template <typename T, size_t S>
-    constexpr T const * ValuePtr(Types::TVector<S, T> const &object) noexcept
-    {
-        return &(object.x);
-    }
+	template <typename T, size_t R, size_t C>
+	constexpr T const * ValuePtr(Types::TMatrix<R, C, T> const &object) noexcept
+	{
+		return &(object[0][0]);
+	}
+
+	template <size_t R, size_t C, typename T>
+	constexpr Types::TMatrix<R, C, T> MakeFromPtr(T const *ptr) noexcept
+	{
+		Types::TMatrix<R, C, T> result;
+		memcpy(ValuePtr(result), ptr, sizeof(Types::TMatrix<R, C, T>));
+
+		return result;
+	}
 }
 
 #endif

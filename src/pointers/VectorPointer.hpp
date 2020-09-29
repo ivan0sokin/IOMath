@@ -22,25 +22,37 @@
 	SOFTWARE.
 */
 
-#ifndef _IO_MATH_QUATERNION_POINTER_HPP
-#define _IO_MATH_QUATERNION_POINTER_HPP
+#ifndef _IO_MATH_VECTOR_POINTER_HPP
+#define _IO_MATH_VECTOR_POINTER_HPP
 
-#include "../types/quaternion/TQuaternion.hpp"
-#include "MakeFromPointer.hpp"
+#include "../types/vectors/TVector2.hpp"
+#include "../types/vectors/TVector3.hpp"
+#include "../types/vectors/TVector4.hpp"
+
+#include <memory.h>
 
 namespace IOMath
 {
-    template <typename T>
-    constexpr T * ValuePtr(Types::TQuaternion<T> &object) noexcept
+    template <typename T, size_t S>
+    constexpr T * ValuePtr(Types::TVector<S, T> &object) noexcept
     {
-        return &(object.w);
+        return &(object.x);
     }
 
-    template <typename T>
-    constexpr T const * ValuePtr(Types::TQuaternion<T> const &object) noexcept
+    template <typename T, size_t S>
+    constexpr T const * ValuePtr(Types::TVector<S, T> const &object) noexcept
     {
-        return &(object.w);
+        return &(object.x);
     }
+
+	template <size_t S, typename T>
+	constexpr Types::TVector<S, T> MakeFromPtr(T const *ptr) noexcept
+	{
+		Types::TVector<S, T> result;
+		memcpy(ValuePtr(result), ptr, sizeof(Types::TVector<S, T>));
+
+		return result;
+	}
 }
 
 #endif

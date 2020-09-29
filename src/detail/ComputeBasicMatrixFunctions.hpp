@@ -190,7 +190,7 @@ namespace IOMath
             T const objectC = object[1][0];
             T const objectD = object[1][1];
 
-            T oneOverDeterminant = static_cast<T>(1) / (objectA * objectD - objectB * objectC);
+            T const oneOverDeterminant = static_cast<T>(1) / (objectA * objectD - objectB * objectC);
             
 			return Types::TMatrix<2, 2, T>
             (
@@ -213,7 +213,7 @@ namespace IOMath
 			T const objectH = object[2][1];
 			T const objectI = object[2][2];
 
-            T oneOverDeterminant = static_cast<T>(1) / (objectA * (objectE * objectI - objectF * objectH) -
+            T const oneOverDeterminant = static_cast<T>(1) / (objectA * (objectE * objectI - objectF * objectH) -
                                                         objectB * (objectD * objectI - objectF * objectG) -
                                                         objectC * (objectE * objectG - objectD * objectH));
 
@@ -274,25 +274,25 @@ namespace IOMath
 			T const coefQ = objectB * objectH - objectD * objectF;
 			T const coefR = objectB * objectG - objectC * objectF;
 
-			Types::TVector<4, T> factorA = Types::TVector<4, T>(coefA, coefA, coefB, coefC);
-			Types::TVector<4, T> factorB = Types::TVector<4, T>(coefD, coefD, coefE, coefF);
-			Types::TVector<4, T> factorC = Types::TVector<4, T>(coefG, coefG, coefH, coefI);
-			Types::TVector<4, T> factorD = Types::TVector<4, T>(coefJ, coefJ, coefK, coefL);
-			Types::TVector<4, T> factorE = Types::TVector<4, T>(coefM, coefM, coefN, coefO);
-			Types::TVector<4, T> factorF = Types::TVector<4, T>(coefP, coefP, coefQ, coefR);
+			Types::TVector<4, T> const factorA = Types::TVector<4, T>(coefA, coefA, coefB, coefC);
+			Types::TVector<4, T> const factorB = Types::TVector<4, T>(coefD, coefD, coefE, coefF);
+			Types::TVector<4, T> const factorC = Types::TVector<4, T>(coefG, coefG, coefH, coefI);
+			Types::TVector<4, T> const factorD = Types::TVector<4, T>(coefJ, coefJ, coefK, coefL);
+			Types::TVector<4, T> const factorE = Types::TVector<4, T>(coefM, coefM, coefN, coefO);
+			Types::TVector<4, T> const factorF = Types::TVector<4, T>(coefP, coefP, coefQ, coefR);
 
-			Types::TVector<4, T> vectorBAAA = Types::TVector<4, T>(objectB, objectA, objectA, objectA); // A
-			Types::TVector<4, T> vectorFEEE = Types::TVector<4, T>(objectF, objectE, objectE, objectE); // B
-			Types::TVector<4, T> vectorJIII = Types::TVector<4, T>(objectJ, objectI, objectI, objectI); // C
-			Types::TVector<4, T> vectorNMMM = Types::TVector<4, T>(objectN, objectM, objectM, objectM); // D
+			Types::TVector<4, T> const vectorBAAA = Types::TVector<4, T>(objectB, objectA, objectA, objectA); // A
+			Types::TVector<4, T> const vectorFEEE = Types::TVector<4, T>(objectF, objectE, objectE, objectE); // B
+			Types::TVector<4, T> const vectorJIII = Types::TVector<4, T>(objectJ, objectI, objectI, objectI); // C
+			Types::TVector<4, T> const vectorNMMM = Types::TVector<4, T>(objectN, objectM, objectM, objectM); // D
 
-			Types::TVector<4, T> inverseA = Types::TVector<4, T>(vectorFEEE * factorA - vectorJIII * factorB + vectorNMMM * factorC);
-			Types::TVector<4, T> inverseB = Types::TVector<4, T>(vectorBAAA * factorA - vectorJIII * factorD + vectorNMMM * factorE);
-			Types::TVector<4, T> inverseC = Types::TVector<4, T>(vectorBAAA * factorB - vectorFEEE * factorD + vectorNMMM * factorF);
-			Types::TVector<4, T> inverseD = Types::TVector<4, T>(vectorBAAA * factorC - vectorFEEE * factorE + vectorJIII * factorF);
+			Types::TVector<4, T> const inverseA = Types::TVector<4, T>(vectorFEEE * factorA - vectorJIII * factorB + vectorNMMM * factorC);
+			Types::TVector<4, T> const inverseB = Types::TVector<4, T>(vectorBAAA * factorA - vectorJIII * factorD + vectorNMMM * factorE);
+			Types::TVector<4, T> const inverseC = Types::TVector<4, T>(vectorBAAA * factorB - vectorFEEE * factorD + vectorNMMM * factorF);
+			Types::TVector<4, T> const inverseD = Types::TVector<4, T>(vectorBAAA * factorC - vectorFEEE * factorE + vectorJIII * factorF);
 
-			Types::TVector<4, T> patternA = Types::TVector<4, T>(+1, -1, +1, -1);
-			Types::TVector<4, T> patternB = Types::TVector<4, T>(-1, +1, -1, +1);
+			Types::TVector<4, T> const patternA = Types::TVector<4, T>(+1, -1, +1, -1);
+			Types::TVector<4, T> const patternB = Types::TVector<4, T>(-1, +1, -1, +1);
 			Types::TMatrix<4, 4, T> const result = Types::TMatrix<4, 4, T>
             (
                 inverseA * patternA,
@@ -301,10 +301,10 @@ namespace IOMath
                 inverseD * patternB
             );
 
-			Types::TVector<4, T> dot = Types::TVector<4, T>(object[0] * result[0]);
-			T determinant = dot.x + dot.y + dot.z + dot.w;
+			Types::TVector<4, T> const dot = Types::TVector<4, T>(object[0] * result[0]);
 
-			T oneOverDeterminant = static_cast<T>(1) / determinant;
+			T const determinant = dot.x + dot.y + dot.z + dot.w;
+			T const oneOverDeterminant = static_cast<T>(1) / determinant;
 
 			return result * oneOverDeterminant;
         }

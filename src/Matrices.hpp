@@ -29,6 +29,5 @@
 #include "Matrix3.hpp"
 #include "Matrix4.hpp"
 #include "MatrixFunctions.hpp"
-#include "ptr/MatrixPointer.hpp"
 
 #endif

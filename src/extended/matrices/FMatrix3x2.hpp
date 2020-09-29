@@ -29,8 +29,8 @@
 
 namespace IOMath
 {
-    typedef Types::TMatrix<3, 2, float> FMatrix3x2;
-    typedef Types::TMatrix<3, 2, float> Matrix3x2;
+    using FMatrix3x2 = Types::TMatrix<3, 2, float>;
+    using Matrix3x2 = Types::TMatrix<3, 2, float>;
 }
 
 #endif

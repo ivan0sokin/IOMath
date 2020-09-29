@@ -29,7 +29,7 @@
 
 namespace IOMath
 {
-    typedef Types::TMatrix<2, 3, double> DMatrix2x3;
+    using DMatrix2x3 = Types::TMatrix<2, 3, double>;
 }
 
 #endif

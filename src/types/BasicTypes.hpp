@@ -29,6 +29,10 @@
 
 using std::size_t;
 
+#ifndef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+	#define IO_MATH_ROW_MAJOR_MATRIX_ORDER
+#endif
+
 namespace IOMath
 {
 	namespace Types

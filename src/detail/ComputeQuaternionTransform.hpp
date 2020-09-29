@@ -41,10 +41,10 @@ namespace IOMath
             T const half = static_cast<T>(0.5);
             T const one = static_cast<T>(1);
 
-            T length = std::sqrt(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
+            T const length = std::sqrt(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
             if(std::abs(length - one) > static_cast<T>(0.001))
             {
-                T oneOverLength = one / length;
+                T const oneOverLength = one / length;
                 axis.x *= oneOverLength;
                 axis.y *= oneOverLength;
                 axis.z *= oneOverLength;

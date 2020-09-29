@@ -29,7 +29,7 @@
 
 namespace IOMath
 {
-    typedef Types::TVector<2, bool> BVector2;
+    using BVector2 = Types::TVector<2, bool>;
 }
 
 #endif

@@ -29,7 +29,7 @@
 
 namespace IOMath
 {
-    typedef Types::TVector<4, unsigned> UVector4;
+    using UVector4 = Types::TVector<4, unsigned>;
 }
 
 #endif
