@@ -54,19 +54,19 @@ namespace IOMath
 					#endif
 				} {}
 			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
-				constexpr TMatrix(data_t const &firstColumn, data_t const &secondColumn, data_t const &thirdColumn) noexcept :
+				constexpr TMatrix(data_t const &first, data_t const &second, data_t const &third) noexcept :
 				data
 				{
-					data_t(firstColumn),
-					data_t(secondColumn),
-					data_t(thirdColumn)
+					data_t(first),
+					data_t(second),
+					data_t(third)
 				} {}
 			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
-				constexpr TMatrix(data_t const &firstRow, data_t const &secondRow) noexcept :
+				constexpr TMatrix(data_t const &first, data_t const &second) noexcept :
 				data
 				{
-					data_t(firstRow),
-					data_t(secondRow)
+					data_t(first),
+					data_t(second)
 				} {}
 			#endif
 
@@ -85,20 +85,20 @@ namespace IOMath
 				} {}
 			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
 				template <typename A, typename B, typename C>
-				constexpr TMatrix(TVector<2, A> const &firstColumn, TVector<2, A> const &secondColumn, TVector<2, A> const &thirdColumn) noexcept :
+				constexpr TMatrix(TVector<2, A> const &first, TVector<2, A> const &second, TVector<2, A> const &third) noexcept :
 					data
 					{
-						data_t(firstColumn),
-						data_t(secondColumn),
-						data_t(thirdColumn)
+						data_t(first),
+						data_t(second),
+						data_t(third)
 					} {}
 			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
 				template <typename A, typename B>
-				constexpr TMatrix(TVector<3, A> const &firstRow, TVector<3, B> const &secondRow) noexcept :
+				constexpr TMatrix(TVector<3, A> const &first, TVector<3, B> const &second) noexcept :
 					data
 					{
-						data_t(firstRow),
-						data_t(secondRow)
+						data_t(first),
+						data_t(second)
 					} {}
 			#endif
 			
@@ -266,6 +266,9 @@ namespace IOMath
 			{
 				this->data[0] = other[0];
 				this->data[1] = other[1];
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					this->data[2] = other[2];
+				#endif
 
 				return *this;
 			}
@@ -274,6 +277,9 @@ namespace IOMath
 			{
 				this->data[0] += scalar;
 				this->data[1] += scalar;
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					this->data[2] += scalar;
+				#endif
 
 				return *this;
 			}
@@ -282,6 +288,9 @@ namespace IOMath
 			{
 				this->data[0] += other[0];
 				this->data[1] += other[1];
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					this->data[2] += other[2];
+				#endif
 
 				return *this;
 			}
@@ -290,6 +299,9 @@ namespace IOMath
 			{
 				this->data[0] -= scalar;
 				this->data[1] -= scalar;
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					this->data[2] -= scalar;
+				#endif
 
 				return *this;
 			}
@@ -298,6 +310,9 @@ namespace IOMath
 			{
 				this->data[0] -= other[0];
 				this->data[1] -= other[1];
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					this->data[2] -= other[2];
+				#endif
 
 				return *this;
 			}
@@ -306,6 +321,9 @@ namespace IOMath
 			{
 				this->data[0] *= scalar;
 				this->data[1] *= scalar;
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					this->data[2] *= scalar;
+				#endif
 
 				return *this;
 			}
@@ -314,6 +332,9 @@ namespace IOMath
 			{
 				this->data[0] /= scalar;
 				this->data[1] /= scalar;
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					this->data[2] /= scalar;
+				#endif
 
 				return *this;
 			}
@@ -322,6 +343,9 @@ namespace IOMath
 			{
 				++this->data[0];
 				++this->data[1];
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					++this->data[2];
+				#endif
 
 				return *this;
 			}
@@ -329,6 +353,9 @@ namespace IOMath
 			{
 				--this->data[0];
 				--this->data[1];
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					--this->data[2];
+				#endif
 
 				return *this;
 			}
@@ -336,7 +363,7 @@ namespace IOMath
 			{
 				TMatrix<2, 3, T> result = TMatrix<2, 3, T>(*this);
 
-				++*this;
+				++(*this);
 
 				return result;
 			}
@@ -344,7 +371,7 @@ namespace IOMath
 			{
 				TMatrix<2, 3, T> result = TMatrix<2, 3, T>(*this);
 
-				--*this;
+				--(*this);
 
 				return result;
 			}
@@ -361,24 +388,56 @@ namespace IOMath
 			return TMatrix<2, 3, T>
 			(
 				-object[0],
-				-object[1]
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					-object[1],
+					-object[2]
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					-object[1]
+				#endif
 			);
 		}
 
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator+(T scalar, TMatrix<2, 3, T> const &object) noexcept
 		{
-			return TMatrix<2, 3, T>(object) += scalar;
+			return TMatrix<2, 3, T>
+			(
+				scalar + object[0],
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					scalar + object[1],
+					scalar + object[2]
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					scalar + object[1]
+				#endif
+			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator+(TMatrix<2, 3, T> const &object, T scalar) noexcept
 		{
-			return TMatrix<2, 3, T>(object) += scalar;
+			return TMatrix<2, 3, T>
+			(
+				object[0] + scalar,
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					object[1] + scalar,
+					object[2] + scalar
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					object[1] + scalar
+				#endif
+			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator+(TMatrix<2, 3, T> const &lObject, TMatrix<2, 3, T> const &rObject) noexcept
 		{
-			return TMatrix<2, 3, T>(lObject) += rObject;
+			return TMatrix<2, 3, T>
+			(
+				lObject[0] + rObject[0],
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					lObject[1] + rObject[1],
+					lObject[2] + rObject[2]
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					lObject[1] + rObject[1]
+				#endif
+			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator-(T scalar, TMatrix<2, 3, T> const &object) noexcept
@@ -386,45 +445,102 @@ namespace IOMath
 			return TMatrix<2, 3, T>
 			(
 				scalar - object[0],
-				scalar - object[1]
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					scalar - object[1],
+					scalar - object[2]
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					scalar - object[1]
+				#endif
 			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator-(TMatrix<2, 3, T> const &object, T scalar) noexcept
 		{
-			return TMatrix<2, 3, T>(object) -= scalar;
+			return TMatrix<2, 3, T>
+			(
+				object[0] - scalar,
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					object[1] - scalar,
+					object[2] - scalar
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					object[1] - scalar
+				#endif
+			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator-(TMatrix<2, 3, T> const &lObject, TMatrix<2, 3, T> const &rObject) noexcept
 		{
-			return TMatrix<2, 3, T>(lObject) -= rObject;
+			return TMatrix<2, 3, T>
+			(
+				lObject[0] - rObject[0],
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					lObject[1] - rObject[1],
+					lObject[2] - rObject[2]
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					lObject[1] - rObject[1]
+				#endif
+			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator*(T scalar, TMatrix<2, 3, T> const &object) noexcept
 		{
-			return TMatrix<2, 3, T>(object) *= scalar;
+			return TMatrix<2, 3, T>
+			(
+				scalar * object[0],
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					scalar * object[1],
+					scalar * object[2]
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					scalar * object[1]
+				#endif
+			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator*(TMatrix<2, 3, T> const &object, T scalar) noexcept
 		{
-			return TMatrix<2, 3, T>(object) *= scalar;
+			return TMatrix<2, 3, T>
+			(
+				object[0] * scalar,
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					object[1] * scalar,
+					object[2] * scalar
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					object[1] * scalar
+				#endif
+			);
 		}
 		template <typename T>
 		constexpr TMatrix<2, 2, T> operator*(TMatrix<2, 3, T> const &lObject, TMatrix<3, 2, T> const &rObject) noexcept
 		{
-			T const lObjectA = lObject[0][0];
-			T const lObjectB = lObject[0][1];
-			T const lObjectC = lObject[0][2];
-			T const lObjectD = lObject[1][0];
-			T const lObjectE = lObject[1][1];
-			T const lObjectF = lObject[1][2];
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				T const lObjectA = lObject[0][0];
+				T const lObjectB = lObject[1][0];
+				T const lObjectC = lObject[2][0];
+				T const lObjectD = lObject[0][1];
+				T const lObjectE = lObject[1][1];
+				T const lObjectF = lObject[2][1];
 
-			T const rObjectA = rObject[0][0];
-			T const rObjectB = rObject[0][1];
-			T const rObjectC = rObject[1][0];
-			T const rObjectD = rObject[1][1];
-			T const rObjectE = rObject[2][0];
-			T const rObjectF = rObject[2][1];
+				T const rObjectA = rObject[0][0];
+				T const rObjectB = rObject[1][0];
+				T const rObjectC = rObject[0][1];
+				T const rObjectD = rObject[1][1];
+				T const rObjectE = rObject[0][2];
+				T const rObjectF = rObject[1][2];
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				T const lObjectA = lObject[0][0];
+				T const lObjectB = lObject[0][1];
+				T const lObjectC = lObject[0][2];
+				T const lObjectD = lObject[1][0];
+				T const lObjectE = lObject[1][1];
+				T const lObjectF = lObject[1][2];
+
+				T const rObjectA = rObject[0][0];
+				T const rObjectB = rObject[0][1];
+				T const rObjectC = rObject[1][0];
+				T const rObjectD = rObject[1][1];
+				T const rObjectE = rObject[2][0];
+				T const rObjectF = rObject[2][1];
+			#endif
 
 			return TMatrix<2, 2, T>
 			(
@@ -437,22 +553,41 @@ namespace IOMath
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator*(TMatrix<2, 3, T> const &lObject, TMatrix<3, 3, T> const &rObject) noexcept
 		{
-			T const lObjectA = lObject[0][0];
-			T const lObjectB = lObject[0][1];
-			T const lObjectC = lObject[0][2];
-			T const lObjectD = lObject[1][0];
-			T const lObjectE = lObject[1][1];
-			T const lObjectF = lObject[1][2];
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				T const lObjectA = lObject[0][0];
+				T const lObjectB = lObject[1][0];
+				T const lObjectC = lObject[2][0];
+				T const lObjectD = lObject[0][1];
+				T const lObjectE = lObject[1][1];
+				T const lObjectF = lObject[2][1];
 
-			T const rObjectA = rObject[0][0];
-			T const rObjectB = rObject[0][1];
-			T const rObjectC = rObject[0][2];
-			T const rObjectD = rObject[1][0];
-			T const rObjectE = rObject[1][1];
-			T const rObjectF = rObject[1][2];
-			T const rObjectG = rObject[2][0];
-			T const rObjectH = rObject[2][1];
-			T const rObjectI = rObject[2][2];
+				T const rObjectA = rObject[0][0];
+				T const rObjectB = rObject[1][0];
+				T const rObjectC = rObject[2][0];
+				T const rObjectD = rObject[0][1];
+				T const rObjectE = rObject[1][1];
+				T const rObjectF = rObject[2][1];
+				T const rObjectG = rObject[0][2];
+				T const rObjectH = rObject[1][2];
+				T const rObjectI = rObject[2][2];
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				T const lObjectA = lObject[0][0];
+				T const lObjectB = lObject[0][1];
+				T const lObjectC = lObject[0][2];
+				T const lObjectD = lObject[1][0];
+				T const lObjectE = lObject[1][1];
+				T const lObjectF = lObject[1][2];
+
+				T const rObjectA = rObject[0][0];
+				T const rObjectB = rObject[0][1];
+				T const rObjectC = rObject[0][2];
+				T const rObjectD = rObject[1][0];
+				T const rObjectE = rObject[1][1];
+				T const rObjectF = rObject[1][2];
+				T const rObjectG = rObject[2][0];
+				T const rObjectH = rObject[2][1];
+				T const rObjectI = rObject[2][2];
+			#endif
 
 			return TMatrix<2, 3, T>
 			(
@@ -467,25 +602,47 @@ namespace IOMath
 		template <typename T>
 		constexpr TMatrix<2, 4, T> operator*(TMatrix<2, 3, T> const &lObject, TMatrix<3, 4, T> const &rObject) noexcept
 		{
-			T const lObjectA = lObject[0][0];
-			T const lObjectB = lObject[0][1];
-			T const lObjectC = lObject[0][2];
-			T const lObjectD = lObject[1][0];
-			T const lObjectE = lObject[1][1];
-			T const lObjectF = lObject[1][2];
+			#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+				T const lObjectA = lObject[0][0];
+				T const lObjectB = lObject[1][0];
+				T const lObjectC = lObject[2][0];
+				T const lObjectD = lObject[0][1];
+				T const lObjectE = lObject[1][1];
+				T const lObjectF = lObject[2][1];
 
-			T const rObjectA = rObject[0][0];
-			T const rObjectB = rObject[0][1];
-			T const rObjectC = rObject[0][2];
-			T const rObjectD = rObject[0][3];
-			T const rObjectE = rObject[1][0];
-			T const rObjectF = rObject[1][1];
-			T const rObjectG = rObject[1][2];
-			T const rObjectH = rObject[1][3];
-			T const rObjectI = rObject[2][0];
-			T const rObjectJ = rObject[2][1];
-			T const rObjectK = rObject[2][2];
-			T const rObjectL = rObject[2][3];
+				T const rObjectA = rObject[0][0];
+				T const rObjectB = rObject[1][0];
+				T const rObjectC = rObject[2][0];
+				T const rObjectD = rObject[3][0];
+				T const rObjectE = rObject[0][1];
+				T const rObjectF = rObject[1][1];
+				T const rObjectG = rObject[2][1];
+				T const rObjectH = rObject[3][1];
+				T const rObjectI = rObject[0][2];
+				T const rObjectJ = rObject[1][2];
+				T const rObjectK = rObject[2][2];
+				T const rObjectL = rObject[3][2];
+			#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+				T const lObjectA = lObject[0][0];
+				T const lObjectB = lObject[0][1];
+				T const lObjectC = lObject[0][2];
+				T const lObjectD = lObject[1][0];
+				T const lObjectE = lObject[1][1];
+				T const lObjectF = lObject[1][2];
+
+				T const rObjectA = rObject[0][0];
+				T const rObjectB = rObject[0][1];
+				T const rObjectC = rObject[0][2];
+				T const rObjectD = rObject[0][3];
+				T const rObjectE = rObject[1][0];
+				T const rObjectF = rObject[1][1];
+				T const rObjectG = rObject[1][2];
+				T const rObjectH = rObject[1][3];
+				T const rObjectI = rObject[2][0];
+				T const rObjectJ = rObject[2][1];
+				T const rObjectK = rObject[2][2];
+				T const rObjectL = rObject[2][3];
+			#endif
 
 			return TMatrix<2, 4, T>
 			(
@@ -511,7 +668,16 @@ namespace IOMath
 		template <typename T>
 		constexpr TMatrix<2, 3, T> operator/(TMatrix<2, 3, T> const &object, T scalar) noexcept
 		{
-			return TMatrix<2, 3, T>(object) /= scalar;
+			return TMatrix<2, 3, T>
+			(
+				object[0] / scalar,
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					object[1] / scalar,
+					object[2] / scalar
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					object[1] / scalar
+				#endif
+			);
 		}
 	
 		template <typename T>
@@ -520,13 +686,27 @@ namespace IOMath
 			return
 			(
 				lObject[0] == rObject[0] &&
-				lObject[1] == rObject[1]
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					lObject[1] == rObject[1] &&
+					lObject[2] == rObject[2]
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					lObject[1] == rObject[1]
+				#endif
 			);
 		}
 		template <typename T>
 		constexpr bool operator!=(TMatrix<2, 3, T> const &lObject, TMatrix<2, 3, T> const &rObject) noexcept
 		{
-			return !(lObject == rObject);
+			return
+			(
+				lObject[0] != rObject[0] ||
+				#ifdef IO_MATH_COLUMN_MAJOR_MATRIX_ORDER
+					lObject[1] != rObject[1] ||
+					lObject[2] != rObject[2]
+				#elif defined(IO_MATH_ROW_MAJOR_MATRIX_ORDER)
+					lObject[1] != rObject[1]
+				#endif
+			);
 		}
 	}
 }

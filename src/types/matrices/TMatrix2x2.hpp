@@ -352,7 +352,7 @@ namespace IOMath
 			{
 				TMatrix<2, 2, T> result = TMatrix<2, 2, T>(*this);
 
-				++*this;
+				++(*this);
 
 				return result;
 			}
@@ -360,7 +360,7 @@ namespace IOMath
 			{
 				TMatrix<2, 2, T> result = TMatrix<2, 2, T>(*this);
 
-				--*this;
+				--(*this);
 
 				return result;
 			}

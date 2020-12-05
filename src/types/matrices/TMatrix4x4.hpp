@@ -322,7 +322,7 @@ namespace IOMath
 			constexpr data_t & operator[](size_t index) noexcept
 			{
 				#ifdef IO_MATH_SAFE_BRACKETS_OPERATOR
-					assert(index >= 0 && index < data_t::size());
+					assert(index >= 0 && index < TMatrix::Rows());
 				#endif
 
 				return data[index];
@@ -330,7 +330,7 @@ namespace IOMath
 			constexpr data_t const & operator[](size_t index) const noexcept
 			{
 				#ifdef IO_MATH_SAFE_BRACKETS_OPERATOR
-					assert(index >= 0 && index < data_t::size());
+					assert(index >= 0 && index < TMatrix::Rows());
 				#endif
 
 				return data[index];
@@ -533,7 +533,7 @@ namespace IOMath
 			{
 				TMatrix<4, 4, T> result = TMatrix<4, 4, T>(*this);
 
-				++*this;
+				++(*this);
 
 				return result;
 			}
@@ -541,7 +541,7 @@ namespace IOMath
 			{
 				TMatrix<4, 4, T> result = TMatrix<4, 4, T>(*this);
 
-				--*this;
+				--(*this);
 
 				return result;
 			}
